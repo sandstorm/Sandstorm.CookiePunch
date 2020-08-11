@@ -15,13 +15,13 @@ Sandstorm:
       storageMethod: cookie
       cookieName: cookie_cutter
       cookieExpiresAfterDays: 120
-      cookieDomain: .nip.io
+      # cookieDomain: .example.org
       mustConsent: true
       # button in consent modal next to save button
       acceptAll: true
       # button in consent modal on the right -> decline
       hideDeclineAll: false
-      default: true
+      default: false
     groups:
       default:
         title: Sandstorm.CookieCutter:Groups:default.title
