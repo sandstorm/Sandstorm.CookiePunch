@@ -21,17 +21,5 @@
         "husky": "^4.2.5",
         "js-yaml": "^3.14.0",
         "prettier": "^2.0.5"
-    },
-    "babel": {
-        "presets": [
-            [
-                "@babel/preset-env"
-            ]
-        ]
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "yarn prettier:fix"
-        }
     }
 }
