@@ -1,0 +1,15 @@
+Sandstorm:
+  CookieCutter:
+    purposes:
+      mediaembeds: Media Embeds
+    groups:
+      media:
+        title: Bar
+        purposes:
+          - mediaembeds
+        description: Some bar description
+    elements:
+      "https://www.youtube.com/embed/":
+        type: iframe
+        block: true
+        group: media

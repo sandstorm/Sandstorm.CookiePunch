@@ -1,299 +1,299 @@
 .klaro {
-    .cookie-modal,
-    .cookie-notice {
-        @import "switch.scss";
+  .cookie-modal,
+  .cookie-notice {
+    @import "switch.scss";
 
-        font-size: 14px;
+    font-size: 14px;
 
-        .slider {
-            box-shadow: $cc_panel__boxShadow;
+    .slider {
+      box-shadow: $cc_panel__boxShadow;
+    }
+
+    a {
+      color: $cc_link__color;
+      text-decoration: none;
+    }
+
+    p,
+    strong,
+    h1,
+    h2,
+    ul,
+    li {
+      font-family: inherit;
+      color: $cc_text__color;
+    }
+
+    p,
+    h1,
+    h2,
+    ul,
+    li {
+      display: block;
+      text-align: left;
+      margin: 0;
+      padding: 0;
+      margin-top: 0.7em;
+    }
+
+    .cm-link {
+      padding-left: 4px;
+      vertical-align: middle;
+    }
+
+    .cm-btn {
+      padding: 6px 10px;
+      margin-right: 0.5em;
+
+      border: $cc_button__border;
+      border-radius: $cc_button__borderRadius;
+      background: $cc_button__backgroundColor;
+      color: $cc_button__color;
+
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.5;
+      }
+
+      &.cm-btn-sm {
+        padding: 0.4em;
+        font-size: 1em;
+      }
+
+      &.cm-btn-close {
+        background: red;
+        color: red;
+      }
+
+      &.cm-btn-success {
+        border: $cc_buttonSuccess__border;
+        background: $cc_buttonSuccess__backgroundColor;
+        color: $cc_buttonSuccess__color;
+      }
+
+      &.cm-btn-info {
+        // no need for this type of button to look different
+        border: $cc_buttonSuccess__border;
+        background: $cc_buttonSuccess__backgroundColor;
+        color: $cc_buttonSuccess__color;
+      }
+
+      &.cm-btn-right {
+        float: right;
+        margin-left: 0.5em;
+        margin-right: 0;
+      }
+    }
+  }
+
+  .cookie-modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+    z-index: $cc_panel__zIndex;
+
+    .cm-bg {
+      background: $cc_backdrop__backgroundColor;
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .cm-modal {
+      z-index: $cc_panel__zIndex + 1;
+      box-shadow: $cc_panel__boxShadow;
+
+      @media (min-width: 1024px) {
+        border-radius: $cc_panel__borderRadius;
+        position: relative;
+        margin: 0 auto;
+        max-width: 640px;
+        height: auto;
+        width: auto;
+      }
+
+      width: 100%;
+      max-height: 98%;
+
+      top: 50%;
+      transform: translateY(-50%);
+
+      position: fixed;
+      overflow: auto;
+      background: $cc_panel__backgroundColor;
+      color: $cc_text__color;
+
+      .hide {
+        border: none;
+        background: none;
+        svg {
+          stroke: $cc_text__color;
+        }
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        // Avoid getting overlapped by the heading, if external CSS sets:
+        // h1 { position: relative }
+        // See: https://github.com/KIProtect/klaro/issues/135
+        z-index: 1;
+      }
+
+      .cm-footer {
+        padding: 1.5em;
+        border-top: $cc_separator__border;
+
+        &-buttons {
+          &::before,
+          &::after {
+            content: " ";
+            display: table;
+          }
+
+          &::after {
+            clear: both;
+          }
         }
 
-        a {
-            color: $cc_link__color;
-            text-decoration: none;
-        }
+        .cm-powered-by {
+          font-size: 0.8em;
+          padding-top: 4px;
+          text-align: center;
 
-        p,
-        strong,
-        h1,
-        h2,
-        ul,
-        li {
-            font-family: inherit;
-            color: $cc_text__color;
+          a {
+            color: $cc_textMuted__color;
+          }
         }
+      }
 
-        p,
-        h1,
-        h2,
-        ul,
-        li {
-            display: block;
-            text-align: left;
-            margin: 0;
-            padding: 0;
-            margin-top: 0.7em;
+      .cm-header {
+        padding: 1.5em;
+        padding-right: 24px;
+        border-bottom: $cc_separator__border;
+        h1 {
+          margin: 0;
+          font-size: 2em;
+          display: block;
+          &.title {
+            padding-right: 20px;
+          }
         }
+      }
 
-        .cm-link {
-            padding-left: 4px;
+      .cm-body {
+        padding: 1.5rem;
+        ul {
+          display: block;
+        }
+        span {
+          display: inline-block;
+          width: auto;
+        }
+        ul.cm-apps {
+          padding: 0;
+          margin: 0;
+          li.cm-app {
+            &:first-child {
+              margin-top: 0;
+            }
+            position: relative;
+            line-height: 20px;
             vertical-align: middle;
-        }
-
-        .cm-btn {
-            padding: 6px 10px;
-            margin-right: 0.5em;
-
-            border: $cc_button__border;
-            border-radius: $cc_button__borderRadius;
-            background: $cc_button__backgroundColor;
-            color: $cc_button__color;
-
-            cursor: pointer;
-
-            &:disabled {
-                opacity: 0.5;
+            padding-left: 60px;
+            min-height: 40px;
+            .switch {
+              position: absolute;
+              left: 0;
             }
-
-            &.cm-btn-sm {
-                padding: 0.4em;
-                font-size: 1em;
-            }
-
-            &.cm-btn-close {
-                background: red;
-                color: red;
-            }
-
-            &.cm-btn-success {
-                border: $cc_buttonSuccess__border;
-                background: $cc_buttonSuccess__backgroundColor;
-                color: $cc_buttonSuccess__color;
-            }
-
-            &.cm-btn-info {
-                // no need for this type of button to look different
-                border: $cc_buttonSuccess__border;
-                background: $cc_buttonSuccess__backgroundColor;
-                color: $cc_buttonSuccess__color;
-            }
-
-            &.cm-btn-right {
-                float: right;
-                margin-left: 0.5em;
-                margin-right: 0;
-            }
-        }
-    }
-
-    .cookie-modal {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        overflow: hidden;
-        left: 0;
-        top: 0;
-        z-index: $cc_panel__zIndex;
-
-        .cm-bg {
-            background: $cc_backdrop__backgroundColor;
-            height: 100%;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        .cm-modal {
-            z-index: $cc_panel__zIndex + 1;
-            box-shadow: $cc_panel__boxShadow;
-
-            @media (min-width: 1024px) {
-                border-radius: $cc_panel__borderRadius;
-                position: relative;
-                margin: 0 auto;
-                max-width: 640px;
-                height: auto;
-                width: auto;
-            }
-
-            width: 100%;
-            max-height: 98%;
-
-            top: 50%;
-            transform: translateY(-50%);
-
-            position: fixed;
-            overflow: auto;
-            background: $cc_panel__backgroundColor;
-            color: $cc_text__color;
-
-            .hide {
-                border: none;
-                background: none;
-                svg {
-                    stroke: $cc_text__color;
-                }
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                // Avoid getting overlapped by the heading, if external CSS sets:
-                // h1 { position: relative }
-                // See: https://github.com/KIProtect/klaro/issues/135
-                z-index: 1;
-            }
-
-            .cm-footer {
-                padding: 1.5em;
-                border-top: $cc_separator__border;
-
-                &-buttons {
-                    &::before,
-                    &::after {
-                        content: " ";
-                        display: table;
-                    }
-
-                    &::after {
-                        clear: both;
-                    }
-                }
-
-                .cm-powered-by {
-                    font-size: 0.8em;
-                    padding-top: 4px;
-                    text-align: center;
-
-                    a {
-                        color: $cc_textMuted__color;
-                    }
-                }
-            }
-
-            .cm-header {
-                padding: 1.5em;
-                padding-right: 24px;
-                border-bottom: $cc_separator__border;
-                h1 {
-                    margin: 0;
-                    font-size: 2em;
-                    display: block;
-                    &.title {
-                        padding-right: 20px;
-                    }
-                }
-            }
-
-            .cm-body {
-                padding: 1.5rem;
-                ul {
-                    display: block;
-                }
-                span {
-                    display: inline-block;
-                    width: auto;
-                }
-                ul.cm-apps {
-                    padding: 0;
-                    margin: 0;
-                    li.cm-app {
-                        &:first-child {
-                            margin-top: 0;
-                        }
-                        position: relative;
-                        line-height: 20px;
-                        vertical-align: middle;
-                        padding-left: 60px;
-                        min-height: 40px;
-                        .switch {
-                            position: absolute;
-                            left: 0;
-                        }
-                        p {
-                            margin-top: 0;
-                        }
-
-                        p.purposes {
-                            font-size: 0.8em;
-                            color: $cc_textMuted__color;
-                        }
-
-                        &.cm-toggle-all {
-                            border-top: $cc_separator__border;
-                            padding-top: 1em;
-                        }
-
-                        span.cm-app-title {
-                            font-weight: 600;
-                        }
-
-                        span.cm-opt-out,
-                        span.cm-required {
-                            padding-left: 0.2em;
-                            font-size: 0.8em;
-                            color: $cc_textMuted__color;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .cookie-notice {
-        background: $cc_panel__backgroundColor;
-        z-index: $cc_panel__zIndex - 1;
-
-        position: fixed;
-        width: 100%;
-        bottom: 0;
-        right: 0;
-
-        @media (min-width: 990px) {
-            box-shadow: $cc_panel__boxShadow;
-            border-radius: $cc_panel__borderRadius;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            max-width: 300px;
-        }
-
-        @media (max-width: 989px) {
-            border: none;
-            border-radius: 0;
-        }
-
-        .cn-body {
-            margin-bottom: 0;
-            margin-right: 0;
-            bottom: 0;
-
-            padding: 1em;
-            padding-top: 0;
-
             p {
-                margin-bottom: 0.5em;
+              margin-top: 0;
             }
 
-            p.cn-changes {
-                text-decoration: underline;
+            p.purposes {
+              font-size: 0.8em;
+              color: $cc_textMuted__color;
             }
 
-            .cn-learn-more {
-                display: inline-block;
+            &.cm-toggle-all {
+              border-top: $cc_separator__border;
+              padding-top: 1em;
             }
 
-            p.cn-ok {
-                padding-top: 0.5em;
-                margin: 0;
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
+            span.cm-app-title {
+              font-weight: 600;
             }
+
+            span.cm-opt-out,
+            span.cm-required {
+              padding-left: 0.2em;
+              font-size: 0.8em;
+              color: $cc_textMuted__color;
+            }
+          }
         }
+      }
+    }
+  }
+
+  .cookie-notice {
+    background: $cc_panel__backgroundColor;
+    z-index: $cc_panel__zIndex - 1;
+
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+
+    @media (min-width: 990px) {
+      box-shadow: $cc_panel__boxShadow;
+      border-radius: $cc_panel__borderRadius;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      max-width: 300px;
     }
 
-    .cookie-notice-hidden {
-        display: none !important;
+    @media (max-width: 989px) {
+      border: none;
+      border-radius: 0;
     }
+
+    .cn-body {
+      margin-bottom: 0;
+      margin-right: 0;
+      bottom: 0;
+
+      padding: 1em;
+      padding-top: 0;
+
+      p {
+        margin-bottom: 0.5em;
+      }
+
+      p.cn-changes {
+        text-decoration: underline;
+      }
+
+      .cn-learn-more {
+        display: inline-block;
+      }
+
+      p.cn-ok {
+        padding-top: 0.5em;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  .cookie-notice-hidden {
+    display: none !important;
+  }
 }

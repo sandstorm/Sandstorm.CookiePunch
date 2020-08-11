@@ -1,25 +1,25 @@
 {
-    "name": "sandstorm-block-them-all",
-    "version": "0.0.1",
-    "description": "Sandstorm Block Them All",
-    "author": "Sandstorm",
-    "browserslist": "> 0.25%, not dead",
-    "scripts": {
-        "build": "yarn run build:translations && yarn run build:template",
-        "build:translations": "node ./Resources/Private/KlaroTranslations/build/build.js",
-        "build:template": "npx babel ./Resources/Private/JavaScript/klaroConfigTemplate.js --out-file ./Resources/Private/JavaScript/klaroConfigTemplateCompiled.js",
-        "prettier:check": "yarn prettier --check .",
-        "prettier:fix": "yarn prettier --write ."
-    },
-    "devDependencies": {
-        "@babel/cli": "^7.10.5",
-        "@babel/core": "^7.11.0",
-        "@babel/preset-env": "^7.11.0",
-        "@prettier/plugin-php": "^0.14.3",
-        "browserlist": "^1.0.1",
-        "handlebars": "^4.7.6",
-        "husky": "^4.2.5",
-        "js-yaml": "^3.14.0",
-        "prettier": "^2.0.5"
-    }
+  "name": "sandstorm-block-them-all",
+  "version": "0.0.1",
+  "description": "Sandstorm Block Them All",
+  "author": "Sandstorm",
+  "browserslist": "> 0.25%, not dead",
+  "scripts": {
+    "build": "yarn run build:translations && yarn run build:template",
+    "build:translations": "node ./Resources/Private/KlaroTranslations/build/build.js",
+    "build:template": "npx babel ./Resources/Private/JavaScript/klaroConfigTemplate.js --out-file ./Resources/Private/JavaScript/klaroConfigTemplateCompiled.js",
+    "prettier:check": "yarn prettier --check .",
+    "prettier:fix": "yarn prettier --write ."
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "@prettier/plugin-php": "^0.14.3",
+    "browserlist": "^1.0.1",
+    "handlebars": "^4.7.6",
+    "husky": "^4.2.5",
+    "js-yaml": "^3.14.0",
+    "prettier": "^2.0.5"
+  }
 }
