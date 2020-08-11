@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="Sandstorm.CookieCutter" source-language="en" datatype="plaintext">
+        <note>
+            ################################################################################################
+            # IMPORTANT: This file was auto-generated as part of the build process to convert translations #
+            # provided by klaro. -> see package.json -> "yarn run build:translations"                      #
+            ################################################################################################
+        </note>
+        <body>
+            <trans-unit id="consentModal.title">
+                <source>Information that we collect</source>
+            </trans-unit>
+            <trans-unit id="consentModal.description">
+                <source>Here you can see and customize the information that we collect about you.
+</source>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.name">
+                <source>privacy policy</source>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.text">
+                <source>To learn more, please read our {privacyPolicy}.
+</source>
+            </trans-unit>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please update your consent.</source>
+            </trans-unit>
+            <trans-unit id="consentNotice.description">
+                <source>We collect and process your personal information for the following purposes: {purposes}.
+</source>
+            </trans-unit>
+            <trans-unit id="consentNotice.learnMore">
+                <source>Customize</source>
+            </trans-unit>
+            <trans-unit id="consentNotice.privacyPolicy.name">
+                <source>privacy policy</source>
+            </trans-unit>
+            <trans-unit id="consentNotice.imprint.name">
+                <source>Imprint</source>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>Accept</source>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>Decline</source>
+            </trans-unit>
+            <trans-unit id="close">
+                <source>Close</source>
+            </trans-unit>
+            <trans-unit id="acceptAll">
+                <source>Accept all</source>
+            </trans-unit>
+            <trans-unit id="acceptSelected">
+                <source>Accept selected</source>
+            </trans-unit>
+            <trans-unit id="app.disableAll.title">
+                <source>Toggle all apps</source>
+            </trans-unit>
+            <trans-unit id="app.disableAll.description">
+                <source>Use this switch to enable/disable all apps.</source>
+            </trans-unit>
+            <trans-unit id="app.optOut.title">
+                <source>(opt-out)</source>
+            </trans-unit>
+            <trans-unit id="app.optOut.description">
+                <source>This app is loaded by default (but you can opt out)</source>
+            </trans-unit>
+            <trans-unit id="app.required.title">
+                <source>(always required)</source>
+            </trans-unit>
+            <trans-unit id="app.required.description">
+                <source>This application is always required</source>
+            </trans-unit>
+            <trans-unit id="app.purposes">
+                <source>Purposes</source>
+            </trans-unit>
+            <trans-unit id="app.purpose">
+                <source>Purpose</source>
+            </trans-unit>
+            <trans-unit id="poweredBy">
+                <source>Powered by Klaro!</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

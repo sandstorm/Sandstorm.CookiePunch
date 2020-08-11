@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    {{#if target}}
+    <file original="" product-name="Sandstorm.CookieCutter" source-language="{{source}}" target-language="{{target}}" datatype="plaintext">
+    {{else}}
+    <file original="" product-name="Sandstorm.CookieCutter" source-language="{{source}}" datatype="plaintext">
+    {{/if}}
+        <note>
+            ################################################################################################
+            # IMPORTANT: This file was auto-generated as part of the build process to convert translations #
+            # provided by klaro. -> see package.json -> "yarn run build:translations"                      #
+            ################################################################################################
+        </note>
+        <body>
+            {{#each units}}
+            <trans-unit id="{{this.id}}">
+                <source>{{this.source}}</source>
+                {{#if this.target}}
+                <target>{{this.target}}</target>
+                {{/if}}
+            </trans-unit>
+            {{/each}}
+        </body>
+    </file>
+</xliff>

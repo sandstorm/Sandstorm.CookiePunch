@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="Sandstorm.CookieCutter" source-language="en" target-language="nl" datatype="plaintext">
+        <note>
+            ################################################################################################
+            # IMPORTANT: This file was auto-generated as part of the build process to convert translations #
+            # provided by klaro. -> see package.json -> "yarn run build:translations"                      #
+            ################################################################################################
+        </note>
+        <body>
+            <trans-unit id="consentModal.title">
+                <source>Information that we collect</source>
+                <target>Informatie die we verzamelen</target>
+            </trans-unit>
+            <trans-unit id="consentModal.description">
+                <source>Here you can see and customize the information that we collect about you.
+</source>
+                <target>Hier kunt u de informatie bekijken en aanpassen die we over u verzamelen.
+</target>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.name">
+                <source>privacy policy</source>
+                <target>privacybeleid</target>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.text">
+                <source>To learn more, please read our {privacyPolicy}.
+</source>
+                <target>Lees ons privacybeleid voor meer informatie {privacyPolicy}.
+</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please update your consent.</source>
+                <target>Er waren wijzigingen sinds uw laatste bezoek, werk uw voorkeuren bij.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.description">
+                <source>We collect and process your personal information for the following purposes: {purposes}.
+</source>
+                <target>Wij verzamelen en verwerken uw persoonlijke gegevens voor de volgende doeleinden: {purposes}.
+</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.learnMore">
+                <source>Customize</source>
+                <target>Lees meer</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.privacyPolicy.name">
+                <source>privacy policy</source>
+                <target>privacybeleid</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.imprint.name">
+                <source>Imprint</source>
+                <target>Afdruk</target>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>Accept</source>
+                <target>OK</target>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+                <target>Opslaan</target>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>Decline</source>
+                <target>Afwijzen</target>
+            </trans-unit>
+            <trans-unit id="close">
+                <source>Close</source>
+                <target>Sluiten</target>
+            </trans-unit>
+            <trans-unit id="app.disableAll.title">
+                <source>Toggle all apps</source>
+                <target>Alle opties in/uit schakelen</target>
+            </trans-unit>
+            <trans-unit id="app.disableAll.description">
+                <source>Use this switch to enable/disable all apps.</source>
+                <target>Gebruik deze schakeloptie om alle apps in/uit te schakelen.</target>
+            </trans-unit>
+            <trans-unit id="app.optOut.title">
+                <source>(opt-out)</source>
+                <target>(afmelden)</target>
+            </trans-unit>
+            <trans-unit id="app.optOut.description">
+                <source>This app is loaded by default (but you can opt out)</source>
+                <target>Deze app is standaard geladen (maar je kunt je afmelden)</target>
+            </trans-unit>
+            <trans-unit id="app.required.title">
+                <source>(always required)</source>
+                <target>(altijd verplicht)</target>
+            </trans-unit>
+            <trans-unit id="app.required.description">
+                <source>This application is always required</source>
+                <target>Deze applicatie is altijd vereist</target>
+            </trans-unit>
+            <trans-unit id="app.purposes">
+                <source>Purposes</source>
+                <target>Doeleinden</target>
+            </trans-unit>
+            <trans-unit id="app.purpose">
+                <source>Purpose</source>
+                <target>Doeleinde</target>
+            </trans-unit>
+            <trans-unit id="poweredBy">
+                <source>Powered by Klaro!</source>
+                <target>Aangedreven door Klaro!</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

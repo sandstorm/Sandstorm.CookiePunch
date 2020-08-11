@@ -1,0 +1,42 @@
+prototype(Sandstorm.CookieCutter:Config) {
+    @class = 'Sandstorm\\CookieCutter\\FusionObjects\\ConfigImplementation'
+
+    translations = Sandstorm.CookieCutter:Config.Translations
+
+    handleConsentOptions.message = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.elements.options.message")}
+    handleConsentOptions.messageClass = ${Configuration.setting("Sandstorm.CookieCutter.elements.options.messageClass")}
+
+    consent = Neos.Fusion:DataStructure {
+        privacyPolicyUrl = ${Configuration.setting("Sandstorm.CookieCutter.consent.privacyPolicyUrl")}
+        storageMethod = ${Configuration.setting("Sandstorm.CookieCutter.consent.storageMethod")}
+        cookieName = ${Configuration.setting("Sandstorm.CookieCutter.consent.cookieName")}
+        cookieExpiresAfterDays = ${Configuration.setting("Sandstorm.CookieCutter.consent.cookieExpiresAfterDays")}
+        cookieDomain = ${Configuration.setting("Sandstorm.CookieCutter.consent.cookieDomain")}
+        default = ${Configuration.setting("Sandstorm.CookieCutter.consent.default")}
+        mustConsent = ${Configuration.setting("Sandstorm.CookieCutter.consent.mustConsent")}
+        acceptAll = ${Configuration.setting("Sandstorm.CookieCutter.consent.acceptAll")}
+        hideDeclineAll = ${Configuration.setting("Sandstorm.CookieCutter.consent.hideDeclineAll")}
+    }
+
+    groups = Neos.Fusion:Map {
+        items = ${Configuration.setting("Sandstorm.CookieCutter.groups")}
+        itemRenderer = Neos.Fusion:DataStructure {
+            name = ${itemKey}
+            title = ${CookieCutterConfig.translate(item.title)}
+            description = ${CookieCutterConfig.translate(item.description)}
+            purposes = ${item.purposes}
+            consent = Neos.Fusion:DataStructure {
+                required = ${item.consent.required}
+                default = ${item.consent.default}
+                cookies = ${item.consent.cookies}
+            }
+        }
+    }
+
+    purposes = Neos.Fusion:Map {
+        items = ${Configuration.setting("Sandstorm.CookieCutter.purposes")}
+        itemRenderer = Neos.Fusion:Value {
+            value = ${CookieCutterConfig.translate(item)}
+        }
+    }
+}

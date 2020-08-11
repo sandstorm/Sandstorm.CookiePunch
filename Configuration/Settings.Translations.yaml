@@ -1,0 +1,41 @@
+################################################################################################
+# IMPORTANT: This file was auto-generated as part of the build process to convert translations #
+# provided by klaro. -> see package.json -> "yarn run build:translations"                      #
+################################################################################################
+
+Sandstorm:
+  CookieCutter:
+    translations:
+      consentModal:
+        title: "Sandstorm.CookieCutter:Klaro:consentModal.title"
+        description: "Sandstorm.CookieCutter:Klaro:consentModal.description"
+        privacyPolicy:
+          name: "Sandstorm.CookieCutter:Klaro:consentModal.privacyPolicy.name"
+          text: "Sandstorm.CookieCutter:Klaro:consentModal.privacyPolicy.text"
+      consentNotice:
+        changeDescription: "Sandstorm.CookieCutter:Klaro:consentNotice.changeDescription"
+        description: "Sandstorm.CookieCutter:Klaro:consentNotice.description"
+        learnMore: "Sandstorm.CookieCutter:Klaro:consentNotice.learnMore"
+        privacyPolicy:
+          name: "Sandstorm.CookieCutter:Klaro:consentNotice.privacyPolicy.name"
+        imprint:
+          name: "Sandstorm.CookieCutter:Klaro:consentNotice.imprint.name"
+      ok: "Sandstorm.CookieCutter:Klaro:ok"
+      save: "Sandstorm.CookieCutter:Klaro:save"
+      decline: "Sandstorm.CookieCutter:Klaro:decline"
+      close: "Sandstorm.CookieCutter:Klaro:close"
+      acceptAll: "Sandstorm.CookieCutter:Klaro:acceptAll"
+      acceptSelected: "Sandstorm.CookieCutter:Klaro:acceptSelected"
+      app:
+        disableAll:
+          title: "Sandstorm.CookieCutter:Klaro:app.disableAll.title"
+          description: "Sandstorm.CookieCutter:Klaro:app.disableAll.description"
+        optOut:
+          title: "Sandstorm.CookieCutter:Klaro:app.optOut.title"
+          description: "Sandstorm.CookieCutter:Klaro:app.optOut.description"
+        required:
+          title: "Sandstorm.CookieCutter:Klaro:app.required.title"
+          description: "Sandstorm.CookieCutter:Klaro:app.required.description"
+        purposes: "Sandstorm.CookieCutter:Klaro:app.purposes"
+        purpose: "Sandstorm.CookieCutter:Klaro:app.purpose"
+      poweredBy: "Sandstorm.CookieCutter:Klaro:poweredBy"

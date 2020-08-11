@@ -1,0 +1,5 @@
+*.hbs
+Resources/Public
+Resources/Private/Fusion
+Resources/Private/JavaScript/*Compiled.js
+Resources/Private/KlaroTranslations/*.yml

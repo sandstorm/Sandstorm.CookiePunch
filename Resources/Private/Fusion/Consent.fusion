@@ -1,0 +1,20 @@
+# Klaro cookie consent, see https://klaro.kiprotect.com/
+prototype(Sandstorm.CookieCutter:Consent) < prototype(Neos.Fusion:Component) {
+    config = Sandstorm.CookieCutter:Config
+    js = Neos.Fusion:ResourceUri {
+        path = 'resource://Sandstorm.CookieCutter/Public/Klaro/klaro-no-css_v0.4.27.js'
+    }
+
+    css = Neos.Fusion:ResourceUri {
+        path = 'resource://Sandstorm.CookieCutter/Public/Klaro/klaro_v0.4.27.min.css'
+    }
+
+
+
+    renderer = afx`
+        <link @if.hasStyles={props.css} rel="stylesheet" type="text/css" href={props.css}/>
+        <script defer type="application/javascript">{props.config}</script>
+        <script defer type="application/javascript" src={props.js}></script>
+    `
+    @process.neverBlockScripts = ${CookieCutter.neverBlockScripts(value)}
+}

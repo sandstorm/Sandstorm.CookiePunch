@@ -1,0 +1,15 @@
+"Sandstorm.CookieCutter:Mixin.ConsentGroup":
+  abstract: true
+  properties:
+    consentGroup:
+      type: string
+      ui:
+        label: "Groups"
+        reloadIfChanged: true
+        inspector:
+          group: "html"
+          position: "200"
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            placeholder: Choose
+            dataSourceIdentifier: sandstorm-consent-groups

@@ -1,0 +1,31 @@
+################################################################################################
+# IMPORTANT: This file was auto-generated as part of the build process to convert translations #
+# provided by klaro. -> see package.json -> "yarn run build:translations"                      #
+################################################################################################
+
+prototype(Sandstorm.CookieCutter:Config.Translations) < prototype(Neos.Fusion:DataStructure) {
+    consentModal.title = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.consentModal.title")}
+    consentModal.description = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.consentModal.description")}
+    consentModal.privacyPolicy.name = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.consentModal.privacyPolicy.name")}
+    consentModal.privacyPolicy.text = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.consentModal.privacyPolicy.text")}
+    consentNotice.changeDescription = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.consentNotice.changeDescription")}
+    consentNotice.description = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.consentNotice.description")}
+    consentNotice.learnMore = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.consentNotice.learnMore")}
+    consentNotice.privacyPolicy.name = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.consentNotice.privacyPolicy.name")}
+    consentNotice.imprint.name = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.consentNotice.imprint.name")}
+    ok = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.ok")}
+    save = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.save")}
+    decline = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.decline")}
+    close = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.close")}
+    acceptAll = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.acceptAll")}
+    acceptSelected = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.acceptSelected")}
+    app.disableAll.title = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.app.disableAll.title")}
+    app.disableAll.description = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.app.disableAll.description")}
+    app.optOut.title = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.app.optOut.title")}
+    app.optOut.description = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.app.optOut.description")}
+    app.required.title = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.app.required.title")}
+    app.required.description = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.app.required.description")}
+    app.purposes = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.app.purposes")}
+    app.purpose = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.app.purpose")}
+    poweredBy = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.poweredBy")}
+}

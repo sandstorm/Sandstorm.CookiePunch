@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="Sandstorm.CookieCutter" source-language="en" target-language="ru" datatype="plaintext">
+        <note>
+            ################################################################################################
+            # IMPORTANT: This file was auto-generated as part of the build process to convert translations #
+            # provided by klaro. -> see package.json -> "yarn run build:translations"                      #
+            ################################################################################################
+        </note>
+        <body>
+            <trans-unit id="consentModal.title">
+                <source>Information that we collect</source>
+                <target>Информация, которую мы сохраняем</target>
+            </trans-unit>
+            <trans-unit id="consentModal.description">
+                <source>Here you can see and customize the information that we collect about you.
+</source>
+                <target>Здесь вы можете просмотреть и настроить, какую информацию о вас мы храним.
+</target>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.name">
+                <source>privacy policy</source>
+                <target>Соглашение</target>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.text">
+                <source>To learn more, please read our {privacyPolicy}.
+</source>
+                <target>Чтобы узнать больше, пожалуйста, прочитайте наше {privacyPolicy}.
+</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please update your consent.</source>
+                <target>Со времени вашего последнего визита произошли изменения, обновите своё согласие.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.description">
+                <source>We collect and process your personal information for the following purposes: {purposes}.
+</source>
+                <target>Мы собираем и обрабатываем вашу личную информацию для следующих целей: {purposes}.
+</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.learnMore">
+                <source>Customize</source>
+                <target>Настроить</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.privacyPolicy.name">
+                <source>privacy policy</source>
+                <target>политика конфиденциальности</target>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>Accept</source>
+                <target>Принять</target>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+                <target>Сохранить</target>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>Decline</source>
+                <target>Отклонить</target>
+            </trans-unit>
+            <trans-unit id="close">
+                <source>Close</source>
+                <target>Закрыть</target>
+            </trans-unit>
+            <trans-unit id="acceptAll">
+                <source>Accept all</source>
+                <target>Принять всё</target>
+            </trans-unit>
+            <trans-unit id="acceptSelected">
+                <source>Accept selected</source>
+                <target>Принять выбранные</target>
+            </trans-unit>
+            <trans-unit id="app.disableAll.title">
+                <source>Toggle all apps</source>
+                <target>Переключить все приложения</target>
+            </trans-unit>
+            <trans-unit id="app.disableAll.description">
+                <source>Use this switch to enable/disable all apps.</source>
+                <target>Используйте этот переключатель, чтобы включить/отключить все приложения.</target>
+            </trans-unit>
+            <trans-unit id="app.optOut.title">
+                <source>(opt-out)</source>
+                <target>(отказаться)</target>
+            </trans-unit>
+            <trans-unit id="app.optOut.description">
+                <source>This app is loaded by default (but you can opt out)</source>
+                <target>Это приложение включено по умолчанию (но вы можете отказаться)</target>
+            </trans-unit>
+            <trans-unit id="app.required.title">
+                <source>(always required)</source>
+                <target>(всегда обязательный)</target>
+            </trans-unit>
+            <trans-unit id="app.required.description">
+                <source>This application is always required</source>
+                <target>Это обязательное приложение</target>
+            </trans-unit>
+            <trans-unit id="app.purposes">
+                <source>Purposes</source>
+                <target>Намерения</target>
+            </trans-unit>
+            <trans-unit id="app.purpose">
+                <source>Purpose</source>
+                <target>Намерение</target>
+            </trans-unit>
+            <trans-unit id="poweredBy">
+                <source>Powered by Klaro!</source>
+                <target>Работает на Кларо!</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

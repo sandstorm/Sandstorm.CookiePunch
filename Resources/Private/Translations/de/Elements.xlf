@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="Sandstorm.CookieCutter" source-language="en" target-language="de" datatype="plaintext">
+        <body>
+            <trans-unit id="options.message">
+                <source>
+                    <![CDATA[<strong>Content was blocked.</strong><br/><a>Please activate "{group}" in your Cookie settings.</a>]]>
+                </source>
+                <target>
+                    <![CDATA[<strong>Inhalte wurden blockiert.</strong><br/><a>Bitte aktiviere "{group}" in den Cookie-Einstellungen.</a>]]>
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

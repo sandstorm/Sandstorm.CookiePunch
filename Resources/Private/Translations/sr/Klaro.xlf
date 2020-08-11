@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="Sandstorm.CookieCutter" source-language="en" target-language="sr" datatype="plaintext">
+        <note>
+            ################################################################################################
+            # IMPORTANT: This file was auto-generated as part of the build process to convert translations #
+            # provided by klaro. -> see package.json -> "yarn run build:translations"                      #
+            ################################################################################################
+        </note>
+        <body>
+            <trans-unit id="consentModal.title">
+                <source>Information that we collect</source>
+                <target>Informacije koje prikupljamo</target>
+            </trans-unit>
+            <trans-unit id="consentModal.description">
+                <source>Here you can see and customize the information that we collect about you.
+</source>
+                <target>Ovde možete videti i podesiti informacije koje prikupljamo o Vama.
+</target>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.name">
+                <source>privacy policy</source>
+                <target>politiku privatnosti</target>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.text">
+                <source>To learn more, please read our {privacyPolicy}.
+</source>
+                <target>Za više informacije pročitajte našu {privacyPolicy}.
+</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please update your consent.</source>
+                <target>Došlo je do promena od Vaše poslednje posete, molimo Vas da ažurirate svoja odobrenja.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.description">
+                <source>We collect and process your personal information for the following purposes: {purposes}.
+</source>
+                <target>Mi prikupljamo i procesiramo Vaše lične podatke radi sledećeg: {purposes}.
+</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.learnMore">
+                <source>Customize</source>
+                <target>Saznajte više</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.privacyPolicy.name">
+                <source>privacy policy</source>
+                <target>politiku privatnosti</target>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>Accept</source>
+                <target>U redu</target>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+                <target>Sačuvaj</target>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>Decline</source>
+                <target>Odbij</target>
+            </trans-unit>
+            <trans-unit id="close">
+                <source>Close</source>
+                <target>Zatvori</target>
+            </trans-unit>
+            <trans-unit id="app.disableAll.title">
+                <source>Toggle all apps</source>
+                <target>Izmeni sve</target>
+            </trans-unit>
+            <trans-unit id="app.disableAll.description">
+                <source>Use this switch to enable/disable all apps.</source>
+                <target>Koristite ovaj prekidač da omogućite/onesposobite sve aplikacije odjednom.</target>
+            </trans-unit>
+            <trans-unit id="app.optOut.title">
+                <source>(opt-out)</source>
+                <target>(onesposobite)</target>
+            </trans-unit>
+            <trans-unit id="app.optOut.description">
+                <source>This app is loaded by default (but you can opt out)</source>
+                <target>Ova aplikacija je učitana automatski (ali je možete onesposobiti)</target>
+            </trans-unit>
+            <trans-unit id="app.required.title">
+                <source>(always required)</source>
+                <target>(neophodna)</target>
+            </trans-unit>
+            <trans-unit id="app.required.description">
+                <source>This application is always required</source>
+                <target>Ova aplikacija je uvek neophodna.</target>
+            </trans-unit>
+            <trans-unit id="app.purposes">
+                <source>Purposes</source>
+                <target>Svrhe</target>
+            </trans-unit>
+            <trans-unit id="app.purpose">
+                <source>Purpose</source>
+                <target>Svrha</target>
+            </trans-unit>
+            <trans-unit id="poweredBy">
+                <source>Powered by Klaro!</source>
+                <target>Pokreće Klaro!</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="Sandstorm.CookieCutter" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit id="default.title">
+                <source>Default</source>
+            </trans-unit>
+            <trans-unit id="default.description">
+                <source>Default Description</source>
+            </trans-unit>
+
+            <trans-unit id="media.title">
+                <source>Media</source>
+            </trans-unit>
+            <trans-unit id="media.description">
+                <source>Media Description</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

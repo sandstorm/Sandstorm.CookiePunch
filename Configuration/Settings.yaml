@@ -1,0 +1,73 @@
+Neos:
+  Neos:
+    fusion:
+      autoInclude:
+        "Sandstorm.CookieCutter": true
+  Fusion:
+    defaultContext:
+      "CookieCutter": Sandstorm\CookieCutter\Eel\Helper\CookieCutter
+      "CookieCutterConfig": Sandstorm\CookieCutter\Eel\Helper\CookieCutterConfig
+
+Sandstorm:
+  CookieCutter:
+    consent:
+      privacyPolicyUrl: /privacy
+      storageMethod: cookie
+      cookieName: cookie_cutter
+      cookieExpiresAfterDays: 120
+      cookieDomain: .nip.io
+      mustConsent: true
+      # button in consent modal next to save button
+      acceptAll: true
+      # button in consent modal on the right -> decline
+      hideDeclineAll: false
+      default: true
+    groups:
+      default:
+        title: Sandstorm.CookieCutter:Groups:default.title
+        description: Sandstorm.CookieCutter:Groups:default.description
+        consent:
+          required: true
+          cookies:
+            - /^ga/i
+      media:
+        title: Sandstorm.CookieCutter:Groups:media.title
+        description: Sandstorm.CookieCutter:Groups:media.description
+        purposes:
+          - videoembeds
+          - analytics
+    purposes:
+      analytics: Analytics
+      videoembeds: Video Embeds
+    elements:
+      block: true
+      group: default
+      options:
+        message: Sandstorm.CookieCutter:Elements:options.message
+        messageClass: block-them-all-message
+      patterns:
+        # Slick
+        "Packages/Unikka.Slick":
+          type: script
+          block: false
+
+        # Jonnitto.Plyr
+        "Packages/Jonnitto.Plyr":
+          type: script
+          group: media
+          block: true
+        "https://www.youtube.com/embed/":
+          type: iframe
+          block: true
+          group: media
+
+        # anchor.fm
+        #                "https://anchor.fm":
+        #                    type: iframe
+        #                    group: media
+        #                    block: true
+
+        # Neos
+        "Packages/Neos.Neos":
+          type: script
+          block: false

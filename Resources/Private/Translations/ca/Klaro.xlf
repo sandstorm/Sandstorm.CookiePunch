@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="Sandstorm.CookieCutter" source-language="en" target-language="ca" datatype="plaintext">
+        <note>
+            ################################################################################################
+            # IMPORTANT: This file was auto-generated as part of the build process to convert translations #
+            # provided by klaro. -> see package.json -> "yarn run build:translations"                      #
+            ################################################################################################
+        </note>
+        <body>
+            <trans-unit id="consentModal.title">
+                <source>Information that we collect</source>
+                <target>Informació que recopilem</target>
+            </trans-unit>
+            <trans-unit id="consentModal.description">
+                <source>Here you can see and customize the information that we collect about you.
+</source>
+                <target>Aquí podeu veure i personalitzar la informació que recopilem sobre vós.
+</target>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.name">
+                <source>privacy policy</source>
+                <target>política de privadesa</target>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.text">
+                <source>To learn more, please read our {privacyPolicy}.
+</source>
+                <target>Per a més informació, consulteu la nostra {privacyPolicy}.
+</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please update your consent.</source>
+                <target>Hi ha hagut canvis des de la vostra darrera visita. Actualitzeu el vostre consentiment.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.description">
+                <source>We collect and process your personal information for the following purposes: {purposes}.
+</source>
+                <target>Recopilem i processem la vostra informació personal amb les següents finalitats: {purposes}.
+</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.learnMore">
+                <source>Customize</source>
+                <target>Saber-ne més</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.privacyPolicy.name">
+                <source>privacy policy</source>
+                <target>política de privadesa</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.imprint.name">
+                <source>Imprint</source>
+                <target>Empremta</target>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>Accept</source>
+                <target>Accepta</target>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+                <target>Desa</target>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>Decline</source>
+                <target>Rebutja</target>
+            </trans-unit>
+            <trans-unit id="close">
+                <source>Close</source>
+                <target>Tanca</target>
+            </trans-unit>
+            <trans-unit id="app.disableAll.title">
+                <source>Toggle all apps</source>
+                <target>Habilita/deshabilita totes les aplicacions</target>
+            </trans-unit>
+            <trans-unit id="app.disableAll.description">
+                <source>Use this switch to enable/disable all apps.</source>
+                <target>Useu aquest botó per a habilitar o deshabilitar totes les aplicacions.</target>
+            </trans-unit>
+            <trans-unit id="app.optOut.title">
+                <source>(opt-out)</source>
+                <target>(opt-out)</target>
+            </trans-unit>
+            <trans-unit id="app.optOut.description">
+                <source>This app is loaded by default (but you can opt out)</source>
+                <target>Aquesta aplicació es carrega per defecte, però podeu desactivar-la</target>
+            </trans-unit>
+            <trans-unit id="app.required.title">
+                <source>(always required)</source>
+                <target>(necessària)</target>
+            </trans-unit>
+            <trans-unit id="app.required.description">
+                <source>This application is always required</source>
+                <target>Aquesta aplicació es necessita sempre</target>
+            </trans-unit>
+            <trans-unit id="app.purposes">
+                <source>Purposes</source>
+                <target>Finalitats</target>
+            </trans-unit>
+            <trans-unit id="app.purpose">
+                <source>Purpose</source>
+                <target>Finalitat</target>
+            </trans-unit>
+            <trans-unit id="poweredBy">
+                <source>Powered by Klaro!</source>
+                <target>Funciona amb Klaro!</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

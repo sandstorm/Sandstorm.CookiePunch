@@ -1,0 +1,10 @@
+################################################################################################
+# IMPORTANT: This file was auto-generated as part of the build process to convert translations #
+# provided by klaro. -> see package.json -> "yarn run build:translations"                      #
+################################################################################################
+
+prototype(Sandstorm.CookieCutter:Config.Translations) < prototype(Neos.Fusion:DataStructure) {
+    {{#each units}}
+    {{this.id}} = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.{{this.id}}")}
+    {{/each}}
+}
