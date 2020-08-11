@@ -6,12 +6,12 @@ use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Neos\Service\DataSource\AbstractDataSource;
 use Sandstorm\CookieCutter\Eel\Helper\CookieCutterConfig;
 
-class ConsentGroupsDataSource extends AbstractDataSource
+class GroupsDataSource extends AbstractDataSource
 {
     /**
      * @var string
      */
-    protected static $identifier = 'sandstorm-consent-groups';
+    protected static $identifier = 'sandstorm-cookiecutter-groups';
 
     /**
      * @Flow\InjectConfiguration(package="Sandstorm.CookieCutter", path="groups")

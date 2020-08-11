@@ -12,4 +12,4 @@
           editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             placeholder: Choose
-            dataSourceIdentifier: sandstorm-consent-groups
+            dataSourceIdentifier: sandstorm-cookiecutter-groups
