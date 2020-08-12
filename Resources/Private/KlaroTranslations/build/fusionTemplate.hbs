@@ -3,8 +3,8 @@
 # provided by klaro. -> see package.json -> "yarn run build:translations"                      #
 ################################################################################################
 
-prototype(Sandstorm.CookieCutter:Config.Translations) < prototype(Neos.Fusion:DataStructure) {
+prototype(Sandstorm.CookiePunch:Config.Translations) < prototype(Neos.Fusion:DataStructure) {
     {{#each units}}
-    {{this.id}} = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.translations.{{this.id}}")}
+    {{this.id}} = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.{{this.id}}")}
     {{/each}}
 }

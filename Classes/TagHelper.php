@@ -1,10 +1,10 @@
 <?php
 
-namespace Sandstorm\CookieCutter;
+namespace Sandstorm\CookiePunch;
 
 /**
  * Class TagHelper
- * @package Sandstorm\CookieCutter
+ * @package Sandstorm\CookiePunch
  */
 class TagHelper
 {

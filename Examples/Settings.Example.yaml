@@ -2,18 +2,18 @@ Neos:
   Neos:
     fusion:
       autoInclude:
-        "Sandstorm.CookieCutter": true
+        "Sandstorm.CookiePunch": true
   Fusion:
     defaultContext:
-      "CookieCutter": Sandstorm\CookieCutter\Eel\Helper\CookieCutter
-      "CookieCutterConfig": Sandstorm\CookieCutter\Eel\Helper\CookieCutterConfig
+      "CookiePunch": Sandstorm\CookiePunch\Eel\Helper\CookiePunch
+      "CookiePunchConfig": Sandstorm\CookiePunch\Eel\Helper\CookiePunchConfig
 
 Sandstorm:
-  CookieCutter:
+  CookiePunch:
     consent:
       privacyPolicyUrl: /privacy
       storageMethod: cookie
-      cookieName: cookie_cutter
+      cookieName: cookie_punch
       cookieExpiresAfterDays: 120
       # cookieDomain: .example.org
       mustConsent: true
@@ -24,15 +24,15 @@ Sandstorm:
       default: false
     groups:
       default:
-        title: Sandstorm.CookieCutter:Groups:default.title
-        description: Sandstorm.CookieCutter:Groups:default.description
+        title: Sandstorm.CookiePunch:Groups:default.title
+        description: Sandstorm.CookiePunch:Groups:default.description
         consent:
           required: true
           cookies:
             - /^ga/i
       media:
-        title: Sandstorm.CookieCutter:Groups:media.title
-        description: Sandstorm.CookieCutter:Groups:media.description
+        title: Sandstorm.CookiePunch:Groups:media.title
+        description: Sandstorm.CookiePunch:Groups:media.description
         purposes:
           - videoembeds
           - analytics
@@ -43,7 +43,7 @@ Sandstorm:
       block: true
       group: default
       options:
-        message: Sandstorm.CookieCutter:Elements:options.message
+        message: Sandstorm.CookiePunch:Elements:options.message
         messageClass: block-them-all-message
       patterns:
         # Slick

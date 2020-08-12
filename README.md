@@ -1,4 +1,4 @@
-# Sandstorm.CookieCutter
+# Sandstorm.CookiePunch
 
 **THIS PACKAGE IS STILL WIP ;) FEEDBACK IS HIGHLY WELCOME.**
 
@@ -20,44 +20,33 @@ This Neos package provides a general approach for blocking elements like script 
 
 ## Instalation
 
-`composer require sandstorm/cookiecutter`
+`composer require sandstorm/cookiepunch`
 
 ## Basic Setup
 
-### STEP 1: Register Eel-Helpers
-
-In your `Settings.yaml` add
-
-```yaml
-Neos:
-  Fusion:
-    defaultContext:
-      'CookieCutter': Sandstorm\CookieCutter\Eel\Helper\CookieCutter
-```
-
-### STEP 2: Adding the consent-modal
+### STEP 1: Adding the consent-modal
 
 In your `Overrides.fusion` or `Root.fusion` add
 
 ```neosfusion
 prototype(Neos.Neos:Page) {
     // This adds the javascript and css needed for the cookie-consent
-    head.javascripts.cookieCutterConsent = Sandstorm.CookieCutter:Consent
+    head.javascripts.cookiePunchConsent = Sandstorm.CookiePunch:Consent
 }
 ```
 
 This will add the needed js and css to your page. If you reload the page you should see the consent-modal.
 
-### STEP 3: Blocking everything
+### STEP 2: Blocking everything
 
 ```neosfusion
 prototype(Neos.Neos:Page) {
     // This adds the javascript and css needed for the cookie-consent
-    head.javascripts.cookieCutterConsent = Sandstorm.CookieCutter:Consent
+    head.javascripts.cookiePunchConsent = Sandstorm.CookiePunch:Consent
     
     // This will block all iframes & script tags
-    @process.blockIframes = ${CookieCutter.blockIframes(value, !node.context.inBackend)}
-    @process.blockScripts = ${CookieCutter.blockScripts(value, !node.context.inBackend)}
+    @process.blockIframes = ${CookiePunch.blockIframes(value, !node.context.inBackend)}
+    @process.blockScripts = ${CookiePunch.blockScripts(value, !node.context.inBackend)}
 }
 ```
 
@@ -69,7 +58,7 @@ Don't worry, we provide some tools to make it easiert for you to configure ;)
 
 Now that your page probably looks broken, let's try to fix it ;)
 
-### STEP 4: Never block your own javascript
+### STEP 3: Never block your own javascript
 
 You might have some scripts that you never want to be blocked because your page would not be usable at all. They are often called `main.js`, `app.js`, `index.js`, ...
 
@@ -77,19 +66,19 @@ You might have some scripts that you never want to be blocked because your page 
 Neos.Fusion:Tag {
     tagName = "script"
     attrbutes.src = "resource://Vendor.Example/Public/JavaScript/index.js"
-    @process.neverBlock = ${CookieCutter.neverBlockScripts(value)}
+    @process.neverBlock = ${CookiePunch.neverBlockScripts(value)}
 }
 ```
 
-This Eel helper will add `data-never-block` attribute to you script tag. These tags will be ignored by `CookieCutter.blockScripts()`.
+This Eel helper will add `data-never-block` attribute to you script tag. These tags will be ignored by `CookiePunch.blockScripts()`.
 
-### STEP 5: Create groups, purposes and add elements
+### STEP 4: Create groups, purposes and add elements
 
-In `Configuration/` create a `Settings.CookieCutter.yaml`.
+In `Configuration/` create a `Settings.CookiePunch.yaml`.
 
 ```yaml
 Sandstorm:
-  CookieCutter:
+  CookiePunch:
     purposes:
       mediaembeds: Media Embeds
     groups:

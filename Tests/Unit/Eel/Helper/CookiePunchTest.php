@@ -3,23 +3,23 @@ namespace Sandstorm\PublicWebsite\Tests\Unit;
 
 use Neos\Flow\Tests\UnitTestCase;
 use Neos\Utility\ObjectAccess;
-use Sandstorm\CookieCutter\Eel\Helper\CookieCutter;
+use Sandstorm\CookiePunch\Eel\Helper\CookiePunch;
 
 /**
  * Testcase for the ConvertNodeUris Fusion implementation
  */
-class CookieCutterTest extends UnitTestCase
+class CookiePunchTest extends UnitTestCase
 {
     /**
      * @test
      */
     public function scriptTagsWillBeBlocked()
     {
-        $blockExternalContentHelper = new CookieCutter();
+        $blockExternalContentHelper = new CookiePunch();
 
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_ALL,
+            CookiePunch::SETTINGS_BLOCK_ALL,
             true,
             true
         );
@@ -76,10 +76,10 @@ class CookieCutterTest extends UnitTestCase
      */
     public function tagsWithDataNameWillBeBlocked()
     {
-        $blockExternalContentHelper = new CookieCutter();
+        $blockExternalContentHelper = new CookiePunch();
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_ALL,
+            CookiePunch::SETTINGS_BLOCK_ALL,
             true,
             true
         );
@@ -103,10 +103,10 @@ class CookieCutterTest extends UnitTestCase
      */
     public function tagsWillUseGroupFromEelHelperAndNotSettings()
     {
-        $blockExternalContentHelper = new CookieCutter();
+        $blockExternalContentHelper = new CookiePunch();
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_ALL,
+            CookiePunch::SETTINGS_BLOCK_ALL,
             true,
             true
         );
@@ -136,10 +136,10 @@ class CookieCutterTest extends UnitTestCase
      */
     public function strangeScriptTagsWillNeverBeBlocked()
     {
-        $blockExternalContentHelper = new CookieCutter();
+        $blockExternalContentHelper = new CookiePunch();
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_ALL,
+            CookiePunch::SETTINGS_BLOCK_ALL,
             true,
             true
         );
@@ -157,10 +157,10 @@ class CookieCutterTest extends UnitTestCase
      */
     public function alreadyBlockedScriptTagsWillNeverBeBlocked()
     {
-        $blockExternalContentHelper = new CookieCutter();
+        $blockExternalContentHelper = new CookiePunch();
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_ALL,
+            CookiePunch::SETTINGS_BLOCK_ALL,
             true,
             true
         );
@@ -181,11 +181,11 @@ class CookieCutterTest extends UnitTestCase
      */
     public function markedTagsWillNeverBeBlocked()
     {
-        $blockExternalContentHelper = new CookieCutter();
+        $blockExternalContentHelper = new CookiePunch();
 
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_ALL,
+            CookiePunch::SETTINGS_BLOCK_ALL,
             true,
             true
         );
@@ -220,17 +220,17 @@ class CookieCutterTest extends UnitTestCase
      */
     public function scriptTagsWithPatternWillBeBlocked()
     {
-        $blockExternalContentHelper = new CookieCutter();
+        $blockExternalContentHelper = new CookiePunch();
         $patterns = [
             "Packages/Vendor.Example" => [
-                CookieCutter::SETTINGS_BLOCK => true,
-                CookieCutter::SETTINGS_GROUP => "vendor",
+                CookiePunch::SETTINGS_BLOCK => true,
+                CookiePunch::SETTINGS_GROUP => "vendor",
             ],
         ];
 
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_PATTERNS,
+            CookiePunch::SETTINGS_BLOCK_PATTERNS,
             $patterns,
             true
         );
@@ -260,23 +260,23 @@ class CookieCutterTest extends UnitTestCase
      */
     public function scriptTagsWithPatternWillNotBeBlocked()
     {
-        $blockExternalContentHelper = new CookieCutter();
+        $blockExternalContentHelper = new CookiePunch();
         $patterns = [
             "Packages/Vendor.Example" => [
-                CookieCutter::SETTINGS_BLOCK => false,
+                CookiePunch::SETTINGS_BLOCK => false,
             ],
         ];
 
         // block all by default
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_ALL,
+            CookiePunch::SETTINGS_BLOCK_ALL,
             true,
             true
         );
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_PATTERNS,
+            CookiePunch::SETTINGS_BLOCK_PATTERNS,
             $patterns,
             true
         );
@@ -300,21 +300,21 @@ class CookieCutterTest extends UnitTestCase
      */
     public function patternOptionsWillBeAddedToTags()
     {
-        $blockExternalContentHelper = new CookieCutter();
+        $blockExternalContentHelper = new CookiePunch();
         $patterns = [
             "Packages/Vendor.Example" => [
-                CookieCutter::SETTINGS_BLOCK => true,
-                CookieCutter::SETTINGS_OPTIONS => ["foo" => "bar"],
+                CookiePunch::SETTINGS_BLOCK => true,
+                CookiePunch::SETTINGS_OPTIONS => ["foo" => "bar"],
             ],
             "foo/bar.html" => [
-                CookieCutter::SETTINGS_BLOCK => true,
-                CookieCutter::SETTINGS_OPTIONS => ["foo" => "baz"],
+                CookiePunch::SETTINGS_BLOCK => true,
+                CookiePunch::SETTINGS_OPTIONS => ["foo" => "baz"],
             ],
         ];
 
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_PATTERNS,
+            CookiePunch::SETTINGS_BLOCK_PATTERNS,
             $patterns,
             true
         );
@@ -339,21 +339,21 @@ class CookieCutterTest extends UnitTestCase
      */
     public function iframesWillBeBlocked()
     {
-        $blockExternalContentHelper = new CookieCutter();
+        $blockExternalContentHelper = new CookiePunch();
 
         $patterns = [
-            "with-style" => [CookieCutter::SETTINGS_BLOCK => true],
+            "with-style" => [CookiePunch::SETTINGS_BLOCK => true],
         ];
 
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_PATTERNS,
+            CookiePunch::SETTINGS_BLOCK_PATTERNS,
             $patterns,
             true
         );
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookieCutter::SETTINGS_BLOCK_ALL,
+            CookiePunch::SETTINGS_BLOCK_ALL,
             true,
             true
         );

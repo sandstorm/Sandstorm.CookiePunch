@@ -2,18 +2,18 @@ Neos:
   Neos:
     fusion:
       autoInclude:
-        "Sandstorm.CookieCutter": true
+        "Sandstorm.CookiePunch": true
   Fusion:
     defaultContext:
-      "CookieCutter": Sandstorm\CookieCutter\Eel\Helper\CookieCutter
-      "CookieCutterConfig": Sandstorm\CookieCutter\Eel\Helper\CookieCutterConfig
+      "CookiePunch": Sandstorm\CookiePunch\Eel\Helper\CookiePunch
+      "CookiePunchConfig": Sandstorm\CookiePunch\Eel\Helper\CookiePunchConfig
 
 Sandstorm:
-  CookieCutter:
+  CookiePunch:
     consent:
       privacyPolicyUrl: /privacy
       storageMethod: cookie
-      cookieName: cookie_cutter
+      cookieName: cookie_punch
       cookieExpiresAfterDays: 120
       mustConsent: true
       acceptAll: true
@@ -21,12 +21,15 @@ Sandstorm:
       default: false
     groups:
       default:
-        title: Sandstorm.CookieCutter:Groups:default.title
-        description: Sandstorm.CookieCutter:Groups:default.description
+        title: Sandstorm.CookiePunch:Groups:default.title
+        description: Sandstorm.CookiePunch:Groups:default.description
+        consent:
+          default: true
     purposes:
       analytics: Analytics
     elements:
       block: true
       group: default
       options:
-        message: Sandstorm.CookieCutter:Elements:options.message
+        message: Sandstorm.CookiePunch:Elements:options.message
+
