@@ -67,10 +67,10 @@ fs.readdir(klaroTranslationsDir, function (err, files) {
 
         const settingsYaml = yaml.safeDump({
           Sandstorm: {
-            CookieCutter: {
+            CookiePunch: {
               translations: jsonToYamlWithPath(
                 json,
-                `Sandstorm.CookieCutter:${xlfName}:`
+                `Sandstorm.CookiePunch:${xlfName}:`
               ),
             },
           },

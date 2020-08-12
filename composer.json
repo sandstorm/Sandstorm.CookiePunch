@@ -1,8 +1,8 @@
 {
-  "name": "sandstorm/cookiecutter",
+  "name": "sandstorm/cookiepunch",
   "type": "neos-package",
   "description": "Block elements like iframes and scripts before the markup reaches the browser and provide a dialog in the browser to enable them again.",
-  "homepage": "https://github.com/sandstorm/Sandstorm.CookieCutter",
+  "homepage": "https://github.com/sandstorm/Sandstorm.CookiePunch",
   "keywords": [
     "Neos",
     "Flow",
@@ -22,12 +22,12 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/sandstorm/Sandstorm.CookieCutter/issues",
-    "source": "https://github.com/sandstorm/Sandstorm.CookieCutter"
+    "issues": "https://github.com/sandstorm/Sandstorm.CookiePunch/issues",
+    "source": "https://github.com/sandstorm/Sandstorm.CookiePunch"
   },
   "autoload": {
     "psr-4": {
-      "Sandstorm\\CookieCutter\\": "Classes"
+      "Sandstorm\\CookiePunch\\": "Classes"
     }
   }
 }

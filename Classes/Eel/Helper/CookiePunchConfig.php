@@ -1,6 +1,6 @@
 <?php
 
-namespace Sandstorm\CookieCutter\Eel\Helper;
+namespace Sandstorm\CookiePunch\Eel\Helper;
 
 use Neos\Eel\Helper\ConfigurationHelper;
 use Neos\Flow\Annotations as Flow;
@@ -8,7 +8,7 @@ use Neos\Eel\ProtectedContextAwareInterface;
 use Neos\Flow\I18n\EelHelper\TranslationHelper;
 use phpDocumentor\Reflection\Types\Boolean;
 
-class CookieCutterConfig implements ProtectedContextAwareInterface
+class CookiePunchConfig implements ProtectedContextAwareInterface
 {
     public function translate(string $path): string
     {

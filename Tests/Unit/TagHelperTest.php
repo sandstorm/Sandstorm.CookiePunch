@@ -2,7 +2,7 @@
 namespace Sandstorm\PublicWebsite\Tests\Unit;
 
 use Neos\Flow\Tests\UnitTestCase;
-use Sandstorm\CookieCutter\TagHelper;
+use Sandstorm\CookiePunch\TagHelper;
 
 /**
  * Testcase for the ConvertNodeUris Fusion implementation

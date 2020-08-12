@@ -1,14 +1,14 @@
 <?php
 
-namespace Sandstorm\CookieCutter\Eel\Helper;
+namespace Sandstorm\CookiePunch\Eel\Helper;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Eel\ProtectedContextAwareInterface;
 use phpDocumentor\Reflection\Types\Boolean;
-use Sandstorm\CookieCutter\ConsentConfigImplementation;
-use Sandstorm\CookieCutter\TagHelper;
+use Sandstorm\CookiePunch\ConsentConfigImplementation;
+use Sandstorm\CookiePunch\TagHelper;
 
-class CookieCutter implements ProtectedContextAwareInterface
+class CookiePunch implements ProtectedContextAwareInterface
 {
     const SETTINGS_BLOCK = "block";
 
@@ -20,22 +20,22 @@ class CookieCutter implements ProtectedContextAwareInterface
     const DEFAULT_GROUP = "default";
 
     /**
-     * @Flow\InjectConfiguration(package="Sandstorm.CookieCutter", path="groups")
+     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="groups")
      */
     protected $groups;
 
     /**
-     * @Flow\InjectConfiguration(package="Sandstorm.CookieCutter", path="elements.patterns")
+     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="elements.patterns")
      */
     protected $patterns;
 
     /**
-     * @Flow\InjectConfiguration(package="Sandstorm.CookieCutter", path="elements.block")
+     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="elements.block")
      */
     protected $block;
 
     /**
-     * @Flow\InjectConfiguration(package="Sandstorm.CookieCutter", path="elements.group")
+     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="elements.group")
      */
     protected $defaultGroup;
 
@@ -346,7 +346,7 @@ class CookieCutter implements ProtectedContextAwareInterface
             throw new \InvalidArgumentException(
                 'The group "' .
                     $name .
-                    '" could not be found in your config. Expected config for "Sandstorm.CookieCutter.groups.' .
+                    '" could not be found in your config. Expected config for "Sandstorm.CookiePunch.groups.' .
                     $name .
                     '"',
                 1596469884

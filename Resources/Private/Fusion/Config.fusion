@@ -1,29 +1,29 @@
-prototype(Sandstorm.CookieCutter:Config) {
-    @class = 'Sandstorm\\CookieCutter\\FusionObjects\\ConfigImplementation'
+prototype(Sandstorm.CookiePunch:Config) {
+    @class = 'Sandstorm\\CookiePunch\\FusionObjects\\ConfigImplementation'
 
-    translations = Sandstorm.CookieCutter:Config.Translations
+    translations = Sandstorm.CookiePunch:Config.Translations
 
-    handleConsentOptions.message = ${CookieCutterConfig.translate("Sandstorm.CookieCutter.elements.options.message")}
-    handleConsentOptions.messageClass = ${Configuration.setting("Sandstorm.CookieCutter.elements.options.messageClass")}
+    handleConsentOptions.message = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.elements.options.message")}
+    handleConsentOptions.messageClass = ${Configuration.setting("Sandstorm.CookiePunch.elements.options.messageClass")}
 
     consent = Neos.Fusion:DataStructure {
-        privacyPolicyUrl = ${Configuration.setting("Sandstorm.CookieCutter.consent.privacyPolicyUrl")}
-        storageMethod = ${Configuration.setting("Sandstorm.CookieCutter.consent.storageMethod")}
-        cookieName = ${Configuration.setting("Sandstorm.CookieCutter.consent.cookieName")}
-        cookieExpiresAfterDays = ${Configuration.setting("Sandstorm.CookieCutter.consent.cookieExpiresAfterDays")}
-        cookieDomain = ${Configuration.setting("Sandstorm.CookieCutter.consent.cookieDomain")}
-        default = ${Configuration.setting("Sandstorm.CookieCutter.consent.default")}
-        mustConsent = ${Configuration.setting("Sandstorm.CookieCutter.consent.mustConsent")}
-        acceptAll = ${Configuration.setting("Sandstorm.CookieCutter.consent.acceptAll")}
-        hideDeclineAll = ${Configuration.setting("Sandstorm.CookieCutter.consent.hideDeclineAll")}
+        privacyPolicyUrl = ${Configuration.setting("Sandstorm.CookiePunch.consent.privacyPolicyUrl")}
+        storageMethod = ${Configuration.setting("Sandstorm.CookiePunch.consent.storageMethod")}
+        cookieName = ${Configuration.setting("Sandstorm.CookiePunch.consent.cookieName")}
+        cookieExpiresAfterDays = ${Configuration.setting("Sandstorm.CookiePunch.consent.cookieExpiresAfterDays")}
+        cookieDomain = ${Configuration.setting("Sandstorm.CookiePunch.consent.cookieDomain")}
+        default = ${Configuration.setting("Sandstorm.CookiePunch.consent.default")}
+        mustConsent = ${Configuration.setting("Sandstorm.CookiePunch.consent.mustConsent")}
+        acceptAll = ${Configuration.setting("Sandstorm.CookiePunch.consent.acceptAll")}
+        hideDeclineAll = ${Configuration.setting("Sandstorm.CookiePunch.consent.hideDeclineAll")}
     }
 
     groups = Neos.Fusion:Map {
-        items = ${Configuration.setting("Sandstorm.CookieCutter.groups")}
+        items = ${Configuration.setting("Sandstorm.CookiePunch.groups")}
         itemRenderer = Neos.Fusion:DataStructure {
             name = ${itemKey}
-            title = ${CookieCutterConfig.translate(item.title)}
-            description = ${CookieCutterConfig.translate(item.description)}
+            title = ${CookiePunchConfig.translate(item.title)}
+            description = ${CookiePunchConfig.translate(item.description)}
             purposes = ${item.purposes}
             consent = Neos.Fusion:DataStructure {
                 required = ${item.consent.required}
@@ -34,9 +34,9 @@ prototype(Sandstorm.CookieCutter:Config) {
     }
 
     purposes = Neos.Fusion:Map {
-        items = ${Configuration.setting("Sandstorm.CookieCutter.purposes")}
+        items = ${Configuration.setting("Sandstorm.CookiePunch.purposes")}
         itemRenderer = Neos.Fusion:Value {
-            value = ${CookieCutterConfig.translate(item)}
+            value = ${CookiePunchConfig.translate(item)}
         }
     }
 }

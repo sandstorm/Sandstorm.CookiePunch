@@ -1,6 +1,6 @@
 <?php
 
-namespace Sandstorm\CookieCutter\FusionObjects;
+namespace Sandstorm\CookiePunch\FusionObjects;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Fusion\FusionObjects\DataStructureImplementation;
@@ -54,7 +54,7 @@ class ConfigImplementation extends DataStructureImplementation
 
         $cookieName = isset($dataStructure[self::CONSENT_CONFIG]["cookieName"])
             ? $dataStructure[self::CONSENT_CONFIG]["cookieName"]
-            : "cookie_cutter";
+            : "cookie_punch";
 
         $cookieExpiresAfterDays = isset(
             $dataStructure[self::CONSENT_CONFIG]["cookieExpiresAfterDays"]
@@ -133,7 +133,7 @@ class ConfigImplementation extends DataStructureImplementation
     private function renderConfig(array $variables): string
     {
         $fileConents = file_get_contents(
-            'resource://Sandstorm.CookieCutter/Private/JavaScript/klaroConfigTemplateCompiled.js'
+            'resource://Sandstorm.CookiePunch/Private/JavaScript/klaroConfigTemplateCompiled.js'
         );
         $template = preg_replace(self::PHP_REMOVE_REGEX, "", $fileConents);
 

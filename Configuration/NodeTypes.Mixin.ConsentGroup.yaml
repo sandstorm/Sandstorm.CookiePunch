@@ -1,4 +1,4 @@
-"Sandstorm.CookieCutter:Mixin.ConsentGroup":
+"Sandstorm.CookiePunch:Mixin.ConsentGroup":
   abstract: true
   properties:
     consentGroup:
@@ -12,4 +12,4 @@
           editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
           editorOptions:
             placeholder: Choose
-            dataSourceIdentifier: sandstorm-cookiecutter-groups
+            dataSourceIdentifier: sandstorm-cookiepunch-groups
