@@ -8,8 +8,8 @@ This Neos package provides a general approach for blocking elements like script 
 
 * helpers to block elements (scripts and iframes) before the markup is send to the client
 * blocking modes:
-    * whitelist elements to not be blocked
-    * blacklist elements to be blocked
+    * block all + allowed list
+    * allow all + blocked list
 * grouping of elements
 * patterns to target elements in markup
 * blocking of HTML snippets created by the editor (Neos.NodeTypes.Html:Html)
