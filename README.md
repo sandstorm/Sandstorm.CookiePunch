@@ -1,13 +1,11 @@
 # Sandstorm.CookiePunch
 
-**THIS PACKAGE IS STILL WIP ;) FEEDBACK IS HIGHLY WELCOME.**
-
 This Neos package provides a general approach for blocking elements like script tags and iframes before the markup reaches the browser and therefore provides a general approach for blocking cookies or other concepts of tracking user behaviour. It also provides a UI in the browser for displaying a cookie-consent and partially unblocking groups of elements.
 
 ## Features
 
-* helpers to block elements (scripts and iframes) before the markup is send to the client
-* blocking modes:
+* helpers to block elements (scripts and iframes) before the markup is sent to the client
+* possible blocking modes:
     * block all + allowed list
     * allow all + blocked list
 * grouping of elements
@@ -18,7 +16,7 @@ This Neos package provides a general approach for blocking elements like script 
 * useful default config and styling
 * SCSS to customize cookie-consent styling
 
-## Instalation
+## Installation
 
 `composer require sandstorm/cookiepunch`
 
@@ -50,11 +48,11 @@ prototype(Neos.Neos:Page) {
 }
 ```
 
-Open the console of your browser inspector an type `klaro.show()`. Make sure all switches are turned off and reload your page again.
+Open the console of your browser inspector and type `klaro.show()`. Make sure all switches are turned off and reload your page again.
 
-As the default behaviour we will block all iframes and scripts. This way nothing slips through e.g. when you install a new plugin. As a developper you should allways check if can trust the markup added by a plugin. 
+As the default behaviour we will block all iframes and scripts. This way nothing slips through e.g. when you install a new plugin. As a developer you should allways check if can trust the markup added by a plugin. 
 
-Don't worry, we provide some tools to make it easiert for you to configure ;)
+Don't worry, we provide some tools to make it easier for you to configure ;)
 
 Now that your page probably looks broken, let's try to fix it ;)
 
@@ -70,7 +68,7 @@ Neos.Fusion:Tag {
 }
 ```
 
-This Eel helper will add `data-never-block` attribute to you script tag. These tags will be ignored by `CookiePunch.blockScripts()`.
+This Eel helper will add a `data-never-block` attribute to your script tag. These tags will be ignored by `CookiePunch.blockScripts()`.
 
 ### STEP 4: Create groups, purposes and add elements
 
@@ -94,4 +92,4 @@ Sandstorm:
         group: media
 ```
 
-Now all tags containing `"https://www.youtube.com/embed/"` will be blocked and added to the group `media`. Reload you page, open the consent modal -> you should see a new switch.
+Now all tags containing `"https://www.youtube.com/embed/"` will be blocked and added to the group `media`. Reload your page, open the consent modal -> you should see a new switch.
