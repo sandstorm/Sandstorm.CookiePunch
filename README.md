@@ -86,10 +86,11 @@ Sandstorm:
           - mediaembeds
         description: Some bar description
     elements:
-      "https://www.youtube.com/embed/":
-        type: iframe
-        block: true
-        group: media
+      patterns:
+        "https://www.youtube.com/embed/":
+          type: iframe
+          block: true
+          group: media
 ```
 
 Now all tags containing `"https://www.youtube.com/embed/"` will be blocked and added to the group `media`. Reload your page, open the consent modal -> you should see a new switch.
