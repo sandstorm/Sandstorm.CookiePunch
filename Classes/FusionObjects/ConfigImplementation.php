@@ -19,10 +19,56 @@ class ConfigImplementation extends DataStructureImplementation
     {
         $dataStructure = parent::evaluate();
 
+        $result = [
+            "privacyPolicyUrl" => isset(
+                $dataStructure[self::CONSENT_CONFIG]["privacyPolicyUrl"]
+            )
+                ? $dataStructure[self::CONSENT_CONFIG]["privacyPolicyUrl"]
+                : "/privacy",
+            "translations" => isset($dataStructure["translations"])
+                ? $dataStructure["translations"]
+                : [],
+            "handleConsentOptions" => isset($dataStructure["handleConsentOptions"])
+                ? $dataStructure["handleConsentOptions"]
+                : [],
+            "storageMethod" =>
+                isset($dataStructure[self::CONSENT_CONFIG]["storageMethod"]) &&
+                ($dataStructure[self::CONSENT_CONFIG]["storageMethod"] === "cookie" ||
+                $dataStructure[self::CONSENT_CONFIG]["storageMethod"] === "localStorage")
+                ? $dataStructure[self::CONSENT_CONFIG]["storageMethod"]
+                : "cookie",
+            "cookieName" => isset($dataStructure[self::CONSENT_CONFIG]["cookieName"])
+                ? $dataStructure[self::CONSENT_CONFIG]["cookieName"]
+                : "cookie_punch",
+            "cookieExpiresAfterDays" => isset(
+                $dataStructure[self::CONSENT_CONFIG]["cookieExpiresAfterDays"]
+            )
+                ? $dataStructure[self::CONSENT_CONFIG]["cookieExpiresAfterDays"]
+                : 120,
+            "cookieDomain" => isset(
+                $dataStructure[self::CONSENT_CONFIG]["cookieDomain"]
+            )
+                ? $dataStructure[self::CONSENT_CONFIG]["cookieDomain"]
+                : null,
+            "default" => isset($dataStructure[self::CONSENT_CONFIG]["default"])
+                ? $dataStructure[self::CONSENT_CONFIG]["default"]
+                : false,
+            "mustConsent" => isset(
+                $dataStructure[self::CONSENT_CONFIG]["mustConsent"]
+            )
+                ? $dataStructure[self::CONSENT_CONFIG]["mustConsent"]
+                : true,
+            "acceptAll" => isset($dataStructure[self::CONSENT_CONFIG]["acceptAll"])
+                ? $dataStructure[self::CONSENT_CONFIG]["acceptAll"]
+                : true,
+            "hideDeclineAll" => isset(
+                $dataStructure[self::CONSENT_CONFIG]["hideDeclineAll"]
+            )
+                ? $dataStructure[self::CONSENT_CONFIG]["hideDeclineAll"]
+                : false
+        ];
+
         $apps = [];
-        $translations = isset($dataStructure["translations"])
-            ? $dataStructure["translations"]
-            : [];
         $groups = isset($dataStructure["groups"])
             ? $dataStructure["groups"]
             : null;
@@ -31,30 +77,8 @@ class ConfigImplementation extends DataStructureImplementation
             ? $dataStructure["purposes"]
             : null;
 
-        $handleConsentOptions = isset($dataStructure["handleConsentOptions"])
-            ? $dataStructure["handleConsentOptions"]
-            : [];
 
-        // Consent relevant stuff
 
-        $privacyPolicyUrl = isset(
-            $dataStructure[self::CONSENT_CONFIG]["privacyPolicyUrl"]
-        )
-            ? $dataStructure[self::CONSENT_CONFIG]["privacyPolicyUrl"]
-            : "/privacy";
-
-        $storageMethod =
-            isset($dataStructure[self::CONSENT_CONFIG]["storageMethod"]) &&
-            ($dataStructure[self::CONSENT_CONFIG]["storageMethod"] ===
-                "cookie" ||
-                $dataStructure[self::CONSENT_CONFIG]["storageMethod"] ===
-                    "localStorage")
-                ? $dataStructure[self::CONSENT_CONFIG]["storageMethod"]
-                : "cookie";
-
-        $cookieName = isset($dataStructure[self::CONSENT_CONFIG]["cookieName"])
-            ? $dataStructure[self::CONSENT_CONFIG]["cookieName"]
-            : "cookie_punch";
 
         $cookieExpiresAfterDays = isset(
             $dataStructure[self::CONSENT_CONFIG]["cookieExpiresAfterDays"]
@@ -174,7 +198,6 @@ class ConfigImplementation extends DataStructureImplementation
                 is_array($groupConfig["purposes"])
                     ? $groupConfig["purposes"]
                     : [],
-            "callback" => self::CONSENT_HANDLER_PLACEHOLDER,
             "cookies" =>
                 isset($groupConfig[self::CONSENT_CONFIG]["cookies"]) &&
                 is_array($groupConfig[self::CONSENT_CONFIG]["cookies"])

@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "commonjs",
+    "strict": true,
+    "removeComments": true
+  },
+  "include": ["Resources/Private/JavaScript/klaroConfigTemplate.ts"]
+}

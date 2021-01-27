@@ -7,7 +7,7 @@
   "scripts": {
     "build": "yarn run build:translations && yarn run build:template",
     "build:translations": "node ./Resources/Private/KlaroTranslations/build/build.js",
-    "build:template": "npx babel ./Resources/Private/JavaScript/klaroConfigTemplate.js --out-file ./Resources/Private/JavaScript/klaroConfigTemplateCompiled.js",
+    "build:template": "tsc -p ./Resources/Private/JavaScript/klaroConfigTemplate.ts --outFile ./Resources/Private/JavaScript/klaroConfigTemplateCompiled.js",
     "prettier:check": "yarn prettier --check .",
     "prettier:fix": "yarn prettier --write ."
   },
@@ -20,6 +20,7 @@
     "handlebars": "^4.7.6",
     "husky": "^4.2.5",
     "js-yaml": "^3.14.0",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "typescript": "^4.0.2"
   }
 }

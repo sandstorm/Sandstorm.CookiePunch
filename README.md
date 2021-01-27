@@ -52,15 +52,16 @@ prototype(Neos.Neos:Page) {
 
 Open the console of your browser inspector an type `klaro.show()`. Make sure all switches are turned off and reload your page again.
 
-As the default behaviour we will block all iframes and scripts. This way nothing slips through e.g. when you install a new plugin. As a developper you should allways check if can trust the markup added by a plugin. 
+As the default behaviour we will block all iframes and scripts. This way nothing slips through e.g. when you install a new plugin. As a developper you should allways check if can trust the content added by a plugin. 
 
 Don't worry, we provide some tools to make it easiert for you to configure ;)
 
 Now that your page probably looks broken, let's try to fix it ;)
 
-### STEP 3: Never block your own javascript
+### STEP 3: Never, ever block your own javascript
 
 You might have some scripts that you never want to be blocked because your page would not be usable at all. They are often called `main.js`, `app.js`, `index.js`, ...
+
 
 ```neosfusion
 Neos.Fusion:Tag {
@@ -72,26 +73,55 @@ Neos.Fusion:Tag {
 
 This Eel helper will add `data-never-block` attribute to you script tag. These tags will be ignored by `CookiePunch.blockScripts()`.
 
-### STEP 4: Create groups, purposes and add elements
+### STEP 4: Unblock scripts of other packages
+
+You also might NOT want to block scripts of packages that only use JS to visually enhance your page by adding animated or interactive content. This could e.g. be a slider.
+
+For this you can add elements to your config that should not be blocked.
 
 In `Configuration/` create a `Settings.CookiePunch.yaml`.
+
+
+```yaml
+Sandstorm:
+  CookiePunch:
+    elements:
+      patterns:
+	      "Packages/Vendor.Slider":
+	        type: script
+	        block: false
+```
+
+This will match any script tag containing the pattern.
+
+You could also try to use the `CookiePunch.blockScripts()` Eel helper to override some aspects the fusion in the package itself, however this is not really robust concerning updates and you would also have to look into the implementation of each package.
+
+### STEP 4: Create groups that can individually be switched on/off by the user
+
+Now that your page does not look broken anymore we can start setting up different groups an assign scripts and iframes for the user to active/deactivete.
 
 ```yaml
 Sandstorm:
   CookiePunch:
     purposes:
-      mediaembeds: Media Embeds
+      media: Media Embeds
     groups:
       media:
         title: Bar
         purposes:
-          - mediaembeds
+          - media
         description: Some bar description
     elements:
-      "https://www.youtube.com/embed/":
-        type: iframe
-        block: true
-        group: media
+      patterns:
+	      "https://www.youtube.com/embed/":
+	        type: iframe
+	        block: true
+	        group: media
+        "https://player.vimeo.com/":
+        	type: iframe
+        	block: true
+        	group: media
 ```
 
-Now all tags containing `"https://www.youtube.com/embed/"` will be blocked and added to the group `media`. Reload you page, open the consent modal -> you should see a new switch.
+In the consent modal you should see a new switch "Media".
+
