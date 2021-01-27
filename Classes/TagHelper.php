@@ -18,8 +18,12 @@ class TagHelper
     const DATA_NEVER_BLOCK = "data-never-block";
 
     // Type Constants
-    const TEXT_PLAIN = "text/plain";
-    const TEXT_JAVASCRIPT = "text/javascript";
+    const TYPE_TEXT_PLAIN = "text/plain";
+    const TYPE_APPLICATION_JSON_LD = "application/ld+json";
+
+    // TODO: switch to "text/javascript" at some point
+    // update tests
+    const TYPE_JAVASCRIPT = "text/javascript";
 
     /**
      * @param string $tag
@@ -66,6 +70,19 @@ class TagHelper
             },
             $tag
         );
+    }
+
+    /**
+     * @param string $tag
+     * @param string $name
+     * @return string
+     */
+    static function tagGetAttributeValue(
+        string $tag,
+        string $name
+    ): ?string {
+        preg_match(self::buildMatchAttributeNameWithAnyValueReqex($name), $tag, $matches);
+        return isset($matches['value']) ? $matches['value'] : null;
     }
 
     /**
