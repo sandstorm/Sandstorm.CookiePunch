@@ -109,13 +109,26 @@ class CookiePunch implements ProtectedContextAwareInterface
             $tag,
             $blockConfig
         ) use ($groupOverride) {
-            // IMPORTANT: keep the order here or update all tests!
+            // #########################################################################
+            // IMPORTANT: keep the order in the following section or update all tests!
+            // #########################################################################
+
             $tag = TagHelper::tagRenameAttribute(
                 $tag,
                 TagHelper::SRC,
                 TagHelper::DATA_SRC
             );
+
             $hasType = TagHelper::tagHasAttribute($tag, TagHelper::TYPE);
+
+            $typeAttributeValue = TagHelper::tagGetAttributeValue($tag, "type");
+
+            if(!$typeAttributeValue) {
+                // We want to be least invasive and try to reuse the type attribute value
+                // if none is present we use fallback.
+                $typeAttributeValue = TagHelper::TYPE_JAVASCRIPT;
+            }
+
             if (TagHelper::tagHasAttribute($tag, TagHelper::DATA_SRC)) {
                 if ($hasType) {
                     $tag = TagHelper::tagRenameAttribute(
@@ -126,7 +139,16 @@ class CookiePunch implements ProtectedContextAwareInterface
                     $tag = TagHelper::tagAddAttribute(
                         $tag,
                         TagHelper::TYPE,
-                        TagHelper::TEXT_PLAIN
+                        TagHelper::TYPE_TEXT_PLAIN
+                    );
+                } else {
+                    // IMPORTANT: we need to add data-type="text/javascript" here to prevent Klaro from
+                    // not correctly recovering the correct value.
+                    // we add type="text/javascript" which later will be turned into an data attribute
+                    $tag = TagHelper::tagAddAttribute(
+                        $tag,
+                        TagHelper::DATA_TYPE,
+                        $typeAttributeValue
                     );
                 }
             } else {
@@ -140,18 +162,18 @@ class CookiePunch implements ProtectedContextAwareInterface
                     $tag = TagHelper::tagAddAttribute(
                         $tag,
                         TagHelper::TYPE,
-                        TagHelper::TEXT_PLAIN
+                        TagHelper::TYPE_TEXT_PLAIN
                     );
                 } else {
                     $tag = TagHelper::tagAddAttribute(
                         $tag,
                         TagHelper::TYPE,
-                        TagHelper::TEXT_PLAIN
+                        TagHelper::TYPE_TEXT_PLAIN
                     );
                     $tag = TagHelper::tagAddAttribute(
                         $tag,
                         TagHelper::DATA_TYPE,
-                        TagHelper::TEXT_JAVASCRIPT
+                        $typeAttributeValue
                     );
                 }
             }
@@ -298,10 +320,12 @@ class CookiePunch implements ProtectedContextAwareInterface
             function ($hits) use ($hitCallback) {
                 $tag = $hits[0];
 
+                // EARLY RETURN - NO CALLBACK
                 if (!$hitCallback) {
                     return $tag;
                 }
 
+                // EARLY RETURN - NEVER BLOCK
                 $neverBlock = $this->tagContains(
                     $tag,
                     TagHelper::DATA_NEVER_BLOCK
@@ -310,23 +334,24 @@ class CookiePunch implements ProtectedContextAwareInterface
                     return $tag;
                 }
 
+                // EARLY RETURN - SPECIAL MIME TYPE
+                $mimeType = TagHelper::tagGetAttributeValue(
+                    $tag,
+                    TagHelper::TYPE
+                );
+                if($mimeType === TagHelper::TYPE_TEXT_PLAIN || $mimeType === TagHelper::TYPE_APPLICATION_JSON_LD) return $tag;
+
+                // EARLY RETURN - HAS BLOCKING ATTRIBUTES
+                // if a part of the markup was already processed
                 $hasBlockingAttributes =
                     TagHelper::tagHasAttribute($tag, TagHelper::DATA_SRC) ||
                     TagHelper::tagHasAttribute(
                         $tag,
-                        TagHelper::TYPE,
-                        TagHelper::TEXT_PLAIN
-                    ) ||
-                    TagHelper::tagHasAttribute(
-                        $tag,
-                        TagHelper::DATA_TYPE,
-                        TagHelper::TEXT_JAVASCRIPT
+                        TagHelper::DATA_TYPE
                     );
                 // We do not check if TagHelper::DATA_NAME is present, because we might want the editor
                 // to choose a group, e.g. in the inspector and still block tags.
-                if ($hasBlockingAttributes) {
-                    return $tag;
-                }
+                if ($hasBlockingAttributes) return $tag;
 
                 $blockConfig = $this->getBlockConfig($tag);
 

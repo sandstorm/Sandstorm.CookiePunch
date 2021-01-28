@@ -6,7 +6,7 @@ use Neos\Utility\ObjectAccess;
 use Sandstorm\CookiePunch\Eel\Helper\CookiePunch;
 
 /**
- * Testcase for the ConvertNodeUris Fusion implementation
+ * Testcase
  */
 class CookiePunchTest extends UnitTestCase
 {
@@ -48,10 +48,11 @@ class CookiePunchTest extends UnitTestCase
         self::assertEquals($expected, $actual);
 
         // ### <script> with src attribute ###
-
+        // IMPORTANT: we need to add data-type="text/javascript" here to prevent Klaro from
+        // not correctly recovering the correct value.
         $markup = '<script src="myscripts.js"></script>';
         $expected =
-            '<script data-src="myscripts.js" data-name="default"></script>';
+            '<script data-src="myscripts.js" data-type="text/javascript" data-name="default"></script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
 
@@ -67,6 +68,14 @@ class CookiePunchTest extends UnitTestCase
         $markup = '<script src="myscripts.js" type="text/javascript"/>';
         $expected =
             '<script data-src="myscripts.js" data-type="text/javascript" type="text/plain" data-name="default"/>';
+        $actual = $blockExternalContentHelper->blockScripts($markup);
+        self::assertEquals($expected, $actual);
+
+        // ### <script> with "application/javascript" or other types will be blocked ###
+        $markup =
+            '<script src="myscripts.js" defer type="application/javascript"></script>';
+        $expected =
+            '<script data-src="myscripts.js" defer data-type="application/javascript" type="text/plain" data-name="default"></script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
     }
@@ -86,7 +95,7 @@ class CookiePunchTest extends UnitTestCase
 
         $markup = '<script src="myscripts.js" data-name="default"></script>';
         $expected =
-            '<script data-src="myscripts.js" data-name="default"></script>';
+            '<script data-src="myscripts.js" data-name="default" data-type="text/javascript"></script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
 
@@ -112,7 +121,7 @@ class CookiePunchTest extends UnitTestCase
         );
 
         $markup = '<script src="myscripts.js"></script>';
-        $expected = '<script data-src="myscripts.js" data-name="foo"></script>';
+        $expected = '<script data-src="myscripts.js" data-type="text/javascript" data-name="foo"></script>';
         $actual = $blockExternalContentHelper->blockScripts(
             $markup,
             true,
@@ -134,7 +143,7 @@ class CookiePunchTest extends UnitTestCase
     /**
      * @test
      */
-    public function strangeScriptTagsWillNeverBeBlocked()
+    public function scriptTagsWithSpecialMimetypesWillNeverBeBlocked()
     {
         $blockExternalContentHelper = new CookiePunch();
         ObjectAccess::setProperty(
@@ -148,6 +157,11 @@ class CookiePunchTest extends UnitTestCase
 
         $markup = '<script type="text/plain"></script>';
         $expected = '<script type="text/plain"></script>';
+        $actual = $blockExternalContentHelper->blockScripts($markup);
+        self::assertEquals($expected, $actual);
+
+        $markup = '<script type="application/ld+json"></script>';
+        $expected = '<script type="application/ld+json"></script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
     }
@@ -322,7 +336,7 @@ class CookiePunchTest extends UnitTestCase
         // <script>
         $markup = '<script src="Packages/Vendor.Example/myscripts.js"/>';
         $expected =
-            '<script data-src="Packages/Vendor.Example/myscripts.js" data-name="default" data-options="{&quot;foo&quot;:&quot;bar&quot;}"/>';
+            '<script data-src="Packages/Vendor.Example/myscripts.js" data-type="text/javascript" data-name="default" data-options="{&quot;foo&quot;:&quot;bar&quot;}"/>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
 
