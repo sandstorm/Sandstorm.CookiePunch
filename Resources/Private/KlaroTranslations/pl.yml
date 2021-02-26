@@ -1,34 +1,72 @@
+# Warning, this file is partially automatically generated!
+acceptAll: Zaakceptować wszystkie
+acceptSelected: Zaakceptować wybrany
+close: Blisko
 consentModal:
-  title: Informacje, które zbieramy
-  description: >
-    Tutaj możesz zobaczyć i dostosować informacje, które zbieramy o Tobie.
+  description: Tutaj mogą Państwo ocenić i dostosować usługi, z których chcielibyśmy
+    skorzystać na tej stronie. Jesteście Państwo odpowiedzialni! Mogą Państwo włączać
+    lub wyłączać usługi według własnego uznania.
   privacyPolicy:
     name: polityka prywatności
-    text: >
-      Aby dowiedzieć się więcej, przeczytaj naszą {privacyPolicy}.
+    text: Aby dowiedzieć się więcej, prosimy o zapoznanie się z naszą {privacyPolicy}.
+  title: Usługi, z których chcielibyśmy skorzystać
 consentNotice:
-  changeDescription: Nastąpiły zmiany od Twojej ostatniej wizyty, zaktualizuj swoją zgodę.
-  description: >
-    Zbieramy i przetwarzamy dane osobowe w następujących celach: {purposes}.
-  learnMore: Dowiedz się więcej
+  changeDescription: Od czasu ostatniej wizyty nastąpiły zmiany, prosimy o odnowienie
+    zgody.
+  description: Witam! Czy możemy włączyć dodatkowe usługi dla {purposes}? W każdej
+    chwili mogą Państwo później zmienić lub wycofać swoją zgodę.
+  imprint:
+    name: odcisk
+  learnMore: Pozwól mi wybrać
   privacyPolicy:
     name: polityka prywatności
-  imprint:
-    name: Odcisk
-ok: OK
-save: Zapisz
-decline: Rezygnacja
-close: Zamknij
-app:
+  testing: Tryb testowy!
+contextualConsent:
+  acceptAlways: Zawsze
+  acceptOnce: Tak
+  description: Czy chcą Państwo załadować treści zewnętrzne dostarczane przez {title}?
+decline: Odmawiam
+ok: To jest ok.
+poweredBy: Zrealizowane z Klaro!
+privacyPolicy:
+  name: polityka prywatności
+  text: Aby dowiedzieć się więcej, prosimy o zapoznanie się z naszą {privacyPolicy}.
+purposeItem:
+  service: usługa
+  services: usług
+purposes:
+  advertising:
+    description: Usługi te przetwarzają dane osobowe w celu pokazania Państwu spersonalizowanych
+      lub opartych na zainteresowaniach ogłoszeń.
+    title: Reklama
+  functional:
+    description: 'Usługi te są niezbędne do prawidłowego funkcjonowania niniejszej
+      strony internetowej. Nie mogą Państwo ich tutaj wyłączyć, ponieważ w przeciwnym
+      razie usługa nie działałaby prawidłowo.
+
+      '
+    title: Świadczenie usług
+  marketing:
+    description: Usługi te przetwarzają dane osobowe w celu pokazania Państwu istotnych
+      treści dotyczących produktów, usług lub tematów, którymi mogą być Państwo zainteresowani.
+    title: Marketing
+  performance:
+    description: 'Usługi te przetwarzają dane osobowe w celu optymalizacji usług oferowanych
+      przez tę stronę.
+
+      '
+    title: Optymalizacja wydajności
+save: Z wyjątkiem
+service:
   disableAll:
-    title: Przełącz dla wszystkich aplikacji
-    description: Użyj przełącznika, aby włączyć/wyłączyć wszystkie aplikacje.
+    description: Za pomocą tego przełącznika można włączać lub wyłączać wszystkie
+      usługi.
+    title: Włączać lub wyłączać wszystkie usługi
   optOut:
-    title: (rezygnacja)
-    description: Ta aplikacja jest domyślnie ładowana (ale możesz zrezygnować)
-  required:
-    title: (zawsze wymagane)
-    description: Ta alikacja jest zawsze wymagana
-  purposes: Cele
+    description: Ta usługa jest domyślnie załadowana (ale mogą Państwo z niej zrezygnować)
+    title: (opt-out)
   purpose: Cel
-poweredBy: Napędzany przez Klaro!
+  purposes: Cele
+  required:
+    description: Usługi te są zawsze wymagane
+    title: (zawsze wymagane)

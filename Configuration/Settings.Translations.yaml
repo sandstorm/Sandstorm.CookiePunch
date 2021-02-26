@@ -1,3 +1,4 @@
+
 ################################################################################################
 # IMPORTANT: This file was auto-generated as part of the build process to convert translations #
 # provided by klaro. -> see package.json -> "yarn run build:translations"                      #
@@ -6,36 +7,53 @@
 Sandstorm:
   CookiePunch:
     translations:
+      acceptAll: 'Sandstorm.CookiePunch:Klaro:acceptAll'
+      acceptSelected: 'Sandstorm.CookiePunch:Klaro:acceptSelected'
+      close: 'Sandstorm.CookiePunch:Klaro:close'
       consentModal:
-        title: "Sandstorm.CookiePunch:Klaro:consentModal.title"
-        description: "Sandstorm.CookiePunch:Klaro:consentModal.description"
-        privacyPolicy:
-          name: "Sandstorm.CookiePunch:Klaro:consentModal.privacyPolicy.name"
-          text: "Sandstorm.CookiePunch:Klaro:consentModal.privacyPolicy.text"
+        description: 'Sandstorm.CookiePunch:Klaro:consentModal.description'
+        title: 'Sandstorm.CookiePunch:Klaro:consentModal.title'
       consentNotice:
-        changeDescription: "Sandstorm.CookiePunch:Klaro:consentNotice.changeDescription"
-        description: "Sandstorm.CookiePunch:Klaro:consentNotice.description"
-        learnMore: "Sandstorm.CookiePunch:Klaro:consentNotice.learnMore"
-        privacyPolicy:
-          name: "Sandstorm.CookiePunch:Klaro:consentNotice.privacyPolicy.name"
-        imprint:
-          name: "Sandstorm.CookiePunch:Klaro:consentNotice.imprint.name"
-      ok: "Sandstorm.CookiePunch:Klaro:ok"
-      save: "Sandstorm.CookiePunch:Klaro:save"
-      decline: "Sandstorm.CookiePunch:Klaro:decline"
-      close: "Sandstorm.CookiePunch:Klaro:close"
-      acceptAll: "Sandstorm.CookiePunch:Klaro:acceptAll"
-      acceptSelected: "Sandstorm.CookiePunch:Klaro:acceptSelected"
-      app:
+        changeDescription: 'Sandstorm.CookiePunch:Klaro:consentNotice.changeDescription'
+        description: 'Sandstorm.CookiePunch:Klaro:consentNotice.description'
+        learnMore: 'Sandstorm.CookiePunch:Klaro:consentNotice.learnMore'
+        testing: 'Sandstorm.CookiePunch:Klaro:consentNotice.testing'
+      contextualConsent:
+        acceptAlways: 'Sandstorm.CookiePunch:Klaro:contextualConsent.acceptAlways'
+        acceptOnce: 'Sandstorm.CookiePunch:Klaro:contextualConsent.acceptOnce'
+        description: 'Sandstorm.CookiePunch:Klaro:contextualConsent.description'
+      decline: 'Sandstorm.CookiePunch:Klaro:decline'
+      ok: 'Sandstorm.CookiePunch:Klaro:ok'
+      poweredBy: 'Sandstorm.CookiePunch:Klaro:poweredBy'
+      privacyPolicy:
+        name: 'Sandstorm.CookiePunch:Klaro:privacyPolicy.name'
+        text: 'Sandstorm.CookiePunch:Klaro:privacyPolicy.text'
+      purposeItem:
+        service: 'Sandstorm.CookiePunch:Klaro:purposeItem.service'
+        services: 'Sandstorm.CookiePunch:Klaro:purposeItem.services'
+      purposes:
+        advertising:
+          description: 'Sandstorm.CookiePunch:Klaro:purposes.advertising.description'
+          title: 'Sandstorm.CookiePunch:Klaro:purposes.advertising.title'
+        functional:
+          description: 'Sandstorm.CookiePunch:Klaro:purposes.functional.description'
+          title: 'Sandstorm.CookiePunch:Klaro:purposes.functional.title'
+        marketing:
+          description: 'Sandstorm.CookiePunch:Klaro:purposes.marketing.description'
+          title: 'Sandstorm.CookiePunch:Klaro:purposes.marketing.title'
+        performance:
+          description: 'Sandstorm.CookiePunch:Klaro:purposes.performance.description'
+          title: 'Sandstorm.CookiePunch:Klaro:purposes.performance.title'
+      save: 'Sandstorm.CookiePunch:Klaro:save'
+      service:
         disableAll:
-          title: "Sandstorm.CookiePunch:Klaro:app.disableAll.title"
-          description: "Sandstorm.CookiePunch:Klaro:app.disableAll.description"
+          description: 'Sandstorm.CookiePunch:Klaro:service.disableAll.description'
+          title: 'Sandstorm.CookiePunch:Klaro:service.disableAll.title'
         optOut:
-          title: "Sandstorm.CookiePunch:Klaro:app.optOut.title"
-          description: "Sandstorm.CookiePunch:Klaro:app.optOut.description"
+          description: 'Sandstorm.CookiePunch:Klaro:service.optOut.description'
+          title: 'Sandstorm.CookiePunch:Klaro:service.optOut.title'
+        purpose: 'Sandstorm.CookiePunch:Klaro:service.purpose'
+        purposes: 'Sandstorm.CookiePunch:Klaro:service.purposes'
         required:
-          title: "Sandstorm.CookiePunch:Klaro:app.required.title"
-          description: "Sandstorm.CookiePunch:Klaro:app.required.description"
-        purposes: "Sandstorm.CookiePunch:Klaro:app.purposes"
-        purpose: "Sandstorm.CookiePunch:Klaro:app.purpose"
-      poweredBy: "Sandstorm.CookiePunch:Klaro:poweredBy"
+          description: 'Sandstorm.CookiePunch:Klaro:service.required.description'
+          title: 'Sandstorm.CookiePunch:Klaro:service.required.title'

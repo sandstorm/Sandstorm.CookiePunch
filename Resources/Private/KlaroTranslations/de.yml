@@ -1,36 +1,73 @@
+# Warning, this file is partially automatically generated!
+acceptAll: Alle akzeptieren
+acceptSelected: Ausgewählte akzeptieren
+close: Schließen
 consentModal:
-  title: Informationen, die wir speichern
-  description: >
-    Hier können Sie einsehen und anpassen, welche Information wir über Sie speichern.
+  description: Hier können Sie die Dienste, die wir auf dieser Website nutzen möchten,
+    bewerten und anpassen. Sie haben das Sagen! Aktivieren oder deaktivieren Sie die
+    Dienste, wie Sie es für richtig halten.
   privacyPolicy:
     name: Datenschutzerklärung
-    text: >
-      Weitere Details finden Sie in unserer {privacyPolicy}.
+    text: Um mehr zu erfahren, lesen Sie bitte unsere {privacyPolicy}.
+  title: Dienste, die wir nutzen möchten
 consentNotice:
-  changeDescription: Es gab Änderungen seit Ihrem letzten Besuch, bitte aktualisieren Sie Ihre Auswahl.
-  description: >
-    Wir speichern und verarbeiten Ihre personenbezogenen Informationen für folgende Zwecke: {purposes}.
-  learnMore: Mehr erfahren
-  privacyPolicy:
-    name: Datenschutzerklärung
+  changeDescription: Seit Ihrem letzten Besuch gab es Änderungen, bitte erneuern Sie
+    Ihre Zustimmung.
+  description: Hallo! Könnten wir bitte einige zusätzliche Dienste für {purposes}
+    aktivieren? Sie können Ihre Zustimmung später jederzeit ändern oder zurückziehen.
   imprint:
     name: Impressum
-ok: OK
-save: Speichern
-decline: Ablehnen
-close: Schließen
-acceptSelected: Auswahl speichern
-acceptAll: Allen zustimmen
-app:
-  disableAll:
-    title: Alle Anwendungen aktivieren/deaktivieren
-    description: Nutzen Sie diesen Schalter, um alle Apps zu aktivieren/deaktivieren.
-  optOut:
-    title: (Opt-Out)
-    description: Diese Anwendung wird standardmäßig geladen (Sie können diese aber deaktivieren)
-  required:
-    title: (immer notwendig)
-    description: Diese Anwendung wird immer benötigt
-  purposes: Zwecke
-  purpose: Zweck
+  learnMore: Lassen Sie mich wählen
+  privacyPolicy:
+    name: Datenschutzerklärung
+  testing: Testmodus!
+contextualConsent:
+  acceptAlways: Immer
+  acceptOnce: Ja
+  description: Möchten Sie von {title} bereitgestellte externe Inhalte laden?
+decline: Ich lehne ab
+ok: Das ist ok
 poweredBy: Realisiert mit Klaro!
+privacyPolicy:
+  name: Datenschutzerklärung
+  text: Um mehr zu erfahren, lesen Sie bitte unsere {privacyPolicy}.
+purposeItem:
+  service: Dienst
+  services: Dienste
+purposes:
+  advertising:
+    description: Diese Dienste verarbeiten persönliche Informationen, um Ihnen personalisierte
+      oder interessenbezogene Werbung zu zeigen.
+    title: Werbung
+  functional:
+    description: 'Diese Dienste sind für die korrekte Funktion dieser Website
+      unerlässlich. Sie können sie hier nicht deaktivieren, da der Dienst sonst
+      nicht richtig funktionieren würde.
+
+      '
+    title: Dienstbereitstellung
+  marketing:
+    description: Diese Dienste verarbeiten persönliche Daten, um Ihnen relevante Inhalte
+      über Produkte, Dienstleistungen oder Themen zu zeigen, die Sie interessieren
+      könnten.
+    title: Marketing
+  performance:
+    description: 'Diese Dienste verarbeiten personenbezogene Daten, um den von dieser
+      Website angebotenen Service zu optimieren.
+
+      '
+    title: Optimierung der Leistung
+save: Speichern
+service:
+  disableAll:
+    description: Mit diesem Schalter können Sie alle Dienste aktivieren oder deaktivieren.
+    title: Alle Dienste aktivieren oder deaktivieren
+  optOut:
+    description: Diese Dienste werden standardmäßig geladen (Sie können sich jedoch
+      abmelden)
+    title: (Opt-out)
+  purpose: Zweck
+  purposes: Zwecke
+  required:
+    description: Dieser Service ist immer erforderlich
+    title: (immer erforderlich)

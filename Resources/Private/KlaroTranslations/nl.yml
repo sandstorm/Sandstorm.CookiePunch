@@ -1,34 +1,72 @@
+# Warning, this file is partially automatically generated!
+acceptAll: Accepteer alle
+acceptSelected: Geselecteerde
+close: Sluit
 consentModal:
-  title: Informatie die we verzamelen
-  description: >
-    Hier kunt u de informatie bekijken en aanpassen die we over u verzamelen.
+  description: Hier kunt u de diensten die wij op deze website willen gebruiken beoordelen
+    en aanpassen. U heeft de leiding! Schakel de diensten naar eigen inzicht in of
+    uit.
   privacyPolicy:
     name: privacybeleid
-    text: >
-      Lees ons privacybeleid voor meer informatie {privacyPolicy}.
+    text: Voor meer informatie kunt u ons {privacyPolicy} lezen.
+  title: Diensten die we graag willen gebruiken
 consentNotice:
-  changeDescription: Er waren wijzigingen sinds uw laatste bezoek, werk uw voorkeuren bij.
-  description: >
-    Wij verzamelen en verwerken uw persoonlijke gegevens voor de volgende doeleinden: {purposes}.
-  learnMore: Lees meer
+  changeDescription: Er waren veranderingen sinds uw laatste bezoek, gelieve uw toestemming
+    te hernieuwen.
+  description: Hallo, kunnen wij u een aantal extra diensten aanbieden voor {purposes}?
+    U kunt uw toestemming later altijd nog wijzigen of intrekken.
+  imprint:
+    name: impressum
+  learnMore: Laat me kiezen
   privacyPolicy:
     name: privacybeleid
-  imprint:
-    name: Afdruk
-ok: OK
+  testing: Testmodus!
+contextualConsent:
+  acceptAlways: Altijd
+  acceptOnce: Ja
+  description: Wilt u externe content laden die door {title} wordt aangeleverd ?
+decline: Ik weiger
+ok: Dat is oké
+poweredBy: Gerealiseerd met Klaro!
+privacyPolicy:
+  name: privacybeleid
+  text: Voor meer informatie kunt u ons {privacyPolicy} lezen.
+purposeItem:
+  service: service
+  services: diensten
+purposes:
+  advertising:
+    description: Deze diensten verwerken persoonlijke informatie om u gepersonaliseerde
+      of op interesse gebaseerde advertenties te tonen.
+    title: Reclame
+  functional:
+    description: 'Deze diensten zijn essentieel voor het correct functioneren van
+      deze website. U kunt ze hier niet uitschakelen omdat de dienst anders niet correct
+      zou werken.
+
+      '
+    title: Dienstverlening
+  marketing:
+    description: Deze diensten verwerken persoonlijke informatie om u relevante inhoud
+      te tonen over producten, diensten of onderwerpen waarin u geïnteresseerd zou
+      kunnen zijn.
+    title: Marketing
+  performance:
+    description: 'Deze diensten verwerken persoonlijke informatie om de service die
+      deze website biedt te optimaliseren.
+
+      '
+    title: Optimalisatie van de prestaties
 save: Opslaan
-decline: Afwijzen
-close: Sluiten
-app:
+service:
   disableAll:
-    title: Alle opties in/uit schakelen
-    description: Gebruik deze schakeloptie om alle apps in/uit te schakelen.
+    description: Gebruik deze schakelaar om alle diensten in of uit te schakelen.
+    title: Alle diensten in- of uitschakelen
   optOut:
-    title: (afmelden)
-    description: Deze app is standaard geladen (maar je kunt je afmelden)
+    description: Deze diensten worden standaard geladen (maar u kunt zich afmelden)
+    title: (opt-out)
+  purpose: Verwerkingsdoel
+  purposes: Verwerkingsdoeleinden
   required:
-    title: (altijd verplicht)
-    description: Deze applicatie is altijd vereist
-  purposes: Doeleinden
-  purpose: Doeleinde
-poweredBy: Aangedreven door Klaro!
+    description: Deze diensten zijn altijd nodig
+    title: (altijd nodig)

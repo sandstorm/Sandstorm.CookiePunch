@@ -8,99 +8,169 @@
             ################################################################################################
         </note>
         <body>
-            <trans-unit id="consentModal.title">
-                <source>Information that we collect</source>
-                <target>Informazioni che raccogliamo</target>
+            <trans-unit id="acceptAll">
+                <source>Accept all</source>
+                <target>Accettare tutti</target>
             </trans-unit>
-            <trans-unit id="consentModal.description">
-                <source>Here you can see and customize the information that we collect about you.
-</source>
-                <target>Qui puoi vedere e scegliere le informazioni che raccogliamo su di te.
-</target>
-            </trans-unit>
-            <trans-unit id="consentModal.privacyPolicy.name">
-                <source>privacy policy</source>
-                <target>policy privacy</target>
-            </trans-unit>
-            <trans-unit id="consentModal.privacyPolicy.text">
-                <source>To learn more, please read our {privacyPolicy}.
-</source>
-                <target>Per saperne di più, leggi la nostra {privacyPolicy}.
-</target>
-            </trans-unit>
-            <trans-unit id="consentNotice.changeDescription">
-                <source>There were changes since your last visit, please update your consent.</source>
-                <target>Ci sono stati cambiamenti dalla tua ultima visita, aggiorna il tuo consenso.</target>
-            </trans-unit>
-            <trans-unit id="consentNotice.description">
-                <source>We collect and process your personal information for the following purposes: {purposes}.
-</source>
-                <target>Raccogliamo ed elaboriamo le vostre informazioni personali per i seguenti scopi: {purposes}.
-</target>
-            </trans-unit>
-            <trans-unit id="consentNotice.learnMore">
-                <source>Customize</source>
-                <target>Scopri di più</target>
-            </trans-unit>
-            <trans-unit id="consentNotice.privacyPolicy.name">
-                <source>privacy policy</source>
-                <target>policy privacy</target>
-            </trans-unit>
-            <trans-unit id="consentNotice.imprint.name">
-                <source>Imprint</source>
-                <target>Impronta</target>
-            </trans-unit>
-            <trans-unit id="ok">
-                <source>Accept</source>
-                <target>OK</target>
-            </trans-unit>
-            <trans-unit id="save">
-                <source>Save</source>
-                <target>Salva</target>
-            </trans-unit>
-            <trans-unit id="decline">
-                <source>Decline</source>
-                <target>Rifiuta</target>
+            <trans-unit id="acceptSelected">
+                <source>Accept selected</source>
+                <target>Accettare selezionato</target>
             </trans-unit>
             <trans-unit id="close">
                 <source>Close</source>
                 <target>Chiudi</target>
             </trans-unit>
-            <trans-unit id="app.disableAll.title">
-                <source>Toggle all apps</source>
-                <target>Cambia per tutte le app</target>
+            <trans-unit id="consentModal.description">
+                <source>Here you can assess and customize the services that we&#x27;d like to use on this website. You&#x27;re in charge! Enable or disable services as you see fit.</source>
+                <target>Qui può valutare e personalizzare i servizi che vorremmo utilizzare su questo sito web. È lei il responsabile! Abilitare o disabilitare i servizi come meglio crede.</target>
             </trans-unit>
-            <trans-unit id="app.disableAll.description">
-                <source>Use this switch to enable/disable all apps.</source>
-                <target>Usa questo interruttore per abilitare/disabilitare tutte le app.</target>
+            <trans-unit id="consentModal.privacyPolicy.name">
+                <source></source>
+                <target>informativa sulla privacy</target>
             </trans-unit>
-            <trans-unit id="app.optOut.title">
+            <trans-unit id="consentModal.privacyPolicy.text">
+                <source></source>
+                <target>Per saperne di più, legga la nostra {privacyPolicy}.</target>
+            </trans-unit>
+            <trans-unit id="consentModal.title">
+                <source>Services we would like to use</source>
+                <target>Servizi che desideriamo utilizzare</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please renew your consent.</source>
+                <target>Ci sono stati dei cambiamenti rispetto alla sua ultima visita, la preghiamo di rinnovare il suo consenso.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.description">
+                <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
+                <target>Salve, possiamo attivare alcuni servizi aggiuntivi per {purposes}? Può sempre modificare o ritirare il suo consenso in un secondo momento.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.imprint.name">
+                <source></source>
+                <target>impronta</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.learnMore">
+                <source>Let me choose</source>
+                <target>Lasciatemi scegliere</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.privacyPolicy.name">
+                <source></source>
+                <target>informativa sulla privacy</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.testing">
+                <source>Testing mode!</source>
+                <target>Modalità di test!</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.acceptAlways">
+                <source>Always</source>
+                <target>Sempre</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.acceptOnce">
+                <source>Yes</source>
+                <target>Sì</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.description">
+                <source>Do you want to load external content supplied by {title}?</source>
+                <target>Vuole caricare contenuti esterni forniti da {title}?</target>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>I decline</source>
+                <target>Rifiuto</target>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>That&#x27;s ok</source>
+                <target>Va bene così</target>
+            </trans-unit>
+            <trans-unit id="poweredBy">
+                <source>Realized with Klaro!</source>
+                <target>Realizzato con Klaro!</target>
+            </trans-unit>
+            <trans-unit id="privacyPolicy.name">
+                <source>privacy policy</source>
+                <target>informativa sulla privacy</target>
+            </trans-unit>
+            <trans-unit id="privacyPolicy.text">
+                <source>To learn more, please read our {privacyPolicy}.</source>
+                <target>Per saperne di più, legga la nostra {privacyPolicy}.</target>
+            </trans-unit>
+            <trans-unit id="purposeItem.service">
+                <source>service</source>
+                <target>servizio</target>
+            </trans-unit>
+            <trans-unit id="purposeItem.services">
+                <source>services</source>
+                <target>servizi</target>
+            </trans-unit>
+            <trans-unit id="purposes.advertising.description">
+                <source>These services process personal information to show you personalized or interest-based advertisements.</source>
+                <target>Questi servizi elaborano le informazioni personali per mostrarle annunci pubblicitari personalizzati o basati su interessi.</target>
+            </trans-unit>
+            <trans-unit id="purposes.advertising.title">
+                <source>Advertising</source>
+                <target>Pubblicità</target>
+            </trans-unit>
+            <trans-unit id="purposes.functional.description">
+                <source>These services are essential for the correct functioning of this website. You cannot disable them here as the service would not work correctly otherwise.
+</source>
+                <target>Questi servizi sono essenziali per il corretto funzionamento di questo sito web. Non può disattivarli qui perché altrimenti il servizio non funzionerebbe correttamente.
+</target>
+            </trans-unit>
+            <trans-unit id="purposes.functional.title">
+                <source>Service Provision</source>
+                <target>Fornitura di servizi</target>
+            </trans-unit>
+            <trans-unit id="purposes.marketing.description">
+                <source>These services process personal information to show you relevant content about products, services or topics that you might be interested in.</source>
+                <target>Questi servizi elaborano le informazioni personali per mostrarle contenuti rilevanti su prodotti, servizi o argomenti che potrebbero interessarla.</target>
+            </trans-unit>
+            <trans-unit id="purposes.marketing.title">
+                <source>Marketing</source>
+                <target>Marketing</target>
+            </trans-unit>
+            <trans-unit id="purposes.performance.description">
+                <source>These services process personal information to optimize the service that this website offers.
+</source>
+                <target>Questi servizi elaborano le informazioni personali per ottimizzare il servizio offerto da questo sito web.
+</target>
+            </trans-unit>
+            <trans-unit id="purposes.performance.title">
+                <source>Performance Optimization</source>
+                <target>Ottimizzazione delle prestazioni</target>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+                <target>Salva</target>
+            </trans-unit>
+            <trans-unit id="service.disableAll.description">
+                <source>Use this switch to enable or disable all services.</source>
+                <target>Utilizzi questo interruttore per attivare o disattivare tutti i servizi.</target>
+            </trans-unit>
+            <trans-unit id="service.disableAll.title">
+                <source>Enable or disable all services</source>
+                <target>Attivare o disattivare tutti i servizi</target>
+            </trans-unit>
+            <trans-unit id="service.optOut.description">
+                <source>This services is loaded by default (but you can opt out)</source>
+                <target>Questo servizio è caricato di default (ma è possibile scegliere di non usufruirne)</target>
+            </trans-unit>
+            <trans-unit id="service.optOut.title">
                 <source>(opt-out)</source>
                 <target>(opt-out)</target>
             </trans-unit>
-            <trans-unit id="app.optOut.description">
-                <source>This app is loaded by default (but you can opt out)</source>
-                <target>Quest&#x27;applicazione è caricata di default (ma puoi disattivarla)</target>
+            <trans-unit id="service.purpose">
+                <source>purpose</source>
+                <target>Scopo dell</target>
             </trans-unit>
-            <trans-unit id="app.required.title">
+            <trans-unit id="service.purposes">
+                <source>purposes</source>
+                <target>Finalità</target>
+            </trans-unit>
+            <trans-unit id="service.required.description">
+                <source>This services is always required</source>
+                <target>Questo servizio è sempre richiesto</target>
+            </trans-unit>
+            <trans-unit id="service.required.title">
                 <source>(always required)</source>
                 <target>(sempre richiesto)</target>
-            </trans-unit>
-            <trans-unit id="app.required.description">
-                <source>This application is always required</source>
-                <target>Quest&#x27;applicazione è sempre richiesta</target>
-            </trans-unit>
-            <trans-unit id="app.purposes">
-                <source>Purposes</source>
-                <target>Scopi</target>
-            </trans-unit>
-            <trans-unit id="app.purpose">
-                <source>Purpose</source>
-                <target>Scopo</target>
-            </trans-unit>
-            <trans-unit id="poweredBy">
-                <source>Powered by Klaro!</source>
-                <target>Realizzato da Klaro!</target>
             </trans-unit>
         </body>
     </file>

@@ -1,34 +1,67 @@
+# Warning, this file is partially automatically generated!
+acceptAll: Aceptar todas
+acceptSelected: Aceptar seleccionadas
+close: Cerrar
 consentModal:
-  title: Información que recopilamos
-  description: >
-    Aquí puede ver y personalizar la información que recopilamos sobre usted.
+  description: Aquí puede evaluar y personalizar los servicios que nos gustaría utilizar
+    en este sitio web. ¡Usted decide! Habilite o deshabilite los servicios como considere
+    oportuno.
   privacyPolicy:
     name: política de privacidad
-    text: >
-      Para más información consulte nuestra {privacyPolicy}.
+    text: Para saber más, por favor lea nuestra {privacyPolicy}.
+  title: Servicios que nos gustaría utilizar
 consentNotice:
-  changeDescription: Ha habido cambios desde su última visita, por favor, actualice su consentimiento.
-  description: >
-    Recopilamos y procesamos su información personal con los siguientes fines: {purposes}.
-  learnMore: Más información
-  privacyPolicy:
-    name: política de privacidad
+  changeDescription: Ha habido cambios en las cookies desde su última visita. Debe
+    renovar su consentimiento.
+  description: ¡Hola! ¿Podríamos habilitar algunos servicios adicionales para {purposes}?
+    Siempre podrá cambiar o retirar su consentimiento más tarde.
   imprint:
     name: Imprimir
-ok: Aceptar
+  learnMore: Quiero elegir
+  privacyPolicy:
+    name: política de privacidad
+  testing: ¡Modo de prueba!
+contextualConsent:
+  acceptAlways: Siempre
+  acceptOnce: Sí
+  description: ¿Quieres cargar el contenido externo suministrado por {title}?
+decline: Descartar todas
+ok: De acuerdo
+poweredBy: ¡Realizado con Klaro!
+privacyPolicy:
+  name: política de privacidad
+  text: Para saber más, por favor lea nuestra {privacyPolicy}.
+purposeItem:
+  service: servicio
+  services: servicios
+purposes:
+  advertising:
+    description: Estos servicios procesan información personal para mostrarle anuncios
+      personalizados o basados en intereses.
+    title: Publicidad
+  functional:
+    description: Estos servicios son esenciales para el correcto funcionamiento de
+      este sitio web. No puede desactivarlos ya que la página no funcionaría correctamente.
+    title: Prestación de servicios
+  marketing:
+    description: Estos servicios procesan información personal para mostrarle contenido
+      relevante sobre productos, servicios o temas que puedan interesarle.
+    title: Marketing
+  performance:
+    description: Estos servicios procesan información personal para optimizar el servicio
+      que ofrece este sitio.
+    title: Optimización del rendimiento
 save: Guardar
-decline: Rechazar
-close: Cerrar
-app:
+service:
   disableAll:
-    title: Habilitar/deshabilitar todas las aplicaciones
-    description: Use este botón para habilitar o deshabilitar todas las aplicaciones.
+    description: Utilice este interruptor para activar o desactivar todos los servicios.
+    title: Activar o desactivar todos los servicios
   optOut:
-    title: (opt-out)
-    description: Esta aplicación se carga de forma predeterminada (pero puede desactivarla)
+    description: Este servicio está habilitado por defecto (pero puede optar por lo
+      contrario)
+    title: (desactivar)
+  purpose: Finalidad
+  purposes: Finalidades
   required:
-    title: (necesaria)
-    description: Esta aplicación se necesita siempre
-  purposes: Fines
-  purpose: Fin
-poweredBy: Powered by Klaro!
+    description: Este servicio es necesario siempre
+    title: (siempre requerido)

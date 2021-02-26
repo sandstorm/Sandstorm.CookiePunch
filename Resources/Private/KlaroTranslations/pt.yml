@@ -1,0 +1,72 @@
+# Warning, this file is partially automatically generated!
+acceptAll: Aceitar todos
+acceptSelected: Aceitar selecionados
+close: Fechar
+consentModal:
+  description: Aqui o senhor pode avaliar e personalizar os serviços que gostaríamos
+    de usar neste website. O senhor está no comando! Habilite ou desabilite os serviços
+    como o senhor julgar conveniente.
+  privacyPolicy:
+    name: política de privacidade
+    text: Para saber mais, por favor, leia nossa {privacyPolicy}.
+  title: Serviços que gostaríamos de utilizar
+consentNotice:
+  changeDescription: Houve mudanças desde sua última visita, queira renovar seu consentimento.
+  description: Olá! Poderíamos, por favor, habilitar alguns serviços adicionais para
+    {purposes}? O senhor pode sempre mudar ou retirar seu consentimento mais tarde.
+  imprint:
+    name: imprimir
+  learnMore: Deixe-me escolher
+  privacyPolicy:
+    name: política de privacidade
+  testing: Modo de teste!
+contextualConsent:
+  acceptAlways: Sempre
+  acceptOnce: Sim
+  description: O senhor deseja carregar conteúdo externo fornecido por {title}?
+decline: Recuso-me
+ok: Está tudo bem.
+poweredBy: Realizado com Klaro!
+privacyPolicy:
+  name: política de privacidade
+  text: Para saber mais, por favor, leia nossa {privacyPolicy}.
+purposeItem:
+  service: serviço
+  services: serviços
+purposes:
+  advertising:
+    description: Esses serviços processam informações pessoais para mostrar ao senhor
+      anúncios personalizados ou baseados em interesses.
+    title: Publicidade
+  functional:
+    description: 'Esses serviços são essenciais para o correto funcionamento deste
+      website. O senhor não pode desativá-los aqui, pois de outra forma o serviço
+      não funcionaria corretamente.
+
+      '
+    title: Prestação de serviços
+  marketing:
+    description: Esses serviços processam informações pessoais para mostrar ao senhor
+      conteúdo relevante sobre produtos, serviços ou tópicos que possam ser do seu
+      interesse.
+    title: Marketing
+  performance:
+    description: 'Esses serviços processam informações pessoais para otimizar o serviço
+      que este website oferece.
+
+      '
+    title: Otimização do desempenho
+save: Exceto
+service:
+  disableAll:
+    description: Use essa chave para habilitar ou desabilitar todos os serviços.
+    title: Habilitar ou desabilitar todos os serviços
+  optOut:
+    description: Estes serviços são carregados por padrão (mas o senhor pode optar
+      por não participar).
+    title: (opt-out)
+  purpose: Objetivo
+  purposes: Fins
+  required:
+    description: Esses serviços são sempre necessários
+    title: (sempre necessário)

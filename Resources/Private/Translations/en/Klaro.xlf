@@ -8,80 +8,115 @@
             ################################################################################################
         </note>
         <body>
-            <trans-unit id="consentModal.title">
-                <source>Information that we collect</source>
-            </trans-unit>
-            <trans-unit id="consentModal.description">
-                <source>Here you can see and customize the information that we collect about you.
-</source>
-            </trans-unit>
-            <trans-unit id="consentModal.privacyPolicy.name">
-                <source>privacy policy</source>
-            </trans-unit>
-            <trans-unit id="consentModal.privacyPolicy.text">
-                <source>To learn more, please read our {privacyPolicy}.
-</source>
-            </trans-unit>
-            <trans-unit id="consentNotice.changeDescription">
-                <source>There were changes since your last visit, please update your consent.</source>
-            </trans-unit>
-            <trans-unit id="consentNotice.description">
-                <source>We collect and process your personal information for the following purposes: {purposes}.
-</source>
-            </trans-unit>
-            <trans-unit id="consentNotice.learnMore">
-                <source>Customize</source>
-            </trans-unit>
-            <trans-unit id="consentNotice.privacyPolicy.name">
-                <source>privacy policy</source>
-            </trans-unit>
-            <trans-unit id="consentNotice.imprint.name">
-                <source>Imprint</source>
-            </trans-unit>
-            <trans-unit id="ok">
-                <source>Accept</source>
-            </trans-unit>
-            <trans-unit id="save">
-                <source>Save</source>
-            </trans-unit>
-            <trans-unit id="decline">
-                <source>Decline</source>
-            </trans-unit>
-            <trans-unit id="close">
-                <source>Close</source>
-            </trans-unit>
             <trans-unit id="acceptAll">
                 <source>Accept all</source>
             </trans-unit>
             <trans-unit id="acceptSelected">
                 <source>Accept selected</source>
             </trans-unit>
-            <trans-unit id="app.disableAll.title">
-                <source>Toggle all apps</source>
+            <trans-unit id="close">
+                <source>Close</source>
             </trans-unit>
-            <trans-unit id="app.disableAll.description">
-                <source>Use this switch to enable/disable all apps.</source>
+            <trans-unit id="consentModal.description">
+                <source>Here you can assess and customize the services that we&#x27;d like to use on this website. You&#x27;re in charge! Enable or disable services as you see fit.</source>
             </trans-unit>
-            <trans-unit id="app.optOut.title">
-                <source>(opt-out)</source>
+            <trans-unit id="consentModal.title">
+                <source>Services we would like to use</source>
             </trans-unit>
-            <trans-unit id="app.optOut.description">
-                <source>This app is loaded by default (but you can opt out)</source>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please renew your consent.</source>
             </trans-unit>
-            <trans-unit id="app.required.title">
-                <source>(always required)</source>
+            <trans-unit id="consentNotice.description">
+                <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
             </trans-unit>
-            <trans-unit id="app.required.description">
-                <source>This application is always required</source>
+            <trans-unit id="consentNotice.learnMore">
+                <source>Let me choose</source>
             </trans-unit>
-            <trans-unit id="app.purposes">
-                <source>Purposes</source>
+            <trans-unit id="consentNotice.testing">
+                <source>Testing mode!</source>
             </trans-unit>
-            <trans-unit id="app.purpose">
-                <source>Purpose</source>
+            <trans-unit id="contextualConsent.acceptAlways">
+                <source>Always</source>
+            </trans-unit>
+            <trans-unit id="contextualConsent.acceptOnce">
+                <source>Yes</source>
+            </trans-unit>
+            <trans-unit id="contextualConsent.description">
+                <source>Do you want to load external content supplied by {title}?</source>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>I decline</source>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>That&#x27;s ok</source>
             </trans-unit>
             <trans-unit id="poweredBy">
-                <source>Powered by Klaro!</source>
+                <source>Realized with Klaro!</source>
+            </trans-unit>
+            <trans-unit id="privacyPolicy.name">
+                <source>privacy policy</source>
+            </trans-unit>
+            <trans-unit id="privacyPolicy.text">
+                <source>To learn more, please read our {privacyPolicy}.</source>
+            </trans-unit>
+            <trans-unit id="purposeItem.service">
+                <source>service</source>
+            </trans-unit>
+            <trans-unit id="purposeItem.services">
+                <source>services</source>
+            </trans-unit>
+            <trans-unit id="purposes.advertising.description">
+                <source>These services process personal information to show you personalized or interest-based advertisements.</source>
+            </trans-unit>
+            <trans-unit id="purposes.advertising.title">
+                <source>Advertising</source>
+            </trans-unit>
+            <trans-unit id="purposes.functional.description">
+                <source>These services are essential for the correct functioning of this website. You cannot disable them here as the service would not work correctly otherwise.
+</source>
+            </trans-unit>
+            <trans-unit id="purposes.functional.title">
+                <source>Service Provision</source>
+            </trans-unit>
+            <trans-unit id="purposes.marketing.description">
+                <source>These services process personal information to show you relevant content about products, services or topics that you might be interested in.</source>
+            </trans-unit>
+            <trans-unit id="purposes.marketing.title">
+                <source>Marketing</source>
+            </trans-unit>
+            <trans-unit id="purposes.performance.description">
+                <source>These services process personal information to optimize the service that this website offers.
+</source>
+            </trans-unit>
+            <trans-unit id="purposes.performance.title">
+                <source>Performance Optimization</source>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+            </trans-unit>
+            <trans-unit id="service.disableAll.description">
+                <source>Use this switch to enable or disable all services.</source>
+            </trans-unit>
+            <trans-unit id="service.disableAll.title">
+                <source>Enable or disable all services</source>
+            </trans-unit>
+            <trans-unit id="service.optOut.description">
+                <source>This services is loaded by default (but you can opt out)</source>
+            </trans-unit>
+            <trans-unit id="service.optOut.title">
+                <source>(opt-out)</source>
+            </trans-unit>
+            <trans-unit id="service.purpose">
+                <source>purpose</source>
+            </trans-unit>
+            <trans-unit id="service.purposes">
+                <source>purposes</source>
+            </trans-unit>
+            <trans-unit id="service.required.description">
+                <source>This services is always required</source>
+            </trans-unit>
+            <trans-unit id="service.required.title">
+                <source>(always required)</source>
             </trans-unit>
         </body>
     </file>

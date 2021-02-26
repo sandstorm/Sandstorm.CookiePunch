@@ -8,56 +8,6 @@
             ################################################################################################
         </note>
         <body>
-            <trans-unit id="consentModal.title">
-                <source>Information that we collect</source>
-                <target>Informasjon vi samler inn</target>
-            </trans-unit>
-            <trans-unit id="consentModal.description">
-                <source>Here you can see and customize the information that we collect about you.
-</source>
-                <target>Her kan du se og velge hvilken informasjon vi samler inn om deg.
-</target>
-            </trans-unit>
-            <trans-unit id="consentModal.privacyPolicy.name">
-                <source>privacy policy</source>
-                <target>personvernerklæring</target>
-            </trans-unit>
-            <trans-unit id="consentModal.privacyPolicy.text">
-                <source>To learn more, please read our {privacyPolicy}.
-</source>
-                <target>For å lære mer, vennligst les vår {privacyPolicy}.
-</target>
-            </trans-unit>
-            <trans-unit id="consentNotice.changeDescription">
-                <source>There were changes since your last visit, please update your consent.</source>
-                <target>Det har skjedd endringer siden ditt siste besøk, vennligst oppdater ditt samtykke.</target>
-            </trans-unit>
-            <trans-unit id="consentNotice.description">
-                <source>We collect and process your personal information for the following purposes: {purposes}.
-</source>
-                <target>Vi samler inn og prosesserer din personlige informasjon av følgende årsaker: {purposes}.
-</target>
-            </trans-unit>
-            <trans-unit id="consentNotice.learnMore">
-                <source>Customize</source>
-                <target>Lær mer</target>
-            </trans-unit>
-            <trans-unit id="consentNotice.privacyPolicy.name">
-                <source>privacy policy</source>
-                <target>personvernerklæring</target>
-            </trans-unit>
-            <trans-unit id="ok">
-                <source>Accept</source>
-                <target>OK</target>
-            </trans-unit>
-            <trans-unit id="save">
-                <source>Save</source>
-                <target>Opslaan</target>
-            </trans-unit>
-            <trans-unit id="decline">
-                <source>Decline</source>
-                <target>Avslå</target>
-            </trans-unit>
             <trans-unit id="acceptAll">
                 <source>Accept all</source>
                 <target>Godtar alle</target>
@@ -66,41 +16,105 @@
                 <source>Accept selected</source>
                 <target>Godtar valgt</target>
             </trans-unit>
-            <trans-unit id="app.disableAll.title">
-                <source>Toggle all apps</source>
-                <target>Bytt alle apper</target>
-            </trans-unit>
-            <trans-unit id="app.disableAll.description">
-                <source>Use this switch to enable/disable all apps.</source>
+            <trans-unit id="service.disableAll.description">
+                <source>Use this switch to enable or disable all services.</source>
                 <target>Bruk denne for å skru av/på alle apper.</target>
             </trans-unit>
-            <trans-unit id="app.optOut.title">
+            <trans-unit id="service.disableAll.title">
+                <source>Enable or disable all services</source>
+                <target>Bytt alle apper</target>
+            </trans-unit>
+            <trans-unit id="service.optOut.description">
+                <source>This services is loaded by default (but you can opt out)</source>
+                <target>Denne appen er lastet som standard (men du kan skru det av)</target>
+            </trans-unit>
+            <trans-unit id="service.optOut.title">
                 <source>(opt-out)</source>
                 <target>(opt-out)</target>
             </trans-unit>
-            <trans-unit id="app.optOut.description">
-                <source>This app is loaded by default (but you can opt out)</source>
-                <target>Denne appen er lastet som standard (men du kan skru det av)</target>
+            <trans-unit id="service.purpose">
+                <source>purpose</source>
+                <target>Årsak</target>
             </trans-unit>
-            <trans-unit id="app.required.title">
+            <trans-unit id="service.purposes">
+                <source>purposes</source>
+                <target>Årsaker</target>
+            </trans-unit>
+            <trans-unit id="service.required.description">
+                <source>This services is always required</source>
+                <target>Denne applikasjonen er alltid påkrevd</target>
+            </trans-unit>
+            <trans-unit id="service.required.title">
                 <source>(always required)</source>
                 <target>(alltid påkrevd)</target>
             </trans-unit>
-            <trans-unit id="app.required.description">
-                <source>This application is always required</source>
-                <target>Denne applikasjonen er alltid påkrevd</target>
+            <trans-unit id="close">
+                <source>Close</source>
             </trans-unit>
-            <trans-unit id="app.purposes">
-                <source>Purposes</source>
-                <target>Årsaker</target>
+            <trans-unit id="close_en">
+                <source></source>
+                <target>Close</target>
             </trans-unit>
-            <trans-unit id="app.purpose">
-                <source>Purpose</source>
-                <target>Årsak</target>
+            <trans-unit id="consentModal.description">
+                <source>Here you can assess and customize the services that we&#x27;d like to use on this website. You&#x27;re in charge! Enable or disable services as you see fit.</source>
+                <target>Her kan du se og velge hvilken informasjon vi samler inn om deg.</target>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.name">
+                <source></source>
+                <target>personvernerklæring</target>
+            </trans-unit>
+            <trans-unit id="consentModal.privacyPolicy.text">
+                <source></source>
+                <target>For å lære mer, vennligst les vår {privacyPolicy}.</target>
+            </trans-unit>
+            <trans-unit id="consentModal.title">
+                <source>Services we would like to use</source>
+                <target>Informasjon vi samler inn</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please renew your consent.</source>
+                <target>Det har skjedd endringer siden ditt siste besøk, vennligst oppdater ditt samtykke.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.description">
+                <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
+                <target>Vi samler inn og prosesserer din personlige informasjon av følgende årsaker: {purposes}.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.imprint.name">
+                <source></source>
+            </trans-unit>
+            <trans-unit id="consentNotice.imprint.name_en">
+                <source></source>
+                <target>imprint</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.learnMore">
+                <source>Let me choose</source>
+                <target>Lær mer</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.privacyPolicy.name">
+                <source></source>
+                <target>personvernerklæring</target>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>I decline</source>
+                <target>Avslå</target>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>That&#x27;s ok</source>
+                <target>OK</target>
             </trans-unit>
             <trans-unit id="poweredBy">
-                <source>Powered by Klaro!</source>
+                <source>Realized with Klaro!</source>
                 <target>Laget med Klaro!</target>
+            </trans-unit>
+            <trans-unit id="purposeItem.service">
+                <source>service</source>
+            </trans-unit>
+            <trans-unit id="purposeItem.services">
+                <source>services</source>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+                <target>Opslaan</target>
             </trans-unit>
         </body>
     </file>

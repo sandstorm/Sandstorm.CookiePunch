@@ -1,36 +1,72 @@
-consentModal:
-  title: Les informations que nous collectons
-  description: >
-    Ici, vous pouvez voir et personnaliser les informations que nous collectons sur vous.
-  privacyPolicy:
-    name: politique de confidentialité
-    text: >
-      Pour en savoir plus, merci de lire notre {privacyPolicy}.
-consentNotice:
-  changeDescription: Des modifications ont eu lieu depuis votre dernière visite, merci de mettre à jour votre consentement.
-  description: >
-    Nous collectons et traitons vos informations personnelles dans le but suivant : {purposes}.
-  learnMore: En savoir plus
-  privacyPolicy:
-    name: politique de confidentialité
-  imprint:
-    name: Imprimer
-ok: OK
-save: Sauvegarder
-decline: Refuser
+# Warning, this file is partially automatically generated!
+acceptAll: Accepter tout
+acceptSelected: Accepter sélectionné
 close: Fermer
-acceptAll: Tout accepter
-acceptSelected: Accepter la sélection
-app:
+consentModal:
+  description: Vous pouvez ici évaluer et personnaliser les services que nous aimerions
+    utiliser sur ce site. C'est vous qui décidez ! Activez ou désactivez les services
+    comme bon vous semble.
+  privacyPolicy:
+    name: politique de confidentialité
+    text: Pour en savoir plus, veuillez lire notre {privacyPolicy}.
+  title: Services que nous souhaitons utiliser
+consentNotice:
+  changeDescription: Il y a eu des changements depuis votre dernière visite, veuillez
+    renouveler votre consentement.
+  description: Bonjour ! Pourrions-nous activer des services supplémentaires pour
+    {purposes}? Vous pouvez toujours modifier ou retirer votre consentement plus tard.
+  imprint:
+    name: mentions légales
+  learnMore: Laissez-moi choisir
+  privacyPolicy:
+    name: politique de confidentialité
+  testing: Mode test !
+contextualConsent:
+  acceptAlways: Toujours
+  acceptOnce: Oui
+  description: Vous souhaitez charger un contenu externe fourni par {title}?
+decline: Je refuse
+ok: C'est bon.
+poweredBy: Réalisé avec Klaro !
+privacyPolicy:
+  name: politique de confidentialité
+  text: Pour en savoir plus, veuillez lire notre {privacyPolicy}.
+purposeItem:
+  service: service
+  services: services
+purposes:
+  advertising:
+    description: Ces services traitent les informations personnelles pour vous présenter
+      des publicités personnalisées ou basées sur des intérêts.
+    title: Publicité
+  functional:
+    description: 'Ces services sont essentiels au bon fonctionnement de ce site. Vous
+      ne pouvez pas les désactiver ici car le service ne fonctionnerait pas correctement
+      autrement.
+
+      '
+    title: Prestation de services
+  marketing:
+    description: Ces services traitent les informations personnelles afin de vous
+      présenter un contenu pertinent sur les produits, les services ou les sujets
+      qui pourraient vous intéresser.
+    title: Marketing
+  performance:
+    description: 'Ces services traitent les informations personnelles afin d''optimiser
+      le service que ce site Web offre.
+
+      '
+    title: Optimisation de la performance
+save: Enregistrer
+service:
   disableAll:
-    title: Changer toutes les options
-    description: Utiliser ce bouton pour activer/désactiver toutes les options
+    description: Utilisez ce commutateur pour activer ou désactiver tous les services.
+    title: Activer ou désactiver tous les services
   optOut:
+    description: Ce service est chargé par défaut (mais vous pouvez le désactiver)
     title: (opt-out)
-    description: Cette application est chargée par défaut (mais vous pouvez la désactiver)
+  purpose: Objet
+  purposes: Fins
   required:
+    description: Ce service est toujours nécessaire
     title: (toujours requis)
-    description: Cette application est toujours requise
-  purposes: Utilisations
-  purpose: Utilisation
-poweredBy: Propulsé par Klaro!

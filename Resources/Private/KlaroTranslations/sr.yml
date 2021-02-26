@@ -1,32 +1,43 @@
-consentModal:
-  title: Informacije koje prikupljamo
-  description: >
-    Ovde možete videti i podesiti informacije koje prikupljamo o Vama.
-  privacyPolicy:
-    name: politiku privatnosti
-    text: >
-      Za više informacije pročitajte našu {privacyPolicy}.
-consentNotice:
-  changeDescription: Došlo je do promena od Vaše poslednje posete, molimo Vas da ažurirate svoja odobrenja.
-  description: >
-    Mi prikupljamo i procesiramo Vaše lične podatke radi sledećeg: {purposes}.
-  learnMore: Saznajte više
-  privacyPolicy:
-    name: politiku privatnosti
-ok: U redu
-save: Sačuvaj
-decline: Odbij
+acceptAll: ''
+acceptAll_en: Accept all
+acceptSelected: ''
+acceptSelected_en: Accept selected
+service:
+    disableAll:
+        description:
+            Koristite ovaj prekidač da omogućite/onesposobite sve aplikacije
+            odjednom.
+        title: Izmeni sve
+    optOut:
+        description: Ova aplikacija je učitana automatski (ali je možete onesposobiti)
+        title: (onesposobite)
+    purpose: Svrha
+    purposes: Svrhe
+    required:
+        description: Ova aplikacija je uvek neophodna
+        title: (neophodna)
 close: Zatvori
-app:
-  disableAll:
-    title: Izmeni sve
-    description: Koristite ovaj prekidač da omogućite/onesposobite sve aplikacije odjednom.
-  optOut:
-    title: (onesposobite)
-    description: Ova aplikacija je učitana automatski (ali je možete onesposobiti)
-  required:
-    title: (neophodna)
-    description: Ova aplikacija je uvek neophodna.
-  purposes: Svrhe
-  purpose: Svrha
+consentModal:
+    description: Ovde možete videti i podesiti informacije koje prikupljamo o Vama.
+    privacyPolicy:
+        name: politiku privatnosti
+        text: Za više informacije pročitajte našu {privacyPolicy}.
+    title: Informacije koje prikupljamo
+consentNotice:
+    changeDescription:
+        Došlo je do promena od Vaše poslednje posete, molimo Vas da ažurirate
+        svoja odobrenja.
+    description: 'Mi prikupljamo i procesiramo Vaše lične podatke radi sledećeg: {purposes}.'
+    imprint:
+        name: ''
+        name_en: imprint
+    learnMore: Saznajte više
+    privacyPolicy:
+        name: politiku privatnosti
+decline: Odbij
+ok: U redu
 poweredBy: Pokreće Klaro!
+purposeItem:
+    service: ''
+    services: ''
+save: Sačuvaj

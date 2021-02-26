@@ -8,91 +8,119 @@
             ################################################################################################
         </note>
         <body>
-            <trans-unit id="consentModal.title">
-                <source>Information that we collect</source>
-                <target>Informațiile pe care le colectăm</target>
+            <trans-unit id="acceptAll">
+                <source>Accept all</source>
+            </trans-unit>
+            <trans-unit id="acceptAll_en">
+                <source></source>
+                <target>Accept all</target>
+            </trans-unit>
+            <trans-unit id="acceptSelected">
+                <source>Accept selected</source>
+            </trans-unit>
+            <trans-unit id="acceptSelected_en">
+                <source></source>
+                <target>Accept selected</target>
+            </trans-unit>
+            <trans-unit id="service.disableAll.description">
+                <source>Use this switch to enable or disable all services.</source>
+                <target>Utilizați acest switch pentru a activa/dezactiva toate aplicațiile.</target>
+            </trans-unit>
+            <trans-unit id="service.disableAll.title">
+                <source>Enable or disable all services</source>
+                <target>Comutați între toate aplicațiile</target>
+            </trans-unit>
+            <trans-unit id="service.optOut.description">
+                <source>This services is loaded by default (but you can opt out)</source>
+                <target>Această aplicație este încărcată în mod implicit (dar puteți renunța)</target>
+            </trans-unit>
+            <trans-unit id="service.optOut.title">
+                <source>(opt-out)</source>
+                <target>(opt-out)</target>
+            </trans-unit>
+            <trans-unit id="service.purpose">
+                <source>purpose</source>
+                <target>Scop</target>
+            </trans-unit>
+            <trans-unit id="service.purposes">
+                <source>purposes</source>
+                <target>Scopuri</target>
+            </trans-unit>
+            <trans-unit id="service.required.description">
+                <source>This services is always required</source>
+                <target>Această aplicație este întotdeauna necesară</target>
+            </trans-unit>
+            <trans-unit id="service.required.title">
+                <source>(always required)</source>
+                <target>(întotdeauna necesar)</target>
+            </trans-unit>
+            <trans-unit id="close">
+                <source>Close</source>
+            </trans-unit>
+            <trans-unit id="close_en">
+                <source></source>
+                <target>Close</target>
             </trans-unit>
             <trans-unit id="consentModal.description">
-                <source>Here you can see and customize the information that we collect about you.
-</source>
-                <target>Aici puteți vedea și personaliza informațiile pe care le colectăm despre dvs.
-</target>
+                <source>Here you can assess and customize the services that we&#x27;d like to use on this website. You&#x27;re in charge! Enable or disable services as you see fit.</source>
+                <target>Aici puteți vedea și personaliza informațiile pe care le colectăm despre dvs.</target>
             </trans-unit>
             <trans-unit id="consentModal.privacyPolicy.name">
-                <source>privacy policy</source>
+                <source></source>
                 <target>politica privacy</target>
             </trans-unit>
             <trans-unit id="consentModal.privacyPolicy.text">
-                <source>To learn more, please read our {privacyPolicy}.
-</source>
-                <target>Pentru a afla mai multe, vă rugăm să citiți {privacyPolicy}.
-</target>
+                <source></source>
+                <target>Pentru a afla mai multe, vă rugăm să citiți {privacyPolicy}.</target>
+            </trans-unit>
+            <trans-unit id="consentModal.title">
+                <source>Services we would like to use</source>
+                <target>Informațiile pe care le colectăm</target>
             </trans-unit>
             <trans-unit id="consentNotice.changeDescription">
-                <source>There were changes since your last visit, please update your consent.</source>
+                <source>There were changes since your last visit, please renew your consent.</source>
                 <target>Au existat modificări de la ultima vizită, vă rugăm să actualizați consimțământul.</target>
             </trans-unit>
             <trans-unit id="consentNotice.description">
-                <source>We collect and process your personal information for the following purposes: {purposes}.
-</source>
-                <target>Colectăm și procesăm informațiile dvs. personale în următoarele scopuri: {purposes}.
-</target>
+                <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
+                <target>Colectăm și procesăm informațiile dvs. personale în următoarele scopuri: {purposes}.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.imprint.name">
+                <source></source>
+            </trans-unit>
+            <trans-unit id="consentNotice.imprint.name_en">
+                <source></source>
+                <target>imprint</target>
             </trans-unit>
             <trans-unit id="consentNotice.learnMore">
-                <source>Customize</source>
+                <source>Let me choose</source>
                 <target>Află mai multe</target>
             </trans-unit>
             <trans-unit id="consentNotice.privacyPolicy.name">
-                <source>privacy policy</source>
+                <source></source>
                 <target>politica privacy</target>
             </trans-unit>
+            <trans-unit id="decline">
+                <source>I decline</source>
+                <target>Renunță</target>
+            </trans-unit>
             <trans-unit id="ok">
-                <source>Accept</source>
+                <source>That&#x27;s ok</source>
                 <target>OK</target>
+            </trans-unit>
+            <trans-unit id="poweredBy">
+                <source>Realized with Klaro!</source>
+                <target>Realizat de Klaro!</target>
+            </trans-unit>
+            <trans-unit id="purposeItem.service">
+                <source>service</source>
+            </trans-unit>
+            <trans-unit id="purposeItem.services">
+                <source>services</source>
             </trans-unit>
             <trans-unit id="save">
                 <source>Save</source>
                 <target>Salvează</target>
-            </trans-unit>
-            <trans-unit id="decline">
-                <source>Decline</source>
-                <target>Renunță</target>
-            </trans-unit>
-            <trans-unit id="app.disableAll.title">
-                <source>Toggle all apps</source>
-                <target>Comutați între toate aplicațiile</target>
-            </trans-unit>
-            <trans-unit id="app.disableAll.description">
-                <source>Use this switch to enable/disable all apps.</source>
-                <target>Utilizați acest switch pentru a activa/dezactiva toate aplicațiile.</target>
-            </trans-unit>
-            <trans-unit id="app.optOut.title">
-                <source>(opt-out)</source>
-                <target>(opt-out)</target>
-            </trans-unit>
-            <trans-unit id="app.optOut.description">
-                <source>This app is loaded by default (but you can opt out)</source>
-                <target>Această aplicație este încărcată în mod implicit (dar puteți renunța)</target>
-            </trans-unit>
-            <trans-unit id="app.required.title">
-                <source>(always required)</source>
-                <target>(întotdeauna necesar)</target>
-            </trans-unit>
-            <trans-unit id="app.required.description">
-                <source>This application is always required</source>
-                <target>Această aplicație este întotdeauna necesară</target>
-            </trans-unit>
-            <trans-unit id="app.purposes">
-                <source>Purposes</source>
-                <target>Scopuri</target>
-            </trans-unit>
-            <trans-unit id="app.purpose">
-                <source>Purpose</source>
-                <target>Scop</target>
-            </trans-unit>
-            <trans-unit id="poweredBy">
-                <source>Powered by Klaro!</source>
-                <target>Realizat de Klaro!</target>
             </trans-unit>
         </body>
     </file>

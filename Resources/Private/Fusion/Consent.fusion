@@ -2,11 +2,11 @@
 prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
     config = Sandstorm.CookiePunch:Config
     js = Neos.Fusion:ResourceUri {
-        path = 'resource://Sandstorm.CookiePunch/Public/Klaro/klaro-no-css_v0.4.27.js'
+        path = 'resource://Sandstorm.CookiePunch/Public/Klaro/klaro-no-css_v0.7.15.js'
     }
 
     css = Neos.Fusion:ResourceUri {
-        path = 'resource://Sandstorm.CookiePunch/Public/Klaro/klaro_v0.4.27.min.css'
+        path = 'resource://Sandstorm.CookiePunch/Public/Klaro/klaro_v0.7.15.min.css'
     }
 
     renderer = afx`
