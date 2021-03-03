@@ -1,7 +1,3 @@
-interface Window {
-  klaroConfig: KlaroConfig;
-}
-
 type KlaroCallbackApp = {
   name: string;
   title: string;
@@ -17,17 +13,18 @@ type KlaroAppConfig = {
 
 type KlaroConfig = {
   lang: string;
-  storageMethod: string;
+
+  acceptAll: boolean;
+  apps: KlaroAppConfig[];
   cookieName: string;
   cookieExpiresAfterDays: number;
   cookieDomain: string;
-  privacyPolicy: string;
   default: boolean;
-  mustConsent: boolean;
-  acceptAll: boolean;
   hideDeclineAll: boolean;
+  mustConsent: boolean;
+  privacyPolicy: string;
+  storageMethod: string;
   translations: { [key: string]: any };
-  apps: KlaroAppConfig[];
 };
 
 type CookiePunchConfig = KlaroConfig & {
@@ -42,10 +39,16 @@ type AppJson = {
   cookies: string[];
 };
 
+//@ts-ignore
+if (!window.cookiePunchConfig) {
+  throw new Error(
+    "No cookiePunchConfig was found on window. This should not happen! Please check your config and logs."
+  );
+}
+
 (function () {
   //@ts-ignore
-  const cookiePunchConfig = "$replaced_by_php__cookiePunchConfig" as CookiePunchConfig;
-
+  const cookiePunchConfig = window.cookiePunchConfig as CookiePunchConfig;
   function buildAppsConfiguration(): KlaroAppConfig[] {
     return cookiePunchConfig.apps.map((app) => {
       return {
@@ -56,51 +59,52 @@ type AppJson = {
     });
   }
 
+  // @ts-ignore
   window.klaroConfig = {
     // IMPORTANT: we disable the language handling of klaro because
     // we want to use translations provided the Neos-way
     lang: "all",
 
-    // How Klaro should store the user's preferences. It can be either 'cookie'
-    // (the default) or 'localStorage'.
-    storageMethod: cookiePunchConfig.storageMethod,
+    // ############## cookiePunchConfig ##############
 
-    // You can customize the name of the cookie that Klaro uses for storing
-    // user consent decisions. If undefined, Klaro will use 'klaro'.
-    cookieName: cookiePunchConfig.cookieName,
+    apps: buildAppsConfiguration(),
 
-    // You can also set a custom expiration time for the Klaro cookie.
-    // By default, it will expire after 120 days.
-    cookieExpiresAfterDays: cookiePunchConfig.cookieExpiresAfterDays,
+    // Show "accept all" to accept all apps instead of "ok" that only accepts
+    // required and "default: true" apps
+    acceptAll: cookiePunchConfig.acceptAll,
 
     // You can change to cookie domain for the consent manager itself.
     // Use this if you want to get consent once for multiple matching domains.
     // If undefined, Klaro will use the current domain.
     cookieDomain: cookiePunchConfig.cookieDomain,
-
-    // Put a link to your privacy policy here (relative or absolute).
-    privacyPolicy: cookiePunchConfig.privacyPolicy,
+    // You can also set a custom expiration time for the Klaro cookie.
+    // By default, it will expire after 120 days.
+    cookieExpiresAfterDays: cookiePunchConfig.cookieExpiresAfterDays,
+    // You can customize the name of the cookie that Klaro uses for storing
+    // user consent decisions. If undefined, Klaro will use 'klaro'.
+    cookieName: cookiePunchConfig.cookieName,
 
     // Defines the default state for applications (true=enabled by default).
     default: cookiePunchConfig.default,
+
+    // replace "decline" with cookie manager modal
+    hideDeclineAll: cookiePunchConfig.hideDeclineAll,
 
     // If "mustConsent" is set to true, Klaro will directly display the consent
     // manager modal and not allow the user to close it before having actively
     // consented or declines the use of third-party apps.
     mustConsent: cookiePunchConfig.mustConsent,
 
-    // Show "accept all" to accept all apps instead of "ok" that only accepts
-    // required and "default: true" apps
-    acceptAll: cookiePunchConfig.acceptAll,
+    // Put a link to your privacy policy here (relative or absolute).
+    privacyPolicy: cookiePunchConfig.privacyPolicy,
 
-    // replace "decline" with cookie manager modal
-    hideDeclineAll: cookiePunchConfig.hideDeclineAll,
+    // How Klaro should store the user's preferences. It can be either 'cookie'
+    // (the default) or 'localStorage'.
+    storageMethod: cookiePunchConfig.storageMethod,
 
     translations: {
       all: cookiePunchConfig.translations,
     },
-
-    apps: buildAppsConfiguration(),
   };
 
   function handleConsent(consent: boolean, app: KlaroCallbackApp) {

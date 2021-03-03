@@ -7,7 +7,8 @@
   "scripts": {
     "build": "yarn run build:translations && yarn run build:template",
     "build:translations": "node ./Resources/Private/KlaroTranslations/build/build.js",
-    "build:template": "tsc -p ./Resources/Private/JavaScript/klaroConfigTemplate.ts --outFile ./Resources/Private/JavaScript/klaroConfigTemplateCompiled.js",
+    "build:template": "tsc",
+    "watch": "tsc --watch",
     "prettier:check": "yarn prettier --check .",
     "prettier:fix": "yarn prettier --write ."
   },

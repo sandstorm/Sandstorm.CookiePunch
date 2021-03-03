@@ -3,7 +3,8 @@
     "target": "ES2015",
     "module": "commonjs",
     "strict": true,
-    "removeComments": true
+    "removeComments": true,
+    "outDir": "./Resources/Public"
   },
-  "include": ["Resources/Private/JavaScript/klaroConfigTemplate.ts"]
+  "include": ["./Resources/Private/JavaScript"]
 }
