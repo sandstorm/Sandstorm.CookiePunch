@@ -5,7 +5,7 @@ use Neos\Flow\Tests\UnitTestCase;
 use Sandstorm\CookiePunch\TagHelper;
 
 /**
- * Testcase for the ConvertNodeUris Fusion implementation
+ * Testcase
  */
 class TagHelperTest extends UnitTestCase
 {
@@ -14,6 +14,25 @@ class TagHelperTest extends UnitTestCase
      */
     public function tagHelper()
     {
+        // ### Get Value of attribute ###
+        $markup = '<div style="with-style" data-foo="bar"></div>';
+        $expected = 'with-style';
+        $actual = TagHelper::tagGetAttributeValue($markup, 'style');
+
+        self::assertEquals($expected, $actual);
+
+        $markup = '<div style="with-style" data-type="text/application"></div>';
+        $expected = 'text/application';
+        $actual = TagHelper::tagGetAttributeValue($markup, 'data-type');
+
+        self::assertEquals($expected, $actual);
+
+        $markup = '<div style="with-style" data-foo="bar"></div>';
+        $expected = null;
+        $actual = TagHelper::tagGetAttributeValue($markup, 'no-attribute');
+
+        self::assertEquals($expected, $actual);
+
         // ### Rename Attribute ###
         $markup = '<div style="with-style" data-foo="bar"></div>';
         $expected = '<div data-style="with-style" data-foo="bar"></div>';
