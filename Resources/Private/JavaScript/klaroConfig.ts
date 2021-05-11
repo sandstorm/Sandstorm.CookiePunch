@@ -1,109 +1,130 @@
-/* PHP_REMOVE_START */
-
-// Here we define variables to have a valid JS file, which makes development
-// more fun. They will later be replaced by the `ConsentConfigImplementation.php`.
-// We prefix variables with `$php_replaced__` to show that they will be replaced.
-
-// This file will be processed the following way:
-//
-// 1. (manually) Make sure you create an new build of this file to get a template that also works
-//    in old browsers -> `yarn run build:template`. This will create a file "klaroConfigTemplateCompiled.js".
-//    This file will be processed in the next steps!
-//
-// 2. ConsentConfigImplementation.php will remove content between "PHP_REMOVE_START" and "PHP_REMOVE_END"
-//    to remove variable definitions, that are only used for a better dev experience.
-//
-// 3. ConsentConfigImplementation.php will remove the callback placeholder for all apps with the actual callback.
-//    This is necessary as we are using json_encode. Json files do not support Js variables or callbacks.
-//
-//    Before:    { "name": "default", "title": "Default", "callback": "### CONSENT_HANDLER ###" }
-//    After:     { "name": "default", "title": "Default", "callback": handleConsent }
-//
-// IMPORTANT FOR DEV: When changing the template make sure to flush the cache, otherwise changes will not
-// show in the browser, even after reloading!
-
-var $php_replaced__apps,
-  $php_replaced__translations,
-  $php_replaced__privacyPolicyUrl,
-  $php_replaced__cookieDomain,
-  $php_replaced__cookieExpiresAfterDays,
-  $php_replaced__storageMethod,
-  $php_replaced__cookieName,
-  $php_replaced__mustConsent,
-  $php_replaced__default,
-  $php_replaced__acceptAll,
-  $php_replaced__hideDeclineAll;
-var $php_replaced__handleConsentOptions = {
-  message: "Message",
-  messageClass: "messageClass",
+type KlaroCallbackApp = {
+  name: string;
+  title: string;
 };
 
-/* PHP_REMOVE_END */
+type KlaroAppConfig = {
+  name: string;
+  title: string;
+  purposes: string[];
+  cookies: RegExp[];
+  callback: (consent: boolean, app: KlaroCallbackApp) => void;
+};
+
+type KlaroConfig = {
+  lang: string;
+
+  acceptAll: boolean;
+  apps: KlaroAppConfig[];
+  cookieName: string;
+  cookieExpiresAfterDays: number;
+  cookieDomain: string;
+  default: boolean;
+  hideDeclineAll: boolean;
+  mustConsent: boolean;
+  privacyPolicy: string;
+  storageMethod: string;
+  translations: { [key: string]: any };
+};
+
+type CookiePunchConfig = KlaroConfig & {
+  apps: AppJson;
+  handleConsentOptions: { [key: string]: any };
+};
+
+type AppJson = {
+  name: string;
+  title: string;
+  purposes: string[];
+  cookies: string[];
+};
+
+//@ts-ignore
+if (!window.cookiePunchConfig) {
+  throw new Error(
+    "No cookiePunchConfig was found on window. This should not happen! Please check your config and logs."
+  );
+}
 
 (function () {
+  //@ts-ignore
+  const cookiePunchConfig = window.cookiePunchConfig as CookiePunchConfig;
+  function buildAppsConfiguration(): KlaroAppConfig[] {
+    return cookiePunchConfig.apps.map((app) => {
+      return {
+        ...app,
+        cookies: [],
+        callback: handleConsent,
+      };
+    });
+  }
+
+  // @ts-ignore
   window.klaroConfig = {
     // IMPORTANT: we disable the language handling of klaro because
     // we want to use translations provided the Neos-way
     lang: "all",
 
-    // How Klaro should store the user's preferences. It can be either 'cookie'
-    // (the default) or 'localStorage'.
-    storageMethod: $php_replaced__storageMethod,
+    // ############## cookiePunchConfig ##############
 
-    // You can customize the name of the cookie that Klaro uses for storing
-    // user consent decisions. If undefined, Klaro will use 'klaro'.
-    cookieName: $php_replaced__cookieName,
+    apps: buildAppsConfiguration(),
 
-    // You can also set a custom expiration time for the Klaro cookie.
-    // By default, it will expire after 120 days.
-    cookieExpiresAfterDays: $php_replaced__cookieExpiresAfterDays,
+    // Show "accept all" to accept all apps instead of "ok" that only accepts
+    // required and "default: true" apps
+    acceptAll: cookiePunchConfig.acceptAll,
 
     // You can change to cookie domain for the consent manager itself.
     // Use this if you want to get consent once for multiple matching domains.
     // If undefined, Klaro will use the current domain.
-    cookieDomain: $php_replaced__cookieDomain,
-
-    // Put a link to your privacy policy here (relative or absolute).
-    privacyPolicy: $php_replaced__privacyPolicyUrl,
+    cookieDomain: cookiePunchConfig.cookieDomain,
+    // You can also set a custom expiration time for the Klaro cookie.
+    // By default, it will expire after 120 days.
+    cookieExpiresAfterDays: cookiePunchConfig.cookieExpiresAfterDays,
+    // You can customize the name of the cookie that Klaro uses for storing
+    // user consent decisions. If undefined, Klaro will use 'klaro'.
+    cookieName: cookiePunchConfig.cookieName,
 
     // Defines the default state for applications (true=enabled by default).
-    default: $php_replaced__default,
+    default: cookiePunchConfig.default,
+
+    // replace "decline" with cookie manager modal
+    hideDeclineAll: cookiePunchConfig.hideDeclineAll,
 
     // If "mustConsent" is set to true, Klaro will directly display the consent
     // manager modal and not allow the user to close it before having actively
     // consented or declines the use of third-party apps.
-    mustConsent: $php_replaced__mustConsent,
+    mustConsent: cookiePunchConfig.mustConsent,
 
-    // Show "accept all" to accept all apps instead of "ok" that only accepts
-    // required and "default: true" apps
-    acceptAll: $php_replaced__acceptAll,
+    // Put a link to your privacy policy here (relative or absolute).
+    privacyPolicy: cookiePunchConfig.privacyPolicy,
 
-    // replace "decline" with cookie manager modal
-    hideDeclineAll: $php_replaced__hideDeclineAll,
+    // How Klaro should store the user's preferences. It can be either 'cookie'
+    // (the default) or 'localStorage'.
+    storageMethod: cookiePunchConfig.storageMethod,
 
     translations: {
-      all: $php_replaced__translations,
+      all: cookiePunchConfig.translations,
     },
-
-    apps: $php_replaced__apps,
   };
 
-  function handleConsent(consent, app) {
+  function handleConsent(consent: boolean, app: KlaroCallbackApp) {
     // We nee a stable class to identify messages so we can remove them later.
     const PERMANENT_MESSAGE_CLASS = "block-them-all-message";
     // -> see Settings.yaml and/or Config.fusion
-    const handleConsentOptions = $php_replaced__handleConsentOptions;
+    const handleConsentOptions = cookiePunchConfig.handleConsentOptions;
 
     if (consent) {
       removeMessagesForConsentGroup(app.name);
       unhideIframesForGroup(app.name);
     } else {
-      let options = null;
+      let options: { [key: string]: any };
+
       document
         .querySelectorAll(`*[data-name="${app.name}"]`)
         .forEach((element) => {
           try {
             // more robust handling of maybe broken JSON
+            //@ts-ignore
             options = JSON.parse(element.dataset.options);
           } catch (e) {
             // Do nothing
@@ -115,7 +136,7 @@ var $php_replaced__handleConsentOptions = {
             handleConsentOptions.messageClass
           );
           let messagePosition = "before";
-          let targetElements = [];
+          let targetElements: Element[] = [];
 
           if (element.tagName === "IFRAME") {
             targetElements = [element];
@@ -142,21 +163,21 @@ var $php_replaced__handleConsentOptions = {
           }
         });
     }
-    function removeMessagesForConsentGroup(group) {
+    function removeMessagesForConsentGroup(group: string) {
       const messageSelector = `.${PERMANENT_MESSAGE_CLASS}[data-name="${group}"]`;
       document.querySelectorAll(messageSelector).forEach((item) => {
         item.remove();
       });
     }
 
-    function unhideIframesForGroup(group) {
+    function unhideIframesForGroup(group: string) {
       const iframeSelector = `iframe[data-name="${group}"]`;
       document.querySelectorAll(iframeSelector).forEach((item) => {
-        item.style.display = "block";
+        (item as HTMLElement).style.display = "block";
       });
     }
 
-    function buildMessageClass(messageClass) {
+    function buildMessageClass(messageClass: string) {
       if (messageClass && messageClass !== PERMANENT_MESSAGE_CLASS) {
         return `${PERMANENT_MESSAGE_CLASS} ${handleConsentOptions.messageClass}`;
       }
@@ -164,11 +185,11 @@ var $php_replaced__handleConsentOptions = {
     }
 
     function addMessage(
-      targetElement,
-      message,
-      app,
-      messagePosition,
-      messageClass
+      targetElement: Element,
+      message: string,
+      app: KlaroCallbackApp,
+      messagePosition: string,
+      messageClass: string
     ) {
       const newElement = document.createElement("div");
       const classNames = messageClass.split(" ");
@@ -179,6 +200,7 @@ var $php_replaced__handleConsentOptions = {
         " "
       )}">${message.replace("{group}", app.title)}</div>`;
       newElement.onclick = function () {
+        //@ts-ignore
         klaro.show();
       };
       newElement.style.cursor = "pointer";
@@ -190,11 +212,11 @@ var $php_replaced__handleConsentOptions = {
 
       switch (messagePosition) {
         case "before": {
-          targetElement.parentElement.insertBefore(newElement, targetElement);
+          targetElement?.parentElement?.insertBefore(newElement, targetElement);
           break;
         }
         case "after": {
-          targetElement.parentElement.insertAfter(newElement, targetElement);
+          targetElement?.parentElement?.appendChild(newElement);
           break;
         }
         case "prepend": {

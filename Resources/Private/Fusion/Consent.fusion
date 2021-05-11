@@ -1,8 +1,14 @@
 # Klaro cookie consent, see https://klaro.kiprotect.com/
 prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
-    config = Sandstorm.CookiePunch:Config
-    js = Neos.Fusion:ResourceUri {
+    cookiePunchConfig = Sandstorm.CookiePunch:Config
+    cookiePunchConfig.@process.toJson = ${Json.stringify(value)}
+
+    klaro = Neos.Fusion:ResourceUri {
         path = 'resource://Sandstorm.CookiePunch/Public/Klaro/klaro-no-css_v0.4.27.js'
+    }
+
+    klaroConfig = Neos.Fusion:ResourceUri {
+        path = 'resource://Sandstorm.CookiePunch/Public/klaroConfig.js'
     }
 
     css = Neos.Fusion:ResourceUri {
@@ -11,8 +17,9 @@ prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
 
     renderer = afx`
         <link @if.hasStyles={props.css} rel="stylesheet" type="text/css" href={props.css}/>
-        <script defer type="application/javascript">{props.config}</script>
-        <script defer type="application/javascript" src={props.js}></script>
+        <script defer type="application/javascript">window.cookiePunchConfig={props.cookiePunchConfig};</script>
+        <script defer type="application/javascript" src={props.klaroConfig}></script>
+        <script defer type="application/javascript" src={props.klaro}></script>
     `
     @process.neverBlockScripts = ${CookiePunch.neverBlockScripts(value)}
 }
