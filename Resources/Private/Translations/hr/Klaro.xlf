@@ -8,95 +8,116 @@
             ################################################################################################
         </note>
         <body>
-            <trans-unit id="consentModal.title">
-                <source>Information that we collect</source>
-                <target>Informacije koje prikupljamo</target>
+            <trans-unit id="acceptAll">
+                <source>Accept all</source>
             </trans-unit>
-            <trans-unit id="consentModal.description">
-                <source>Here you can see and customize the information that we collect about you.
-</source>
-                <target>Ovdje možete vidjeti i podesiti informacije koje prikupljamo o Vama.
-</target>
+            <trans-unit id="acceptAll_en">
+                <source></source>
+                <target>Prihvati sve</target>
             </trans-unit>
-            <trans-unit id="consentModal.privacyPolicy.name">
-                <source>privacy policy</source>
-                <target>pravila privatnosti</target>
+            <trans-unit id="acceptSelected">
+                <source>Accept selected</source>
             </trans-unit>
-            <trans-unit id="consentModal.privacyPolicy.text">
-                <source>To learn more, please read our {privacyPolicy}.
-</source>
-                <target>Za više informacije pročitajte naša {privacyPolicy}.
-</target>
+            <trans-unit id="acceptSelected_en">
+                <source></source>
+                <target>Prihvati odabrane</target>
             </trans-unit>
-            <trans-unit id="consentNotice.changeDescription">
-                <source>There were changes since your last visit, please update your consent.</source>
-                <target>Došlo je do promjena od Vaše posljednjeg posjećivanja web stranice, molimo Vas da ažurirate svoja odobrenja.</target>
+            <trans-unit id="service.disableAll.description">
+                <source>Use this switch to enable or disable all services.</source>
+                <target>Koristite ovaj prekidač da omogućite/onemogućite sve aplikacije odjednom.</target>
             </trans-unit>
-            <trans-unit id="consentNotice.description">
-                <source>We collect and process your personal information for the following purposes: {purposes}.
-</source>
-                <target>Mi prikupljamo i procesiramo Vaše osobne podatke radi slijedećeg: {purposes}.
-</target>
+            <trans-unit id="service.disableAll.title">
+                <source>Enable or disable all services</source>
+                <target>Izmeijeni sve</target>
             </trans-unit>
-            <trans-unit id="consentNotice.learnMore">
-                <source>Customize</source>
-                <target>Saznajte više</target>
+            <trans-unit id="service.optOut.description">
+                <source>This services is loaded by default (but you can opt out)</source>
+                <target>Ova aplikacija je učitana automatski (ali je možete onemogućiti)</target>
             </trans-unit>
-            <trans-unit id="consentNotice.privacyPolicy.name">
-                <source>privacy policy</source>
-                <target>pravila privatnosti</target>
+            <trans-unit id="service.optOut.title">
+                <source>(opt-out)</source>
+                <target>(onemogućite)</target>
             </trans-unit>
-            <trans-unit id="ok">
-                <source>Accept</source>
-                <target>U redu</target>
+            <trans-unit id="service.purpose">
+                <source>purpose</source>
+                <target>Svrha</target>
             </trans-unit>
-            <trans-unit id="save">
-                <source>Save</source>
-                <target>Spremi</target>
+            <trans-unit id="service.purposes">
+                <source>purposes</source>
+                <target>Svrhe</target>
             </trans-unit>
-            <trans-unit id="decline">
-                <source>Decline</source>
-                <target>Odbij</target>
+            <trans-unit id="service.required.description">
+                <source>This services is always required</source>
+                <target>Ova aplikacija je uvijek obavezna</target>
+            </trans-unit>
+            <trans-unit id="service.required.title">
+                <source>(always required)</source>
+                <target>(obavezna)</target>
             </trans-unit>
             <trans-unit id="close">
                 <source>Close</source>
                 <target>Zatvori</target>
             </trans-unit>
-            <trans-unit id="app.disableAll.title">
-                <source>Toggle all apps</source>
-                <target>Izmeijeni sve</target>
+            <trans-unit id="consentModal.description">
+                <source>Here you can assess and customize the services that we&#x27;d like to use on this website. You&#x27;re in charge! Enable or disable services as you see fit.</source>
+                <target>Ovdje možete vidjeti i podesiti informacije koje prikupljamo o Vama.</target>
             </trans-unit>
-            <trans-unit id="app.disableAll.description">
-                <source>Use this switch to enable/disable all apps.</source>
-                <target>Koristite ovaj prekidač da omogućite/onemogućite sve aplikacije odjednom.</target>
+            <trans-unit id="consentModal.privacyPolicy.name">
+                <source></source>
+                <target>pravila privatnosti</target>
             </trans-unit>
-            <trans-unit id="app.optOut.title">
-                <source>(opt-out)</source>
-                <target>(onemogućite)</target>
+            <trans-unit id="consentModal.privacyPolicy.text">
+                <source></source>
+                <target>Za više informacije pročitajte naša {privacyPolicy}.</target>
             </trans-unit>
-            <trans-unit id="app.optOut.description">
-                <source>This app is loaded by default (but you can opt out)</source>
-                <target>Ova aplikacija je učitana automatski (ali je možete onemogućiti)</target>
+            <trans-unit id="consentModal.title">
+                <source>Services we would like to use</source>
+                <target>Informacije koje prikupljamo</target>
             </trans-unit>
-            <trans-unit id="app.required.title">
-                <source>(always required)</source>
-                <target>(obavezna)</target>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please renew your consent.</source>
+                <target>Došlo je do promjena od Vaše posljednjeg posjećivanja web stranice, molimo Vas da ažurirate svoja odobrenja.</target>
             </trans-unit>
-            <trans-unit id="app.required.description">
-                <source>This application is always required</source>
-                <target>Ova aplikacija je uvijek obavezna.</target>
+            <trans-unit id="consentNotice.description">
+                <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
+                <target>Mi prikupljamo i procesiramo Vaše osobne podatke radi slijedećeg: {purposes}.</target>
             </trans-unit>
-            <trans-unit id="app.purposes">
-                <source>Purposes</source>
-                <target>Svrhe</target>
+            <trans-unit id="consentNotice.imprint.name">
+                <source></source>
             </trans-unit>
-            <trans-unit id="app.purpose">
-                <source>Purpose</source>
-                <target>Svrha</target>
+            <trans-unit id="consentNotice.imprint.name_en">
+                <source></source>
+                <target>imprint</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.learnMore">
+                <source>Let me choose</source>
+                <target>Saznajte više</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.privacyPolicy.name">
+                <source></source>
+                <target>pravila privatnosti</target>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>I decline</source>
+                <target>Odbij</target>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>That&#x27;s ok</source>
+                <target>U redu</target>
             </trans-unit>
             <trans-unit id="poweredBy">
-                <source>Powered by Klaro!</source>
+                <source>Realized with Klaro!</source>
                 <target>Pokreće Klaro!</target>
+            </trans-unit>
+            <trans-unit id="purposeItem.service">
+                <source>service</source>
+            </trans-unit>
+            <trans-unit id="purposeItem.services">
+                <source>services</source>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+                <target>Spremi</target>
             </trans-unit>
         </body>
     </file>

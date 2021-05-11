@@ -11,23 +11,27 @@ class GroupsDataSource extends AbstractDataSource
     /**
      * @var string
      */
-    protected static $identifier = 'sandstorm-cookiepunch-groups';
+    protected static $identifier = 'sandstorm-cookiepunch-services';
 
     /**
-     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="groups")
+     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="consent.services")
      */
-    protected $groups;
+    protected $services;
 
     public function getData(NodeInterface $node = null, array $arguments = [])
     {
         $CookiePunchConfig = new CookiePunchConfig();
         $options = [];
-        foreach ($this->groups as $name => $group) {
-            $label = isset($group["title"])
-                ? $CookiePunchConfig->translate($group["title"])
-                : $name;
-            $options[$name] = ['label' => $label];
+
+        if(isset($this->services) && sizeof(array_keys($this->services)) > 0) {
+            foreach ($this->services as $name => $service) {
+                $label = isset($service["title"])
+                    ? $CookiePunchConfig->translate($service["title"])
+                    : $name;
+                $options[$name] = ['label' => $label];
+            }
         }
+
         return $options;
     }
 }

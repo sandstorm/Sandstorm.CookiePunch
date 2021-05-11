@@ -1,0 +1,21 @@
+Sandstorm:
+  CookiePunch:
+    consent:
+      purposes:
+        mediaembeds: Media Embeds
+      services:
+        anchor:
+          title: Anchor FM
+          description: Podcast Player
+          purposes:
+            - mediaembeds
+    blocking:
+      tagPatterns:
+        script:
+          "Packages/Neos.Neos":
+            block: false
+          "Packages/Unikka.Slick":
+            block: false
+        iframe:
+          "https://anchor.fm":
+            service: anchor

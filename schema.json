@@ -1,0 +1,291 @@
+{
+  "definitions": {
+    "blockPattern": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "block": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "service": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Sandstorm": {
+      "type": "object",
+      "properties": {
+        "CookiePunch": {
+          "type": "object",
+          "properties": {
+            "consent": {
+              "type": "object",
+              "properties": {
+                "privacyPolicyUrl": {
+                  "type": "string"
+                },
+                "elementID": {
+                  "type": "string"
+                },
+                "noAutoLoad": {
+                  "type": "boolean"
+                },
+                "htmlTexts": {
+                  "type": "boolean"
+                },
+                "embedded": {
+                  "type": "boolean"
+                },
+                "groupByPurpose": {
+                  "type": "boolean"
+                },
+                "storageMethod": {
+                  "type": "string"
+                },
+                "cookieName": {
+                  "type": "string"
+                },
+                "cookieExpiresAfterDays": {
+                  "type": "integer"
+                },
+                "default": {
+                  "type": "boolean"
+                },
+                "mustConsent": {
+                  "type": "boolean"
+                },
+                "acceptAll": {
+                  "type": "boolean"
+                },
+                "hideDeclineAll": {
+                  "type": "boolean"
+                },
+                "hideLearnMore": {
+                  "type": "boolean"
+                },
+                "noticeAsModal": {
+                  "type": "boolean"
+                },
+                "disablePoweredBy": {
+                  "type": "boolean"
+                },
+                "cookiePath": {
+                  "type": ["string", "null"]
+                },
+                "cookieDomain": {
+                  "type": ["string", "null"]
+                },
+                "additionalClass": {
+                  "type": ["string", "null"]
+                },
+                "styling": {
+                  "type": "object",
+                  "properties": {
+                    "button-text-color": {
+                      "type": "string"
+                    },
+                    "font-size": {
+                      "type": "string"
+                    },
+                    "font-family": {
+                      "type": "string"
+                    },
+                    "title-font-family": {
+                      "type": "string"
+                    },
+                    "green1": {
+                      "type": "string"
+                    },
+                    "green2": {
+                      "type": "string"
+                    },
+                    "green3": {
+                      "type": "string"
+                    },
+                    "blue1": {
+                      "type": "string"
+                    },
+                    "blue2": {
+                      "type": "string"
+                    },
+                    "blue3": {
+                      "type": "string"
+                    },
+                    "red1": {
+                      "type": "string"
+                    },
+                    "red2": {
+                      "type": "string"
+                    },
+                    "red3": {
+                      "type": "string"
+                    },
+                    "light1": {
+                      "type": "string"
+                    },
+                    "light2": {
+                      "type": "string"
+                    },
+                    "light3": {
+                      "type": "string"
+                    },
+                    "dark1": {
+                      "type": "string"
+                    },
+                    "dark2": {
+                      "type": "string"
+                    },
+                    "dark3": {
+                      "type": "string"
+                    },
+                    "white1": {
+                      "type": "string"
+                    },
+                    "white2": {
+                      "type": "string"
+                    },
+                    "white3": {
+                      "type": "string"
+                    },
+                    "border-radius": {
+                      "type": "string"
+                    },
+                    "border-style": {
+                      "type": "string"
+                    },
+                    "border-width": {
+                      "type": "string"
+                    },
+                    "notice-left": {
+                      "type": "string"
+                    },
+                    "notice-right": {
+                      "type": "string"
+                    },
+                    "notice-top": {
+                      "type": "string"
+                    },
+                    "notice-bottom": {
+                      "type": "string"
+                    },
+                    "notice-max-width": {
+                      "type": "string"
+                    },
+                    "notice-position": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "purposes": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "services": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "purposes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "contextualConsentOnly": {
+                        "type": "boolean"
+                      },
+                      "default": true,
+                      "cookies": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "pattern": {
+                              "type": "string"
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "domain": {
+                              "type": "string"
+                            },
+                            "patternIsRegex": {
+                              "type": "boolean"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": {
+                        "type": "boolean"
+                      },
+                      "optOut": {
+                        "type": "boolean"
+                      },
+                      "onlyOnce": {
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            "blocking": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "tagPatterns": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "script": {
+                      "$ref": "#/definitions/blockPattern"
+                    },
+                    "iframe": {
+                      "$ref": "#/definitions/blockPattern"
+                    }
+                  }
+                }
+              }
+            },
+            "translations": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["CookiePunch"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["Sandstorm"],
+  "additionalProperties": true
+}

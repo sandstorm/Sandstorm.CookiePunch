@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="Sandstorm.CookiePunch" source-language="en" target-language="cs" datatype="plaintext">
+        <note>
+            ################################################################################################
+            # IMPORTANT: This file was auto-generated as part of the build process to convert translations #
+            # provided by klaro. -> see package.json -> "yarn run build:translations"                      #
+            ################################################################################################
+        </note>
+        <body>
+            <trans-unit id="privacyPolicy.name">
+                <source>privacy policy</source>
+                <target>zásady ochrany soukromí</target>
+            </trans-unit>
+            <trans-unit id="privacyPolicy.text">
+                <source>To learn more, please read our {privacyPolicy}.</source>
+                <target>Pro další informace si přečtete naše &lt;tr-hint v&#x3D;&quot;privacy policy&quot;&gt;{privacyPolicy}&lt;/tr-hint&gt;.</target>
+            </trans-unit>
+            <trans-unit id="consentModal.title">
+                <source>Services we would like to use</source>
+                <target>Služby, které bychom rádi využili</target>
+            </trans-unit>
+            <trans-unit id="consentModal.description">
+                <source>Here you can assess and customize the services that we&#x27;d like to use on this website. You&#x27;re in charge! Enable or disable services as you see fit.</source>
+                <target>Zde můžete posoudit a přizpůsobit služby, které bychom rádi na tomto webu používali. Máte to pod kontrolou! Povolte nebo zakažte služby, jak uznáte za vhodné.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.testing">
+                <source>Testing mode!</source>
+                <target>Testing mode!</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please renew your consent.</source>
+                <target>Od vaší poslední návštěvy došlo ke změnám, obnovte prosím svůj souhlas.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.description">
+                <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
+                <target>„Dobrý den! Můžeme povolit některé další služby pro {purposes}? Svůj souhlas můžete kdykoliv změnit nebo odvolat.“</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.learnMore|capitalize">
+                <source></source>
+                <target>Vyberu si</target>
+            </trans-unit>
+            <trans-unit id="účely.functional.title|capitalize">
+                <source></source>
+                <target>Poskytování služeb</target>
+            </trans-unit>
+            <trans-unit id="účely.functional.description">
+                <source></source>
+                <target>Tyto služby jsou nezbytné pro správné fungování tohoto webu. Nelze je zde deaktivovat, protože služba by jinak nefungovala správně.
+</target>
+            </trans-unit>
+            <trans-unit id="účely.performance.title|capitalize">
+                <source></source>
+                <target>Optimalizace výkonu</target>
+            </trans-unit>
+            <trans-unit id="účely.performance.description">
+                <source></source>
+                <target>V rámci těchto služeb jsou zpracovávány osobní údaje za účelem optimalizace služeb, které jsou na tomto webu poskytovány.
+</target>
+            </trans-unit>
+            <trans-unit id="účely.marketing.title|capitalize">
+                <source></source>
+                <target>Marketing</target>
+            </trans-unit>
+            <trans-unit id="účely.marketing.description">
+                <source></source>
+                <target>V rámci těchto služeb jsou zpracovávány osobní údaje, aby se vám zobrazoval relevantní obsah o produktech, službách nebo tématech, které by vás mohly zajímat.</target>
+            </trans-unit>
+            <trans-unit id="účely.advertising.title|capitalize">
+                <source></source>
+                <target>Reklama</target>
+            </trans-unit>
+            <trans-unit id="účely.advertising.description">
+                <source></source>
+                <target>V rámci těchto služeb jsou zpracovávány osobní údaje, aby vám zobrazovaly personalizované nebo zájmově orientované reklamy.</target>
+            </trans-unit>
+            <trans-unit id="purposeItem.service">
+                <source>service</source>
+                <target>Jednoduchá služba &lt;tr-snip&gt;&lt;/tr-snip&gt; , kterou nainstaluji do svého počítače.</target>
+            </trans-unit>
+            <trans-unit id="purposeItem.services">
+                <source>services</source>
+                <target>Několik jednoduchých služeb &lt;tr-snip&gt;&lt;/tr-snip&gt; , které nainstaluji do svého počítače.</target>
+            </trans-unit>
+            <trans-unit id="ok|capitalize">
+                <source></source>
+                <target>To je v pořádku</target>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+                <target>uložit</target>
+            </trans-unit>
+            <trans-unit id="decline|capitalize">
+                <source></source>
+                <target>Nepřijímám</target>
+            </trans-unit>
+            <trans-unit id="close">
+                <source>Close</source>
+                <target>zavřít</target>
+            </trans-unit>
+            <trans-unit id="acceptAll">
+                <source>Accept all</source>
+                <target>přijmout vše</target>
+            </trans-unit>
+            <trans-unit id="acceptSelected">
+                <source>Accept selected</source>
+                <target>přijmout vybrané</target>
+            </trans-unit>
+            <trans-unit id="service.disableAll.title">
+                <source>Enable or disable all services</source>
+                <target>povolit nebo zakázat všechny služby</target>
+            </trans-unit>
+            <trans-unit id="service.disableAll.description">
+                <source>Use this switch to enable or disable all services.</source>
+                <target>Pomocí tohoto přepínače můžete povolit nebo zakázat všechny služby.</target>
+            </trans-unit>
+            <trans-unit id="service.optOut.title">
+                <source>(opt-out)</source>
+                <target>(opt-out)</target>
+            </trans-unit>
+            <trans-unit id="service.optOut.description">
+                <source>This services is loaded by default (but you can opt out)</source>
+                <target>Tato služba se načítá ve výchozím nastavení (ale můžete ji zrušit)</target>
+            </trans-unit>
+            <trans-unit id="service.required.title">
+                <source>(always required)</source>
+                <target>(vždy vyžadováno)</target>
+            </trans-unit>
+            <trans-unit id="service.required.description">
+                <source>This services is always required</source>
+                <target>Tato služba je vždy vyžadována</target>
+            </trans-unit>
+            <trans-unit id="service.purposes">
+                <source>purposes</source>
+                <target>Zpracování  pro účely &lt;tr-snip&gt;&lt;/tr-snip&gt;</target>
+            </trans-unit>
+            <trans-unit id="service.purpose">
+                <source>purpose</source>
+                <target>Zpracování pro účely &lt;tr-snip&gt;&lt;/tr-snip&gt;</target>
+            </trans-unit>
+            <trans-unit id="poweredBy">
+                <source>Realized with Klaro!</source>
+                <target>Realizováno pomocí Klaro!</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.description">
+                <source>Do you want to load external content supplied by {title}?</source>
+                <target>Chcete načíst externí obsah dodávaný prostřednictvím {title}?</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.acceptOnce">
+                <source>Yes</source>
+                <target>Ano</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.acceptAlways">
+                <source>Always</source>
+                <target>Vždy</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

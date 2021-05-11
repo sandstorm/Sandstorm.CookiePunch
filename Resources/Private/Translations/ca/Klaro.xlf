@@ -8,99 +8,109 @@
             ################################################################################################
         </note>
         <body>
-            <trans-unit id="consentModal.title">
-                <source>Information that we collect</source>
-                <target>Informació que recopilem</target>
+            <trans-unit id="acceptAll">
+                <source>Accept all</source>
+                <target>Accepta-les totes</target>
             </trans-unit>
-            <trans-unit id="consentModal.description">
-                <source>Here you can see and customize the information that we collect about you.
-</source>
-                <target>Aquí podeu veure i personalitzar la informació que recopilem sobre vós.
-</target>
+            <trans-unit id="acceptSelected">
+                <source>Accept selected</source>
+                <target>Accepta les escollides</target>
             </trans-unit>
-            <trans-unit id="consentModal.privacyPolicy.name">
-                <source>privacy policy</source>
-                <target>política de privadesa</target>
+            <trans-unit id="service.disableAll.description">
+                <source>Use this switch to enable or disable all services.</source>
+                <target>Useu aquest botó per a habilitar o deshabilitar totes les aplicacions.</target>
             </trans-unit>
-            <trans-unit id="consentModal.privacyPolicy.text">
-                <source>To learn more, please read our {privacyPolicy}.
-</source>
-                <target>Per a més informació, consulteu la nostra {privacyPolicy}.
-</target>
+            <trans-unit id="service.disableAll.title">
+                <source>Enable or disable all services</source>
+                <target>Habilita/deshabilita totes les aplicacions</target>
             </trans-unit>
-            <trans-unit id="consentNotice.changeDescription">
-                <source>There were changes since your last visit, please update your consent.</source>
-                <target>Hi ha hagut canvis des de la vostra darrera visita. Actualitzeu el vostre consentiment.</target>
+            <trans-unit id="service.optOut.description">
+                <source>This services is loaded by default (but you can opt out)</source>
+                <target>Aquesta aplicació es carrega per defecte, però podeu desactivar-la</target>
             </trans-unit>
-            <trans-unit id="consentNotice.description">
-                <source>We collect and process your personal information for the following purposes: {purposes}.
-</source>
-                <target>Recopilem i processem la vostra informació personal amb les següents finalitats: {purposes}.
-</target>
+            <trans-unit id="service.optOut.title">
+                <source>(opt-out)</source>
+                <target>(opt-out)</target>
             </trans-unit>
-            <trans-unit id="consentNotice.learnMore">
-                <source>Customize</source>
-                <target>Saber-ne més</target>
+            <trans-unit id="service.purpose">
+                <source>purpose</source>
+                <target>Finalitat</target>
             </trans-unit>
-            <trans-unit id="consentNotice.privacyPolicy.name">
-                <source>privacy policy</source>
-                <target>política de privadesa</target>
+            <trans-unit id="service.purposes">
+                <source>purposes</source>
+                <target>Finalitats</target>
             </trans-unit>
-            <trans-unit id="consentNotice.imprint.name">
-                <source>Imprint</source>
-                <target>Empremta</target>
+            <trans-unit id="service.required.description">
+                <source>This services is always required</source>
+                <target>Aquesta aplicació es necessita sempre</target>
             </trans-unit>
-            <trans-unit id="ok">
-                <source>Accept</source>
-                <target>Accepta</target>
-            </trans-unit>
-            <trans-unit id="save">
-                <source>Save</source>
-                <target>Desa</target>
-            </trans-unit>
-            <trans-unit id="decline">
-                <source>Decline</source>
-                <target>Rebutja</target>
+            <trans-unit id="service.required.title">
+                <source>(always required)</source>
+                <target>(necessària)</target>
             </trans-unit>
             <trans-unit id="close">
                 <source>Close</source>
                 <target>Tanca</target>
             </trans-unit>
-            <trans-unit id="app.disableAll.title">
-                <source>Toggle all apps</source>
-                <target>Habilita/deshabilita totes les aplicacions</target>
+            <trans-unit id="consentModal.description">
+                <source>Here you can assess and customize the services that we&#x27;d like to use on this website. You&#x27;re in charge! Enable or disable services as you see fit.</source>
+                <target>Aquí podeu veure i personalitzar la informació que recopilem sobre vós.</target>
             </trans-unit>
-            <trans-unit id="app.disableAll.description">
-                <source>Use this switch to enable/disable all apps.</source>
-                <target>Useu aquest botó per a habilitar o deshabilitar totes les aplicacions.</target>
+            <trans-unit id="consentModal.privacyPolicy.name">
+                <source></source>
+                <target>política de privadesa</target>
             </trans-unit>
-            <trans-unit id="app.optOut.title">
-                <source>(opt-out)</source>
-                <target>(opt-out)</target>
+            <trans-unit id="consentModal.privacyPolicy.text">
+                <source></source>
+                <target>Per a més informació, consulteu la nostra {privacyPolicy}.</target>
             </trans-unit>
-            <trans-unit id="app.optOut.description">
-                <source>This app is loaded by default (but you can opt out)</source>
-                <target>Aquesta aplicació es carrega per defecte, però podeu desactivar-la</target>
+            <trans-unit id="consentModal.title">
+                <source>Services we would like to use</source>
+                <target>Informació que recopilem</target>
             </trans-unit>
-            <trans-unit id="app.required.title">
-                <source>(always required)</source>
-                <target>(necessària)</target>
+            <trans-unit id="consentNotice.changeDescription">
+                <source>There were changes since your last visit, please renew your consent.</source>
+                <target>Hi ha hagut canvis des de la vostra darrera visita. Actualitzeu el vostre consentiment.</target>
             </trans-unit>
-            <trans-unit id="app.required.description">
-                <source>This application is always required</source>
-                <target>Aquesta aplicació es necessita sempre</target>
+            <trans-unit id="consentNotice.description">
+                <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
+                <target>Recopilem i processem la vostra informació personal amb les següents finalitats: {purposes}.</target>
             </trans-unit>
-            <trans-unit id="app.purposes">
-                <source>Purposes</source>
-                <target>Finalitats</target>
+            <trans-unit id="consentNotice.imprint.name">
+                <source></source>
+                <target>Empremta</target>
             </trans-unit>
-            <trans-unit id="app.purpose">
-                <source>Purpose</source>
-                <target>Finalitat</target>
+            <trans-unit id="consentNotice.learnMore">
+                <source>Let me choose</source>
+                <target>Saber-ne més</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.privacyPolicy.name">
+                <source></source>
+                <target>política de privadesa</target>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>I decline</source>
+                <target>Rebutja</target>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>That&#x27;s ok</source>
+                <target>Accepta</target>
             </trans-unit>
             <trans-unit id="poweredBy">
-                <source>Powered by Klaro!</source>
+                <source>Realized with Klaro!</source>
                 <target>Funciona amb Klaro!</target>
+            </trans-unit>
+            <trans-unit id="purposeItem.service">
+                <source>service</source>
+                <target>aplicació</target>
+            </trans-unit>
+            <trans-unit id="purposeItem.services">
+                <source>services</source>
+                <target>aplicacions</target>
+            </trans-unit>
+            <trans-unit id="save">
+                <source>Save</source>
+                <target>Desa</target>
             </trans-unit>
         </body>
     </file>

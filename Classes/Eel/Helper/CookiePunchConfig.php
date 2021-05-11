@@ -10,13 +10,17 @@ use phpDocumentor\Reflection\Types\Boolean;
 
 class CookiePunchConfig implements ProtectedContextAwareInterface
 {
-    public function translate(string $path): string
+    public function translate($path): ?string
     {
-        $settingsValue = (new ConfigurationHelper())->setting($path);
-        if ($settingsValue) {
-            return (new TranslationHelper())->translate($settingsValue);
+        if ($path) {
+            $settingsValue = (new ConfigurationHelper())->setting($path);
+            if ($settingsValue) {
+                return (new TranslationHelper())->translate($settingsValue);
+            } else {
+                return (new TranslationHelper())->translate($path);
+            }
         } else {
-            return (new TranslationHelper())->translate($path);
+            return null;
         }
     }
 
