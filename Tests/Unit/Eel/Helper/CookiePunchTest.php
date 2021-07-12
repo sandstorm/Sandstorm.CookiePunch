@@ -10,32 +10,21 @@ use Sandstorm\CookiePunch\Eel\Helper\CookiePunch;
  */
 class CookiePunchTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
-    public function scriptTagsWillBeBlocked()
+    public function scriptTagsWillBeBlockedWithoutConfig()
     {
         $blockExternalContentHelper = new CookiePunch();
-
-        ObjectAccess::setProperty(
-            $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_ALL,
-            true,
-            true
-        );
 
         // ### <script> with NO attribute ###
 
         $markup = '<script>var foo="bar";</script>';
         $expected =
-            '<script type="text/plain" data-type="text/javascript" data-name="default">var foo="bar";</script>';
+            '<script type="text/plain" data-type="text/javascript">var foo="bar";</script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
 
         // selfclosing
         $markup = '<script/>';
-        $expected =
-            '<script type="text/plain" data-type="text/javascript" data-name="default"/>';
+        $expected = '<script type="text/plain" data-type="text/javascript"/>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
 
@@ -43,7 +32,7 @@ class CookiePunchTest extends UnitTestCase
 
         $markup = '<script type="text/javascript"></script>';
         $expected =
-            '<script data-type="text/javascript" type="text/plain" data-name="default"></script>';
+            '<script data-type="text/javascript" type="text/plain"></script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
 
@@ -52,7 +41,7 @@ class CookiePunchTest extends UnitTestCase
         // not correctly recovering the correct value.
         $markup = '<script src="myscripts.js"></script>';
         $expected =
-            '<script data-src="myscripts.js" data-type="text/javascript" data-name="default"></script>';
+            '<script data-src="myscripts.js" data-type="text/javascript"></script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
 
@@ -60,14 +49,14 @@ class CookiePunchTest extends UnitTestCase
         $markup =
             '<script src="myscripts.js" defer type="text/javascript"></script>';
         $expected =
-            '<script data-src="myscripts.js" defer data-type="text/javascript" type="text/plain" data-name="default"></script>';
+            '<script data-src="myscripts.js" defer data-type="text/javascript" type="text/plain"></script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
 
         // selfclosing
         $markup = '<script src="myscripts.js" type="text/javascript"/>';
         $expected =
-            '<script data-src="myscripts.js" data-type="text/javascript" type="text/plain" data-name="default"/>';
+            '<script data-src="myscripts.js" data-type="text/javascript" type="text/plain"/>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
 
@@ -75,9 +64,113 @@ class CookiePunchTest extends UnitTestCase
         $markup =
             '<script src="myscripts.js" defer type="application/javascript"></script>';
         $expected =
-            '<script data-src="myscripts.js" defer data-type="application/javascript" type="text/plain" data-name="default"></script>';
+            '<script data-src="myscripts.js" defer data-type="application/javascript" type="text/plain"></script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
+    }
+
+    public function scriptTagsWillBeBlockedForPatternConfigWithBlockAttribute()
+    {
+        $blockExternalContentHelper = new CookiePunch();
+
+        ObjectAccess::setProperty(
+            $blockExternalContentHelper,
+            "tagPatterns",
+            [
+                "script" => [
+                    "*" => [
+                        "bock" => true,
+                    ],
+                ],
+            ],
+            true
+        );
+
+        $markup = '<script>var foo="bar";</script>';
+        $expected =
+            '<script type="text/plain" data-type="text/javascript">var foo="bar";</script>';
+        $actual = $blockExternalContentHelper->blockScripts($markup);
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function scriptTagsWillBeBlockedForPatternConfigWithServiceAttribute()
+    {
+        $blockExternalContentHelper = new CookiePunch();
+
+        ObjectAccess::setProperty(
+            $blockExternalContentHelper,
+            "tagPatterns",
+            [
+                "script" => [
+                    "*" => [
+                        "service" => "default",
+                    ],
+                ],
+            ],
+            true
+        );
+
+        $markup = '<script>var foo="bar";</script>';
+        $expected =
+            '<script type="text/plain" data-type="text/javascript" data-name="default">var foo="bar";</script>';
+        $actual = $blockExternalContentHelper->blockScripts($markup);
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function scriptTagsWillBeBlockedAsServiceAttributeWins()
+    {
+        $blockExternalContentHelper = new CookiePunch();
+
+        ObjectAccess::setProperty(
+            $blockExternalContentHelper,
+            "tagPatterns",
+            [
+                "script" => [
+                    "*" => [
+                        "block" => false,
+                        "service" => "default",
+                    ],
+                ],
+            ],
+            true
+        );
+
+        $markup = '<script>var foo="bar";</script>';
+        $expected =
+            '<script type="text/plain" data-type="text/javascript" data-name="default">var foo="bar";</script>';
+        $actual = $blockExternalContentHelper->blockScripts($markup);
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function scriptTagsWillNotBeBlockedForPatternConfigWithDefaultBlockingEqualsFalse()
+    {
+        $blockExternalContentHelper = new CookiePunch();
+
+        ObjectAccess::setProperty(
+            $blockExternalContentHelper,
+            "tagPatterns",
+            [
+                "script" => [
+                    "*" => [
+                        "block" => false,
+                    ],
+                ],
+            ],
+            true
+        );
+
+        $markup = '<script>var foo="bar";</script>';
+        $actual = $blockExternalContentHelper->blockScripts($markup);
+        self::assertEquals($markup, $actual);
     }
 
     /**
@@ -86,12 +179,6 @@ class CookiePunchTest extends UnitTestCase
     public function tagsWithDataNameWillBeBlocked()
     {
         $blockExternalContentHelper = new CookiePunch();
-        ObjectAccess::setProperty(
-            $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_ALL,
-            true,
-            true
-        );
 
         $markup = '<script src="myscripts.js" data-name="default"></script>';
         $expected =
@@ -102,7 +189,7 @@ class CookiePunchTest extends UnitTestCase
         $markup =
             '<iframe src="https://www.w3schools.com" data-name="default"></iframe>';
         $expected =
-            '<iframe data-src="https://www.w3schools.com" data-name="default" style="display: none;"></iframe>';
+            '<iframe data-src="https://www.w3schools.com" data-name="default"></iframe>';
         $actual = $blockExternalContentHelper->blockIframes($markup);
         self::assertEquals($expected, $actual);
     }
@@ -110,18 +197,13 @@ class CookiePunchTest extends UnitTestCase
     /**
      * @test
      */
-    public function tagsWillUseGroupFromEelHelperAndNotSettings()
+    public function tagsWillUseServiceNameFromEelHelperAndNotSettings()
     {
         $blockExternalContentHelper = new CookiePunch();
-        ObjectAccess::setProperty(
-            $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_ALL,
-            true,
-            true
-        );
 
         $markup = '<script src="myscripts.js"></script>';
-        $expected = '<script data-src="myscripts.js" data-type="text/javascript" data-name="foo"></script>';
+        $expected =
+            '<script data-src="myscripts.js" data-type="text/javascript" data-name="foo"></script>';
         $actual = $blockExternalContentHelper->blockScripts(
             $markup,
             true,
@@ -131,7 +213,7 @@ class CookiePunchTest extends UnitTestCase
 
         $markup = '<iframe src="https://www.w3schools.com"></iframe>';
         $expected =
-            '<iframe data-src="https://www.w3schools.com" data-name="bar" style="display: none;"></iframe>';
+            '<iframe data-src="https://www.w3schools.com" data-name="bar"></iframe>';
         $actual = $blockExternalContentHelper->blockIframes(
             $markup,
             true,
@@ -146,12 +228,6 @@ class CookiePunchTest extends UnitTestCase
     public function scriptTagsWithSpecialMimetypesWillNeverBeBlocked()
     {
         $blockExternalContentHelper = new CookiePunch();
-        ObjectAccess::setProperty(
-            $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_ALL,
-            true,
-            true
-        );
 
         // Do nothing -> keep the type as it is not "text/javascript"
 
@@ -172,12 +248,6 @@ class CookiePunchTest extends UnitTestCase
     public function alreadyBlockedScriptTagsWillNeverBeBlocked()
     {
         $blockExternalContentHelper = new CookiePunch();
-        ObjectAccess::setProperty(
-            $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_ALL,
-            true,
-            true
-        );
 
         $markup =
             '<script data-src="myscripts.js" data-name="default"></script>';
@@ -197,13 +267,6 @@ class CookiePunchTest extends UnitTestCase
     {
         $blockExternalContentHelper = new CookiePunch();
 
-        ObjectAccess::setProperty(
-            $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_ALL,
-            true,
-            true
-        );
-
         $markup = '<script src="myscripts.js"></script>';
         $actualWithDataAttribute = $blockExternalContentHelper->neverBlockScripts(
             $markup
@@ -211,6 +274,7 @@ class CookiePunchTest extends UnitTestCase
         $actualNotBlocked = $blockExternalContentHelper->neverBlockScripts(
             $actualWithDataAttribute
         );
+
         $expected = '<script src="myscripts.js" data-never-block></script>';
 
         self::assertEquals($expected, $actualWithDataAttribute);
@@ -232,20 +296,23 @@ class CookiePunchTest extends UnitTestCase
     /**
      * @test
      */
-    public function scriptTagsWithPatternWillBeBlocked()
+    public function onlyScriptTagsWithPatternWillBeBlockedIfDefaultBlockingIsFalse()
     {
         $blockExternalContentHelper = new CookiePunch();
-        $patterns = [
-            "Packages/Vendor.Example" => [
-                CookiePunch::SETTINGS_BLOCK => true,
-                CookiePunch::SETTINGS_GROUP => "vendor",
-            ],
-        ];
 
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_PATTERNS,
-            $patterns,
+            "tagPatterns",
+            [
+                "script" => [
+                    "*" => [
+                        "block" => false,
+                    ],
+                    "Packages/Vendor.Example" => [
+                        "service" => "foo",
+                    ],
+                ],
+            ],
             true
         );
 
@@ -264,7 +331,7 @@ class CookiePunchTest extends UnitTestCase
         $markup =
             '<script src="Packages/Vendor.Example/myscripts.js" type="text/javascript"/>';
         $expected =
-            '<script data-src="Packages/Vendor.Example/myscripts.js" data-type="text/javascript" type="text/plain" data-name="vendor"/>';
+            '<script data-src="Packages/Vendor.Example/myscripts.js" data-type="text/javascript" type="text/plain" data-name="foo"/>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
     }
@@ -272,33 +339,30 @@ class CookiePunchTest extends UnitTestCase
     /**
      * @test
      */
-    public function scriptTagsWithPatternWillNotBeBlocked()
+    public function scriptTagsWithPatternWillNotBeBlockedIfDefaultBlockingIsTrue()
     {
         $blockExternalContentHelper = new CookiePunch();
-        $patterns = [
-            "Packages/Vendor.Example" => [
-                CookiePunch::SETTINGS_BLOCK => false,
-            ],
-        ];
 
-        // block all by default
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_ALL,
-            true,
-            true
-        );
-        ObjectAccess::setProperty(
-            $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_PATTERNS,
-            $patterns,
+            "tagPatterns",
+            [
+                "script" => [
+                    "*" => [
+                        "service" => "foo",
+                    ],
+                    "Packages/Vendor.Example" => [
+                        "block" => false,
+                    ],
+                ],
+            ],
             true
         );
 
         // no pattern matched -> blocked
         $markup = '<script type="text/javascript"></script>';
         $expected =
-            '<script data-type="text/javascript" type="text/plain" data-name="default"></script>';
+            '<script data-type="text/javascript" type="text/plain" data-name="foo"></script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
 
@@ -312,63 +376,23 @@ class CookiePunchTest extends UnitTestCase
     /**
      * @test
      */
-    public function patternOptionsWillBeAddedToTags()
-    {
-        $blockExternalContentHelper = new CookiePunch();
-        $patterns = [
-            "Packages/Vendor.Example" => [
-                CookiePunch::SETTINGS_BLOCK => true,
-                CookiePunch::SETTINGS_OPTIONS => ["foo" => "bar"],
-            ],
-            "foo/bar.html" => [
-                CookiePunch::SETTINGS_BLOCK => true,
-                CookiePunch::SETTINGS_OPTIONS => ["foo" => "baz"],
-            ],
-        ];
-
-        ObjectAccess::setProperty(
-            $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_PATTERNS,
-            $patterns,
-            true
-        );
-
-        // <script>
-        $markup = '<script src="Packages/Vendor.Example/myscripts.js"/>';
-        $expected =
-            '<script data-src="Packages/Vendor.Example/myscripts.js" data-type="text/javascript" data-name="default" data-options="{&quot;foo&quot;:&quot;bar&quot;}"/>';
-        $actual = $blockExternalContentHelper->blockScripts($markup);
-        self::assertEquals($expected, $actual);
-
-        // <iframe>
-        $markup = '<iframe src="foo/bar.html"/>';
-        $expected =
-            '<iframe data-src="foo/bar.html" data-name="default" style="display: none;" data-options="{&quot;foo&quot;:&quot;baz&quot;}"/>';
-        $actual = $blockExternalContentHelper->blockIframes($markup);
-        self::assertEquals($expected, $actual);
-    }
-
-    /**
-     * @test
-     */
     public function iframesWillBeBlocked()
     {
         $blockExternalContentHelper = new CookiePunch();
 
-        $patterns = [
-            "with-style" => [CookiePunch::SETTINGS_BLOCK => true],
-        ];
-
         ObjectAccess::setProperty(
             $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_PATTERNS,
-            $patterns,
-            true
-        );
-        ObjectAccess::setProperty(
-            $blockExternalContentHelper,
-            CookiePunch::SETTINGS_BLOCK_ALL,
-            true,
+            "tagPatterns",
+            [
+                "iframe" => [
+                    "*" => [
+                        "service" => "foo",
+                    ],
+                    "with-style" => [
+                        "block" => true,
+                    ],
+                ],
+            ],
             true
         );
 
@@ -376,14 +400,14 @@ class CookiePunchTest extends UnitTestCase
 
         $markup = '<iframe src="https://www.w3schools.com"></iframe>';
         $expected =
-            '<iframe data-src="https://www.w3schools.com" data-name="default" style="display: none;"></iframe>';
+            '<iframe data-src="https://www.w3schools.com" data-name="foo"></iframe>';
         $actual = $blockExternalContentHelper->blockIframes($markup);
 
         self::assertEquals($expected, $actual);
 
         $markup = '<iframe src="with-style"/>';
         $expected =
-            '<iframe data-src="with-style" data-name="default" style="display: none;"/>';
+            '<iframe data-src="with-style" data-name="foo"/>';
         $actual = $blockExternalContentHelper->blockIframes($markup);
 
         self::assertEquals($expected, $actual);

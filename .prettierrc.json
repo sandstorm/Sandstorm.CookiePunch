@@ -1,3 +1,4 @@
 {
-  "phpVersion": "7.2"
+  "phpVersion": "7.2",
+  "tabWidth": 2
 }

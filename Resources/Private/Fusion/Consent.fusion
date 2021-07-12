@@ -1,25 +1,42 @@
 # Klaro cookie consent, see https://klaro.kiprotect.com/
 prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
-    cookiePunchConfig = Sandstorm.CookiePunch:Config
-    cookiePunchConfig.@process.toJson = ${Json.stringify(value)}
+    noCSS = false
 
-    klaro = Neos.Fusion:ResourceUri {
-        path = 'resource://Sandstorm.CookiePunch/Public/Klaro/klaro-no-css_v0.4.27.js'
+    renderer = Neos.Fusion:Value {
+        @context.cookiePunchConfig = Sandstorm.CookiePunch:Config
+        @context.cookiePunchConfig.@process.toJson = ${Json.stringify(value)}
+        @context.cookiePunch = Neos.Fusion:Case {
+            noCSS {
+                condition = ${props.noCSS}
+                renderer = Neos.Fusion:ResourceUri {
+                    path = 'resource://Sandstorm.CookiePunch/Public/build/cookiepunch.nocss.js'
+                }
+            }
+            fallback {
+                condition = ${true}
+                renderer = Neos.Fusion:ResourceUri {
+                    path = 'resource://Sandstorm.CookiePunch/Public/build/cookiepunch.js'
+                }
+            }
+        }
+
+        @context.klaroCssVars = Neos.Fusion:Join {
+            1 = ".klaro {"
+            2 = Neos.Fusion:Reduce {
+                items = ${Configuration.setting("Sandstorm.CookiePunch.consent.styling")}
+                itemReducer = ${carry + "--" + itemKey + ": " + item + ";"}
+            }
+            3 = "}"
+        }
+        @process.klaroCssVars = ${String.toString(value)}
+
+        value = afx`
+            <script defer type="application/javascript">window.cookiePunchConfig={cookiePunchConfig};</script>
+            <script defer type="application/javascript" src={cookiePunch}></script>
+            <style @if.withCSS={!props.noCSS}>{klaroCssVars}</style>
+        `
     }
 
-    klaroConfig = Neos.Fusion:ResourceUri {
-        path = 'resource://Sandstorm.CookiePunch/Public/klaroConfig.js'
-    }
-
-    css = Neos.Fusion:ResourceUri {
-        path = 'resource://Sandstorm.CookiePunch/Public/Klaro/klaro_v0.4.27.min.css'
-    }
-
-    renderer = afx`
-        <link @if.hasStyles={props.css} rel="stylesheet" type="text/css" href={props.css}/>
-        <script defer type="application/javascript">window.cookiePunchConfig={props.cookiePunchConfig};</script>
-        <script defer type="application/javascript" src={props.klaroConfig}></script>
-        <script defer type="application/javascript" src={props.klaro}></script>
-    `
+    // We should never block the consent ;)
     @process.neverBlockScripts = ${CookiePunch.neverBlockScripts(value)}
 }

@@ -1,0 +1,47 @@
+Sandstorm:
+  CookiePunch:
+    consent:
+      purposes:
+        mediaembeds: Media Embeds
+      services:
+        # Each service should have a unique (and short) key/name.
+        footube:
+          # If "default" is set to true, the service will be enabled by default
+          # Overwrites global "default" setting.
+          # We recommend leaving this to "false" for services that collect
+          # personal information.
+          default: true
+          # The title of you service as listed in the consent modal.
+          title: Foo Tube
+          # The description of you service as listed in the consent modal.
+          description: Crazy Foo Media Service
+          # The purpose(s) of this service. Will be listed on the consent notice.
+          # Do not forget to add translations for all purposes you list here.
+          purposes:
+            - mediaembeds
+          # A list of regex expressions or strings giving the names of
+          # cookies set by this service. If the user withdraws consent for a
+          # given service, Klaro will then automatically delete all matching
+          # cookies.
+          cookies:
+            - # exact match of cookie name in browser
+              pattern: "_foo_media"
+              path: "/"
+              domain: "foo.media.com"
+            - # pattern match of cookie name in browser
+              # IMPORTANT: do not wrap regex with /.../
+              pattern: "_foo.*$"
+              patternIsRegex: true
+              path: "/"
+              domain: "foo.media.com"
+          contextualConsentOnly: true
+          # If "required" is set to true, Klaro will not allow this service to
+          # be disabled by the user.
+          required: false
+          # If "optOut" is set to true, Klaro will load this service even before
+          # the user gave explicit consent.
+          # We recommend always leaving this "false".
+          optOut: false
+          # If "onlyOnce" is set to true, the service will only be executed
+          # once regardless how often the user toggles it on and off.
+          onlyOnce: true

@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
-    "module": "commonjs",
+    "module": "es6",
+    "target": "es5",
     "strict": true,
-    "removeComments": true,
-    "outDir": "./Resources/Public"
+    "moduleResolution": "node",
+    "outDir": "./Resources/Public",
+    "allowJs": true
   },
-  "include": ["./Resources/Private/JavaScript"]
+  "include": ["./Resources/Private/JavaScript"],
+  "exclude": ["node_modules"]
 }

@@ -5,39 +5,19 @@ namespace Sandstorm\CookiePunch\Eel\Helper;
 use Neos\Flow\Annotations as Flow;
 use Neos\Eel\ProtectedContextAwareInterface;
 use phpDocumentor\Reflection\Types\Boolean;
-use Sandstorm\CookiePunch\ConsentConfigImplementation;
 use Sandstorm\CookiePunch\TagHelper;
 
 class CookiePunch implements ProtectedContextAwareInterface
 {
-    const SETTINGS_BLOCK = "block";
-
-    const SETTINGS_GROUP = "group";
-    const SETTINGS_OPTIONS = "options";
-    const SETTINGS_BLOCK_ALL = "block";
-
-    const SETTINGS_BLOCK_PATTERNS = "patterns";
-    const DEFAULT_GROUP = "default";
+    /**
+     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="services")
+     */
+    protected $services;
 
     /**
-     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="groups")
+     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="blocking.tagPatterns")
      */
-    protected $groups;
-
-    /**
-     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="elements.patterns")
-     */
-    protected $patterns;
-
-    /**
-     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="elements.block")
-     */
-    protected $block;
-
-    /**
-     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="elements.group")
-     */
-    protected $defaultGroup;
+    protected $tagPatterns;
 
     public function neverBlockIframes(string $markup): string
     {
@@ -64,80 +44,91 @@ class CookiePunch implements ProtectedContextAwareInterface
     public function blockIframes(
         string $markup,
         bool $enabled = true,
-        string $groupOverride = null
+        string $serviceNameOverride = null
     ): string {
         if (!$enabled) {
             return $markup;
         }
 
         return $this->replaceTags("iframe", $markup, function (
-            $tag,
-            $blockConfig
-        ) use ($groupOverride) {
+            $tagMarkup,
+            $serviceName
+        ) use ($serviceNameOverride) {
             // IMPORTANT: keep the order here or update all tests!
-            $tag = TagHelper::tagRenameAttribute(
-                $tag,
+            $tagMarkup = TagHelper::tagRenameAttribute(
+                $tagMarkup,
                 TagHelper::SRC,
                 TagHelper::DATA_SRC
             );
-            $tag = $this->addDataNameAttribute(
-                $tag,
-                $blockConfig,
-                $groupOverride
-            );
-            $tag = TagHelper::tagAddAttribute($tag, "style", "display: none;");
-            $tag = $this->addDataOptionsAttribute($tag, $blockConfig);
 
-            return $tag;
+            $dataNameAttribute = $serviceNameOverride
+                ? $serviceNameOverride
+                : $serviceName;
+
+            if (
+                !TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_NAME) &&
+                $dataNameAttribute
+            ) {
+                $tagMarkup = TagHelper::tagAddAttribute(
+                    $tagMarkup,
+                    TagHelper::DATA_NAME,
+                    $dataNameAttribute
+                );
+            }
+
+            return $tagMarkup;
         });
     }
 
     /**
-     * @param string $markup
+     * @param string $contentMarkup
      * @return string
      */
     public function blockScripts(
-        string $markup,
+        string $contentMarkup,
         bool $enabled = true,
-        string $groupOverride = null
+        string $serviceNameOverride = null
     ): string {
         if (!$enabled) {
-            return $markup;
+            return $contentMarkup;
         }
 
-        return $this->replaceTags("script", $markup, function (
-            $tag,
-            $blockConfig
-        ) use ($groupOverride) {
+        return $this->replaceTags("script", $contentMarkup, function (
+            $tagMarkup,
+            $serviceName
+        ) use ($serviceNameOverride) {
             // #########################################################################
             // IMPORTANT: keep the order in the following section or update all tests!
             // #########################################################################
 
-            $tag = TagHelper::tagRenameAttribute(
-                $tag,
+            $tagMarkup = TagHelper::tagRenameAttribute(
+                $tagMarkup,
                 TagHelper::SRC,
                 TagHelper::DATA_SRC
             );
 
-            $hasType = TagHelper::tagHasAttribute($tag, TagHelper::TYPE);
+            $hasType = TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE);
 
-            $typeAttributeValue = TagHelper::tagGetAttributeValue($tag, "type");
+            $typeAttributeValue = TagHelper::tagGetAttributeValue(
+                $tagMarkup,
+                "type"
+            );
 
-            if(!$typeAttributeValue) {
+            if (!$typeAttributeValue) {
                 // We want to be least invasive and try to reuse the type attribute value
                 // if none is present we use fallback.
                 $typeAttributeValue = TagHelper::TYPE_JAVASCRIPT;
             }
 
-            if (TagHelper::tagHasAttribute($tag, TagHelper::DATA_SRC)) {
+            if (TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_SRC)) {
                 if ($hasType) {
-                    $tag = TagHelper::tagRenameAttribute(
-                        $tag,
+                    $tagMarkup = TagHelper::tagRenameAttribute(
+                        $tagMarkup,
                         TagHelper::TYPE,
                         TagHelper::DATA_TYPE
                     );
-                    $tag = TagHelper::tagAddAttribute(
-                        $tag,
+                    $tagMarkup = TagHelper::tagAddAttribute(
+                        $tagMarkup,
                         TagHelper::TYPE,
                         TagHelper::TYPE_TEXT_PLAIN
                     );
@@ -145,8 +136,8 @@ class CookiePunch implements ProtectedContextAwareInterface
                     // IMPORTANT: we need to add data-type="text/javascript" here to prevent Klaro from
                     // not correctly recovering the correct value.
                     // we add type="text/javascript" which later will be turned into an data attribute
-                    $tag = TagHelper::tagAddAttribute(
-                        $tag,
+                    $tagMarkup = TagHelper::tagAddAttribute(
+                        $tagMarkup,
                         TagHelper::DATA_TYPE,
                         $typeAttributeValue
                     );
@@ -154,38 +145,64 @@ class CookiePunch implements ProtectedContextAwareInterface
             } else {
                 // nor src so we have to "break" the tag by setting the type
                 if ($hasType) {
-                    $tag = TagHelper::tagRenameAttribute(
-                        $tag,
+                    $tagMarkup = TagHelper::tagRenameAttribute(
+                        $tagMarkup,
                         TagHelper::TYPE,
                         TagHelper::DATA_TYPE
                     );
-                    $tag = TagHelper::tagAddAttribute(
-                        $tag,
+                    $tagMarkup = TagHelper::tagAddAttribute(
+                        $tagMarkup,
                         TagHelper::TYPE,
                         TagHelper::TYPE_TEXT_PLAIN
                     );
                 } else {
-                    $tag = TagHelper::tagAddAttribute(
-                        $tag,
+                    $tagMarkup = TagHelper::tagAddAttribute(
+                        $tagMarkup,
                         TagHelper::TYPE,
                         TagHelper::TYPE_TEXT_PLAIN
                     );
-                    $tag = TagHelper::tagAddAttribute(
-                        $tag,
+                    $tagMarkup = TagHelper::tagAddAttribute(
+                        $tagMarkup,
                         TagHelper::DATA_TYPE,
                         $typeAttributeValue
                     );
                 }
             }
-            $tag = $this->addDataNameAttribute(
-                $tag,
-                $blockConfig,
-                $groupOverride
-            );
-            $tag = $this->addDataOptionsAttribute($tag, $blockConfig);
 
-            return $tag;
+            $dataNameAttribute = $serviceNameOverride
+                ? $serviceNameOverride
+                : $serviceName;
+
+            if (
+                !TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_NAME) &&
+                $dataNameAttribute
+            ) {
+                $tagMarkup = TagHelper::tagAddAttribute(
+                    $tagMarkup,
+                    TagHelper::DATA_NAME,
+                    $dataNameAttribute
+                );
+            }
+
+            return $tagMarkup;
         });
+    }
+
+    /**
+     * @param string | null $markup
+     * @param string $service
+     * @return string
+     */
+    public function addContextualConsent(
+        string $service,
+        ?string $markup,
+        ?bool $isEnabled
+    ) {
+        if ($isEnabled) {
+            return "<div data-name='" . $service . "'>" . $markup . "</div>";
+        } else {
+            return $markup;
+        }
     }
 
     private function addNeverBlockAttribute(string $tag): string
@@ -196,44 +213,6 @@ class CookiePunch implements ProtectedContextAwareInterface
                 TagHelper::DATA_NEVER_BLOCK
             );
         }
-        return $tag;
-    }
-
-    private function addDataNameAttribute(
-        string $tag,
-        array $blockConfig,
-        string $groupOverride = null
-    ): string {
-        if (!TagHelper::tagHasAttribute($tag, TagHelper::DATA_NAME)) {
-            $value = $groupOverride
-                ? $groupOverride
-                : $blockConfig[self::SETTINGS_GROUP];
-            return TagHelper::tagAddAttribute(
-                $tag,
-                TagHelper::DATA_NAME,
-                $value
-            );
-        }
-        return $tag;
-    }
-
-    private function addDataOptionsAttribute(
-        string $tag,
-        array $blockConfig
-    ): string {
-        if (isset($blockConfig[self::SETTINGS_OPTIONS])) {
-            $encodedOptions = htmlspecialchars(
-                json_encode($blockConfig[self::SETTINGS_OPTIONS]),
-                ENT_QUOTES,
-                'UTF-8'
-            );
-            return TagHelper::tagAddAttribute(
-                $tag,
-                TagHelper::DATA_OPTIONS,
-                $encodedOptions
-            );
-        }
-
         return $tag;
     }
 
@@ -248,130 +227,140 @@ class CookiePunch implements ProtectedContextAwareInterface
     }
 
     /**
-     * @param string $tag
-     * @return array
-     */
-    private function getBlockConfig(string $tag): array
-    {
-        if (!$this->patterns) {
-            return $this->buildBlockConfigForPatternConfig();
-        }
-
-        foreach ($this->patterns as $pattern => $config) {
-            if ($this->tagContains($tag, $pattern)) {
-                return $this->buildBlockConfigForPatternConfig($config);
-            }
-        }
-        return $this->buildBlockConfigForPatternConfig();
-    }
-
-    /**
-     * @param array|null $config
-     * @return array
-     */
-    private function buildBlockConfigForPatternConfig(
-        array $config = null
-    ): array {
-        $fallbackBlocked = isset($this->block) ? $this->block : false;
-        $fallbackGroup = isset($this->defaultGroup)
-            ? $this->defaultGroup
-            : self::DEFAULT_GROUP;
-
-        // no config early return
-        if (!$config) {
-            return [
-                self::SETTINGS_BLOCK => $fallbackBlocked,
-                self::SETTINGS_GROUP => $fallbackGroup,
-            ];
-        }
-
-        $blocked = isset($config[self::SETTINGS_BLOCK])
-            ? $config[self::SETTINGS_BLOCK]
-            : $fallbackBlocked;
-        $group = isset($config[self::SETTINGS_GROUP])
-            ? $config[self::SETTINGS_GROUP]
-            : $fallbackGroup;
-        $options = isset($config[self::SETTINGS_OPTIONS])
-            ? $config[self::SETTINGS_OPTIONS]
-            : null;
-
-        return [
-            self::SETTINGS_BLOCK => $blocked,
-            self::SETTINGS_GROUP => $group,
-            self::SETTINGS_OPTIONS => $options,
-        ];
-    }
-
-    /**
      * @param string $tagName
-     * @param string $text
+     * @param string $contentMarkup
      * @param callable $hitCallback
      * @return string
      */
     private function replaceTags(
         string $tagName,
-        string $text,
+        string $contentMarkup,
         callable $hitCallback
     ): string {
         $regex = '/<' . $tagName . '.*?>/';
 
+        // STAGE 1:
+        //
+        // Before making changes to a tag we do some check first
+        // and decide if we need to apply more logic.
+        // This is basically a collection of early return before using the
+        // callback which will the replace the tags.
+        //
+        // IMPORTANT: here we do not change a tag. We only check if we need to proceed
         return preg_replace_callback(
             $regex,
-            function ($hits) use ($hitCallback) {
-                $tag = $hits[0];
+            function ($hits) use ($hitCallback, $tagName) {
+                $tagMarkup = $hits[0];
 
                 // EARLY RETURN - NO CALLBACK
                 if (!$hitCallback) {
-                    return $tag;
+                    return $tagMarkup;
                 }
 
                 // EARLY RETURN - NEVER BLOCK
                 $neverBlock = $this->tagContains(
-                    $tag,
+                    $tagMarkup,
                     TagHelper::DATA_NEVER_BLOCK
                 );
+
                 if ($neverBlock) {
-                    return $tag;
+                    return $tagMarkup;
                 }
 
                 // EARLY RETURN - SPECIAL MIME TYPE
                 $mimeType = TagHelper::tagGetAttributeValue(
-                    $tag,
+                    $tagMarkup,
                     TagHelper::TYPE
                 );
-                if($mimeType === TagHelper::TYPE_TEXT_PLAIN || $mimeType === TagHelper::TYPE_APPLICATION_JSON_LD) return $tag;
+                if (
+                    $mimeType === TagHelper::TYPE_TEXT_PLAIN ||
+                    $mimeType === TagHelper::TYPE_APPLICATION_JSON_LD
+                ) {
+                    return $tagMarkup;
+                }
 
                 // EARLY RETURN - HAS BLOCKING ATTRIBUTES
                 // if a part of the markup was already processed
-                $hasBlockingAttributes =
-                    TagHelper::tagHasAttribute($tag, TagHelper::DATA_SRC) ||
-                    TagHelper::tagHasAttribute(
-                        $tag,
-                        TagHelper::DATA_TYPE
-                    );
                 // We do not check if TagHelper::DATA_NAME is present, because we might want the editor
                 // to choose a group, e.g. in the inspector and still block tags.
-                if ($hasBlockingAttributes) return $tag;
+                $hasBlockingAttributes =
+                    TagHelper::tagHasAttribute(
+                        $tagMarkup,
+                        TagHelper::DATA_SRC
+                    ) ||
+                    TagHelper::tagHasAttribute(
+                        $tagMarkup,
+                        TagHelper::DATA_TYPE
+                    );
 
-                $blockConfig = $this->getBlockConfig($tag);
+                if ($hasBlockingAttributes) {
+                    return $tagMarkup;
+                }
 
-                if ($blockConfig[self::SETTINGS_BLOCK]) {
-                    return call_user_func($hitCallback, $tag, $blockConfig);
+                // Blocking based on patterns from the config
+                // tagName can be iframe or script
+
+                // default is always true but can change depending on the next stage
+                $block = true;
+                $serviceName = null;
+
+                $tagPatterns = isset($this->tagPatterns[$tagName])
+                    ? $this->tagPatterns[$tagName]
+                    : [];
+
+                if (isset($tagPatterns["*"])) {
+                    $patternConfig = $tagPatterns["*"];
+                    if (isset($patternConfig["block"])) {
+                        $block = $patternConfig["block"];
+                    }
+                    if (isset($patternConfig["service"])) {
+                        $block = true;
+                        // We also pass the corresponding service name to the next stage
+                        $serviceName = $patternConfig["service"];
+                    }
+                }
+
+                foreach ($tagPatterns as $pattern => $patternConfig) {
+                    if ($pattern === "*") {
+                        continue;
+                    }
+                    if ($this->tagContains($tagMarkup, $pattern)) {
+                        if (isset($patternConfig["block"])) {
+                            $block = $patternConfig["block"];
+                        }
+
+                        if (isset($patternConfig["service"])) {
+                            // if we habe a relating consent service the elment will always be blocked
+                            // as it will be controlled by the consent itself
+                            $block = true;
+
+                            // We also pass the corresponding service name to the next stage
+                            $serviceName = $patternConfig["service"];
+                        }
+                    }
+                }
+
+                if ($block) {
+                    return call_user_func(
+                        $hitCallback,
+                        $tagMarkup,
+                        $serviceName
+                    );
                 } else {
-                    return $tag;
+                    return $tagMarkup;
                 }
             },
-            $text
+            $contentMarkup
         );
     }
 
-    private function validateGroup(string $name = null)
+    private function validateService(string $name = null)
     {
-        if ($name && !isset($this->groups[$name])) {
+        if ($name && !isset($this->services[$name])) {
             throw new \InvalidArgumentException(
-                'The group "' .
+                'The service "' .
                     $name .
-                    '" could not be found in your config. Expected config for "Sandstorm.CookiePunch.groups.' .
+                    '" could not be found in your config. Expected config for "Sandstorm.CookiePunch.services.' .
                     $name .
                     '"',
                 1596469884

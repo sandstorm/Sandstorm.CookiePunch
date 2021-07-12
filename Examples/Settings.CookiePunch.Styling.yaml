@@ -1,0 +1,43 @@
+Sandstorm:
+  CookiePunch:
+    consent:
+      styling:
+        button-text-color: "<value>"
+        font-size: "<value>"
+        font-family: "<value>"
+        title-font-family: "<value>"
+
+        green1: "<value>"
+        green2: "<value>"
+        green3: "<value>"
+
+        blue1: "<value>"
+        blue2: "<value>"
+        blue3: "<value>"
+
+        red1: "<value>"
+        red2: "<value>"
+        red3: "<value>"
+
+        light1: "<value>"
+        light2: "<value>"
+        light3: "<value>"
+
+        dark1: "<value>"
+        dark2: "<value>"
+        dark3: "<value>"
+
+        white1: "<value>"
+        white2: "<value>"
+        white3: "<value>"
+
+        border-radius: "0"
+        border-style: "<value>"
+        border-width: "<value>"
+
+        notice-left: "<value>"
+        notice-right: "<value>"
+        notice-top: "<value>"
+        notice-bottom: "<value>"
+        notice-max-width: "<value>"
+        notice-position: "<value>"

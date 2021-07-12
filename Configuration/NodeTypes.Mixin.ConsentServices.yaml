@@ -1,0 +1,15 @@
+"Sandstorm.CookiePunch:Mixin.ConsentServices":
+  abstract: true
+  properties:
+    consentServices:
+      type: string
+      ui:
+        label: "Cookie Consent Services"
+        reloadIfChanged: true
+        inspector:
+          group: "html"
+          position: "200"
+          editor: Neos.Neos/Inspector/Editors/SelectBoxEditor
+          editorOptions:
+            placeholder: Choose
+            dataSourceIdentifier: sandstorm-cookiepunch-services

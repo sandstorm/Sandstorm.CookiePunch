@@ -12,24 +12,27 @@ Sandstorm:
   CookiePunch:
     consent:
       privacyPolicyUrl: /privacy
+      elementID: "klaro"
+      noAutoLoad: false
+      htmlTexts: false
+      embedded: false
+      groupByPurpose: true
       storageMethod: cookie
       cookieName: cookie_punch
       cookieExpiresAfterDays: 120
+      default: false
       mustConsent: true
       acceptAll: true
       hideDeclineAll: false
-      default: false
-    groups:
-      default:
-        title: Sandstorm.CookiePunch:Groups:default.title
-        description: Sandstorm.CookiePunch:Groups:default.description
-        consent:
-          default: true
-    purposes:
-      analytics: Analytics
-    elements:
-      block: true
-      group: default
-      options:
-        message: Sandstorm.CookiePunch:Elements:options.message
-
+      hideLearnMore: false
+      noticeAsModal: false
+      disablePoweredBy: false
+      additionalClass: ~
+    blocking:
+      tagPatterns:
+        script:
+          "*":
+            block: true
+        iframe:
+          "*":
+            block: true

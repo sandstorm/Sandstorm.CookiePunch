@@ -8,99 +8,169 @@
             ################################################################################################
         </note>
         <body>
-            <trans-unit id="consentModal.title">
-                <source>Information that we collect</source>
-                <target>Informatie die we verzamelen</target>
+            <trans-unit id="acceptAll">
+                <source>Accept all</source>
+                <target>Accepteer alle</target>
+            </trans-unit>
+            <trans-unit id="acceptSelected">
+                <source>Accept selected</source>
+                <target>Geselecteerde</target>
+            </trans-unit>
+            <trans-unit id="close">
+                <source>Close</source>
+                <target>Sluit</target>
             </trans-unit>
             <trans-unit id="consentModal.description">
-                <source>Here you can see and customize the information that we collect about you.
-</source>
-                <target>Hier kunt u de informatie bekijken en aanpassen die we over u verzamelen.
-</target>
+                <source>Here you can assess and customize the services that we&#x27;d like to use on this website. You&#x27;re in charge! Enable or disable services as you see fit.</source>
+                <target>Hier kunt u de diensten die wij op deze website willen gebruiken beoordelen en aanpassen. U heeft de leiding! Schakel de diensten naar eigen inzicht in of uit.</target>
             </trans-unit>
             <trans-unit id="consentModal.privacyPolicy.name">
-                <source>privacy policy</source>
+                <source></source>
                 <target>privacybeleid</target>
             </trans-unit>
             <trans-unit id="consentModal.privacyPolicy.text">
-                <source>To learn more, please read our {privacyPolicy}.
-</source>
-                <target>Lees ons privacybeleid voor meer informatie {privacyPolicy}.
-</target>
+                <source></source>
+                <target>Voor meer informatie kunt u ons {privacyPolicy} lezen.</target>
+            </trans-unit>
+            <trans-unit id="consentModal.title">
+                <source>Services we would like to use</source>
+                <target>Diensten die we graag willen gebruiken</target>
             </trans-unit>
             <trans-unit id="consentNotice.changeDescription">
-                <source>There were changes since your last visit, please update your consent.</source>
-                <target>Er waren wijzigingen sinds uw laatste bezoek, werk uw voorkeuren bij.</target>
+                <source>There were changes since your last visit, please renew your consent.</source>
+                <target>Er waren veranderingen sinds uw laatste bezoek, gelieve uw toestemming te hernieuwen.</target>
             </trans-unit>
             <trans-unit id="consentNotice.description">
-                <source>We collect and process your personal information for the following purposes: {purposes}.
-</source>
-                <target>Wij verzamelen en verwerken uw persoonlijke gegevens voor de volgende doeleinden: {purposes}.
-</target>
+                <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
+                <target>Hallo, kunnen wij u een aantal extra diensten aanbieden voor {purposes}? U kunt uw toestemming later altijd nog wijzigen of intrekken.</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.imprint.name">
+                <source></source>
+                <target>impressum</target>
             </trans-unit>
             <trans-unit id="consentNotice.learnMore">
-                <source>Customize</source>
-                <target>Lees meer</target>
+                <source>Let me choose</source>
+                <target>Laat me kiezen</target>
             </trans-unit>
             <trans-unit id="consentNotice.privacyPolicy.name">
+                <source></source>
+                <target>privacybeleid</target>
+            </trans-unit>
+            <trans-unit id="consentNotice.testing">
+                <source>Testing mode!</source>
+                <target>Testmodus!</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.acceptAlways">
+                <source>Always</source>
+                <target>Altijd</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.acceptOnce">
+                <source>Yes</source>
+                <target>Ja</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.description">
+                <source>Do you want to load external content supplied by {title}?</source>
+                <target>Wilt u externe content laden die door {title} wordt aangeleverd ?</target>
+            </trans-unit>
+            <trans-unit id="decline">
+                <source>I decline</source>
+                <target>Ik weiger</target>
+            </trans-unit>
+            <trans-unit id="ok">
+                <source>That&#x27;s ok</source>
+                <target>Dat is oké</target>
+            </trans-unit>
+            <trans-unit id="poweredBy">
+                <source>Realized with Klaro!</source>
+                <target>Gerealiseerd met Klaro!</target>
+            </trans-unit>
+            <trans-unit id="privacyPolicy.name">
                 <source>privacy policy</source>
                 <target>privacybeleid</target>
             </trans-unit>
-            <trans-unit id="consentNotice.imprint.name">
-                <source>Imprint</source>
-                <target>Afdruk</target>
+            <trans-unit id="privacyPolicy.text">
+                <source>To learn more, please read our {privacyPolicy}.</source>
+                <target>Voor meer informatie kunt u ons {privacyPolicy} lezen.</target>
             </trans-unit>
-            <trans-unit id="ok">
-                <source>Accept</source>
-                <target>OK</target>
+            <trans-unit id="purposeItem.service">
+                <source>service</source>
+                <target>service</target>
+            </trans-unit>
+            <trans-unit id="purposeItem.services">
+                <source>services</source>
+                <target>diensten</target>
+            </trans-unit>
+            <trans-unit id="purposes.advertising.description">
+                <source>These services process personal information to show you personalized or interest-based advertisements.</source>
+                <target>Deze diensten verwerken persoonlijke informatie om u gepersonaliseerde of op interesse gebaseerde advertenties te tonen.</target>
+            </trans-unit>
+            <trans-unit id="purposes.advertising.title">
+                <source>Advertising</source>
+                <target>Reclame</target>
+            </trans-unit>
+            <trans-unit id="purposes.functional.description">
+                <source>These services are essential for the correct functioning of this website. You cannot disable them here as the service would not work correctly otherwise.
+</source>
+                <target>Deze diensten zijn essentieel voor het correct functioneren van deze website. U kunt ze hier niet uitschakelen omdat de dienst anders niet correct zou werken.
+</target>
+            </trans-unit>
+            <trans-unit id="purposes.functional.title">
+                <source>Service Provision</source>
+                <target>Dienstverlening</target>
+            </trans-unit>
+            <trans-unit id="purposes.marketing.description">
+                <source>These services process personal information to show you relevant content about products, services or topics that you might be interested in.</source>
+                <target>Deze diensten verwerken persoonlijke informatie om u relevante inhoud te tonen over producten, diensten of onderwerpen waarin u geïnteresseerd zou kunnen zijn.</target>
+            </trans-unit>
+            <trans-unit id="purposes.marketing.title">
+                <source>Marketing</source>
+                <target>Marketing</target>
+            </trans-unit>
+            <trans-unit id="purposes.performance.description">
+                <source>These services process personal information to optimize the service that this website offers.
+</source>
+                <target>Deze diensten verwerken persoonlijke informatie om de service die deze website biedt te optimaliseren.
+</target>
+            </trans-unit>
+            <trans-unit id="purposes.performance.title">
+                <source>Performance Optimization</source>
+                <target>Optimalisatie van de prestaties</target>
             </trans-unit>
             <trans-unit id="save">
                 <source>Save</source>
                 <target>Opslaan</target>
             </trans-unit>
-            <trans-unit id="decline">
-                <source>Decline</source>
-                <target>Afwijzen</target>
+            <trans-unit id="service.disableAll.description">
+                <source>Use this switch to enable or disable all services.</source>
+                <target>Gebruik deze schakelaar om alle diensten in of uit te schakelen.</target>
             </trans-unit>
-            <trans-unit id="close">
-                <source>Close</source>
-                <target>Sluiten</target>
+            <trans-unit id="service.disableAll.title">
+                <source>Enable or disable all services</source>
+                <target>Alle diensten in- of uitschakelen</target>
             </trans-unit>
-            <trans-unit id="app.disableAll.title">
-                <source>Toggle all apps</source>
-                <target>Alle opties in/uit schakelen</target>
+            <trans-unit id="service.optOut.description">
+                <source>This services is loaded by default (but you can opt out)</source>
+                <target>Deze diensten worden standaard geladen (maar u kunt zich afmelden)</target>
             </trans-unit>
-            <trans-unit id="app.disableAll.description">
-                <source>Use this switch to enable/disable all apps.</source>
-                <target>Gebruik deze schakeloptie om alle apps in/uit te schakelen.</target>
-            </trans-unit>
-            <trans-unit id="app.optOut.title">
+            <trans-unit id="service.optOut.title">
                 <source>(opt-out)</source>
-                <target>(afmelden)</target>
+                <target>(opt-out)</target>
             </trans-unit>
-            <trans-unit id="app.optOut.description">
-                <source>This app is loaded by default (but you can opt out)</source>
-                <target>Deze app is standaard geladen (maar je kunt je afmelden)</target>
+            <trans-unit id="service.purpose">
+                <source>purpose</source>
+                <target>Verwerkingsdoel</target>
             </trans-unit>
-            <trans-unit id="app.required.title">
+            <trans-unit id="service.purposes">
+                <source>purposes</source>
+                <target>Verwerkingsdoeleinden</target>
+            </trans-unit>
+            <trans-unit id="service.required.description">
+                <source>This services is always required</source>
+                <target>Deze diensten zijn altijd nodig</target>
+            </trans-unit>
+            <trans-unit id="service.required.title">
                 <source>(always required)</source>
-                <target>(altijd verplicht)</target>
-            </trans-unit>
-            <trans-unit id="app.required.description">
-                <source>This application is always required</source>
-                <target>Deze applicatie is altijd vereist</target>
-            </trans-unit>
-            <trans-unit id="app.purposes">
-                <source>Purposes</source>
-                <target>Doeleinden</target>
-            </trans-unit>
-            <trans-unit id="app.purpose">
-                <source>Purpose</source>
-                <target>Doeleinde</target>
-            </trans-unit>
-            <trans-unit id="poweredBy">
-                <source>Powered by Klaro!</source>
-                <target>Aangedreven door Klaro!</target>
+                <target>(altijd nodig)</target>
             </trans-unit>
         </body>
     </file>

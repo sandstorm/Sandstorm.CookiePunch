@@ -77,11 +77,13 @@ class TagHelper
      * @param string $name
      * @return string
      */
-    static function tagGetAttributeValue(
-        string $tag,
-        string $name
-    ): ?string {
-        preg_match(self::buildMatchAttributeNameWithAnyValueReqex($name), $tag, $matches);
+    static function tagGetAttributeValue(string $tag, string $name): ?string
+    {
+        preg_match(
+            self::buildMatchAttributeNameWithAnyValueReqex($name),
+            $tag,
+            $matches
+        );
         return isset($matches['value']) ? $matches['value'] : null;
     }
 
