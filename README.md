@@ -349,6 +349,30 @@ You can override translations
 - in the yaml config by providing/overriding a translation key instead of the actual text ( e.g. for the title of service )
 - by overriding the corresponding path in the fusion prototypes `Sandstorm.CookiePunch:Config.Translations` or `Sandstorm.CookiePunch:Config`
 
+## Troubleshooting
+
+### iframes work after unblocking but are the wrong size or in the wrong place
+
+**Please check**
+
+* Do you have an iframe that you blocked because it adds cookies?
+* Do you have a Js that manipulates this iframe?
+* Is this Js not blocked while the iframe is?
+* Does a reload of the page fix the problem after you consented?
+
+**This could be the problem**
+
+* The Js runs once when the page loads, but the iframe is still "broken" (maybe having the wrong size).
+* The Js does some styling magic to extend the iframe to the available width of the page.
+* The Js needs to run when the iframe is in an unblocked state otherwise the calculation fails.
+
+**How to fix**
+
+* Also block the Js, although it does not add any cookies.
+* Attach it to the same service as the iframe.
+* This way the Js will run after the iframe was unblocked.
+
+
 ## Migrating from version 1 to 2
 
 **HINT:** Add the `schema.json` file from this package to your IDE and select it for your yaml files. This will make it easier and give you auto-completion and validation when migrating.
