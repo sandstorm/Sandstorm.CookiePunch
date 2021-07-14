@@ -230,7 +230,7 @@ You simply need to call `klaro.show()`. Below is an example of how to create a l
 <a
   href=""
   onclick="(function(e){e.preventDefault();klaro.show()})(arguments[0])"
-  >Hello</a
+  >Cookie Settings</a
 >
 ```
 
