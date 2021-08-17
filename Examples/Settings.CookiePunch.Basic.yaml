@@ -2,7 +2,9 @@ Sandstorm:
   CookiePunch:
     consent:
       purposes:
-        mediaembeds: Media Embeds
+        mediaembeds:
+          title: Media Embeds
+          description: Some Description
       services:
         anchor:
           title: Anchor FM

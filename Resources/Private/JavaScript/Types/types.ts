@@ -15,12 +15,21 @@ export type CookiePunchService = {
   onlyOnce?: boolean;
 };
 
+export type CookiePunchPurpose = {
+  title?: string;
+  description?: string;
+}
+
 export type CookiePunchServiceCookies = {
   pattern: string;
   patternIsRegex?: boolean;
   path?: "string";
   domain?: string;
 }[];
+
+export type CookiePunchPurposes = {
+  [key: string]: CookiePunchPurpose;
+};
 
 export type CookiePunchServices = {
   [key: string]: CookiePunchService;
@@ -49,7 +58,7 @@ export type CookiePunchConfig = {
     cookiePath?: string;
     cookieDomain?: string;
 
-    purposes: string[];
+    purposes: CookiePunchPurposes
     services: CookiePunchServices;
     translations: {
       [key: string]: any;
@@ -64,6 +73,13 @@ export type KlaroTranslations = {
 };
 
 export type KlaroServiceTranslations = {
+  [key: string]: {
+    title?: string;
+    description?: string;
+  };
+};
+
+export type KlaroPurposeTranslations = {
   [key: string]: {
     title?: string;
     description?: string;
@@ -89,7 +105,7 @@ export type KlaroServices = KlaroService[];
 
 export type KlaroConfig = {
   version: 1;
-  lang: "zz";
+  lang: "en";
 
   elementID: string;
   noAutoLoad: boolean;
@@ -114,6 +130,6 @@ export type KlaroConfig = {
   services: KlaroServices;
 
   translations: {
-    zz: KlaroTranslations | KlaroServiceTranslations;
+    en: KlaroTranslations | KlaroServiceTranslations;
   };
 };

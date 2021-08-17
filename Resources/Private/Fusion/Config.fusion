@@ -27,8 +27,10 @@ prototype(Sandstorm.CookiePunch:Config) < prototype(Neos.Fusion:DataStructure) {
 
         purposes = Neos.Fusion:Map {
             items = ${Configuration.setting("Sandstorm.CookiePunch.consent.purposes")}
-            itemRenderer = Neos.Fusion:Value {
-                value = ${CookiePunchConfig.translate(item)}
+            itemRenderer = Neos.Fusion:DataStructure {
+                name = ${itemKey}
+                title = ${CookiePunchConfig.translate(item.title)}
+                description = ${CookiePunchConfig.translate(item.description)}
             }
         }
 

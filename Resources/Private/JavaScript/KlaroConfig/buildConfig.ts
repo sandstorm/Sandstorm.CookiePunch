@@ -5,7 +5,7 @@ import {
   CookiePunchServices,
   KlaroServiceTranslations,
   CookiePunchServiceCookies,
-  KlaroServiceCookies,
+  KlaroServiceCookies, CookiePunchPurposes, KlaroPurposeTranslations,
 } from "../Types/types";
 
 export default function buildConfig(
@@ -17,7 +17,10 @@ export default function buildConfig(
 
     // IMPORTANT: we disable the language handling of klaro because
     // we want to use translations provided the Neos-way
-    lang: "zz",
+    // however we cannot use the zz language as for some reasons default translations
+    // will be used when switching languages. This is why we pin the language here so
+    // klaro will use the translations provided by us.
+    lang: "en",
 
     elementID: cookiePunchConfig.consent.elementID,
     noAutoLoad: cookiePunchConfig.consent.noAutoLoad,
@@ -38,15 +41,18 @@ export default function buildConfig(
     cookiePath: cookiePunchConfig.consent.cookiePath,
     cookieDomain: cookiePunchConfig.consent.cookieDomain,
 
-    purposes: cookiePunchConfig.consent.purposes,
+    purposes: Object.keys(cookiePunchConfig.consent.purposes),
 
     services: buildKlaroServicesConfig(cookiePunchConfig.consent.services),
 
     translations: {
-      zz: {
+      en: {
         privacyPolicyUrl: cookiePunchConfig.consent.privacyPolicyUrl,
         ...cookiePunchConfig.consent.translations,
         ...buildKlaroServiceTranslations(cookiePunchConfig.consent.services),
+        purposes: {
+          ... buildKlaroPurposeTranslations(cookiePunchConfig.consent.purposes)
+        }
       },
     },
   };
@@ -62,8 +68,22 @@ function validateCookiePunchConfigOnWindow(
   }
 }
 
+function buildKlaroPurposeTranslations(
+  cookiePunchPurposes: CookiePunchPurposes
+): KlaroPurposeTranslations {
+  let result = {} as KlaroPurposeTranslations;
+  Object.keys(cookiePunchPurposes).forEach((name) => {
+    const purpose = cookiePunchPurposes[name];
+    result[name] = {
+      title: purpose.title,
+      description: purpose.description,
+    };
+  });
+  return result;
+}
+
 function buildKlaroServiceTranslations(
-  cookiePunchServices: CookiePunchServices
+    cookiePunchServices: CookiePunchServices
 ): KlaroServiceTranslations {
   let result = {} as KlaroServiceTranslations;
   Object.keys(cookiePunchServices).forEach((name) => {
@@ -89,7 +109,7 @@ function buildKlaroServicesConfig(
     if (cookiePunchService.purposes) {
       klaroService.purposes = cookiePunchService.purposes;
     } else {
-      // For some reasons we currently need an empty error here to not break klaro
+      // For some reasons we currently need an empty array here to not break klaro
       klaroService.purposes = [];
     }
     if (typeof cookiePunchService.contextualConsentOnly === "boolean")

@@ -196,7 +196,15 @@
                 "purposes": {
                   "type": "object",
                   "additionalProperties": {
-                    "type": "string"
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
                   }
                 },
                 "services": {
