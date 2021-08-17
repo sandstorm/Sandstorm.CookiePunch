@@ -77,7 +77,9 @@ Sandstorm:
   CookiePunch:
     consent:
       purposes:
-        mediaembeds: Media Embeds
+        mediaembeds:
+          title: Media Embeds
+          description: Some Description
       services:
         anchor:
           title: Anchor FM
@@ -372,6 +374,30 @@ You can override translations
 * Attach it to the same service as the iframe.
 * This way the Js will run after the iframe was unblocked.
 
+## Migrating from version 2 to 3
+
+We changed the format for configuring the purposes to provide more functionality provided by Klaro.js. We now support `title` and `description` for each purpose.
+
+**Old**
+
+```yaml
+Sandstorm:
+  CookiePunch:
+    consent:
+      purposes:
+        mediaembeds: Media Embeds
+```
+
+**New**
+
+```yaml
+Sandstorm:
+  CookiePunch:
+    consent:
+      purposes:
+        title: Media Embeds
+        description: Some Description
+```
 
 ## Migrating from version 1 to 2
 
