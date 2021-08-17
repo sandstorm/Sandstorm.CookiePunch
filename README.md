@@ -121,7 +121,7 @@ Let's look at the `Packages/Neos.Neos` pattern from the example above. This patt
 The tag is a string that matches if it contains the given pattern. You could also match for `foo` or anything else in this string. Internally `strpos()` is used.
 
 #### This pattern will never be blocked:
-
+ 
 ```yaml
 "Packages/Neos.Neos":
   block: false
