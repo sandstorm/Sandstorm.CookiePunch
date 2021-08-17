@@ -75,9 +75,9 @@ function buildKlaroPurposeTranslations(
   Object.keys(cookiePunchPurposes).forEach((name) => {
     const purpose = cookiePunchPurposes[name];
     result[name] = {
-      title: purpose.title,
-      description: purpose.description,
+      title: purpose.title || `NO TITLE FOUND FOR PURPOSE ${name}`,
     };
+    if(purpose.description) result[name].description = purpose.description;
   });
   return result;
 }
@@ -89,9 +89,9 @@ function buildKlaroServiceTranslations(
   Object.keys(cookiePunchServices).forEach((name) => {
     const service = cookiePunchServices[name];
     result[name] = {
-      title: service.title,
-      description: service.description,
+      title: service.title || `NO TITLE FOUND FOR SERVICE ${name}`,
     };
+    if(service.description) result[name].description = service.description;
   });
   return result;
 }
