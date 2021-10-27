@@ -1,8 +1,9 @@
 import * as Klaro from "klaro";
-import buildConfig from "./KlaroConfig/buildConfig";
+import buildKlaroConfig from "./Helper/buildKlaroConfig";
+import "./Helper/openModalEventListener";
 
 const cookiePunchConfig = window.cookiePunchConfig;
-const config = buildConfig(cookiePunchConfig);
+const config = buildKlaroConfig(cookiePunchConfig);
 
 // we assign the Klaro module to the window, so that we can access it in JS
 window.klaro = Klaro;

@@ -5,10 +5,12 @@ import {
   CookiePunchServices,
   KlaroServiceTranslations,
   CookiePunchServiceCookies,
-  KlaroServiceCookies, CookiePunchPurposes, KlaroPurposeTranslations,
+  KlaroServiceCookies,
+  CookiePunchPurposes,
+  KlaroPurposeTranslations,
 } from "../Types/types";
 
-export default function buildConfig(
+export default function buildKlaroConfig(
   cookiePunchConfig: CookiePunchConfig
 ): KlaroConfig {
   validateCookiePunchConfigOnWindow(cookiePunchConfig);
@@ -51,8 +53,8 @@ export default function buildConfig(
         ...cookiePunchConfig.consent.translations,
         ...buildKlaroServiceTranslations(cookiePunchConfig.consent.services),
         purposes: {
-          ... buildKlaroPurposeTranslations(cookiePunchConfig.consent.purposes)
-        }
+          ...buildKlaroPurposeTranslations(cookiePunchConfig.consent.purposes),
+        },
       },
     },
   };
@@ -83,7 +85,7 @@ function buildKlaroPurposeTranslations(
 }
 
 function buildKlaroServiceTranslations(
-    cookiePunchServices: CookiePunchServices
+  cookiePunchServices: CookiePunchServices
 ): KlaroServiceTranslations {
   let result = {} as KlaroServiceTranslations;
   Object.keys(cookiePunchServices).forEach((name) => {

@@ -226,20 +226,11 @@ here: `Resources/Private/KlaroCss/klaro.css`.
 
 ### Step 6: Let the user open the consent modal later
 
-You simply need to call `klaro.show()`. Below is an example of how to create a link that will open the modal.
+You can place a link in Neos, e.g. somewhere in your privacy statement with the `href` pointing to `#open_cookie_punch_modal`.
+This will be picked up by a click event listener and open the modal. The browser will not reload the page as we use `event.preventDefault()`
+internally.
 
-```html
-<a
-  href=""
-  onclick="(function(e){e.preventDefault();klaro.show()})(arguments[0])"
-  >Cookie Settings</a
->
-```
-
-For Neos you might want to create a NodeType that can be placed e.g. between the sections of your data security statement. If you are using `Neos:NodeTypes` you can place a HTMl element with the
-corresponding markup.
-
-Using the link editor in Neos will not work as it does not support setting the `onclick` attribute.
+Alternatively you can call `klaro.show()` in your JavaScript.
 
 ## Advanced Usages
 
@@ -357,22 +348,22 @@ You can override translations
 
 **Please check**
 
-* Do you have an iframe that you blocked because it adds cookies?
-* Do you have a Js that manipulates this iframe?
-* Is this Js not blocked while the iframe is?
-* Does a reload of the page fix the problem after you consented?
+- Do you have an iframe that you blocked because it adds cookies?
+- Do you have a Js that manipulates this iframe?
+- Is this Js not blocked while the iframe is?
+- Does a reload of the page fix the problem after you consented?
 
 **This could be the problem**
 
-* The Js runs once when the page loads, but the iframe is still "broken" (maybe having the wrong size).
-* The Js does some styling magic to extend the iframe to the available width of the page.
-* The Js needs to run when the iframe is in an unblocked state otherwise the calculation fails.
+- The Js runs once when the page loads, but the iframe is still "broken" (maybe having the wrong size).
+- The Js does some styling magic to extend the iframe to the available width of the page.
+- The Js needs to run when the iframe is in an unblocked state otherwise the calculation fails.
 
 **How to fix**
 
-* Also block the Js, although it does not add any cookies.
-* Attach it to the same service as the iframe.
-* This way the Js will run after the iframe was unblocked.
+- Also block the Js, although it does not add any cookies.
+- Attach it to the same service as the iframe.
+- This way the Js will run after the iframe was unblocked.
 
 ## Migrating from version 2 to 3
 
