@@ -330,7 +330,7 @@ class CookiePunch implements ProtectedContextAwareInterface
                         }
 
                         if (isset($patternConfig["service"])) {
-                            // if we habe a relating consent service the elment will always be blocked
+                            // if we have a relating consent service the element will always be blocked
                             // as it will be controlled by the consent itself
                             $block = true;
 

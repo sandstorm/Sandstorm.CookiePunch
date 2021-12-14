@@ -14,7 +14,6 @@ class TagHelper
     const TYPE = "type";
     const DATA_TYPE = "data-type";
     const DATA_NAME = "data-name";
-    const DATA_OPTIONS = "data-options";
     const DATA_NEVER_BLOCK = "data-never-block";
 
     // Type Constants
