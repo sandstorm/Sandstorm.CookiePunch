@@ -17,11 +17,22 @@ class AddContextualConsentTest extends UnitTestCase
     {
         $cookiePunch = new CookiePunch();
 
+        ObjectAccess::setProperty(
+            $cookiePunch,
+            "services",
+            [
+                "bar" => [
+                    "title" => "Bar"
+                ],
+            ],
+            true
+        );
+
         $markup = '<audio><source src="some.mp3"/><source src="some.mp3"/></audio>';
         $expected =
-            '<div data-name="myservice"><audio><source data-src="some.mp3"/><source data-src="some.mp3"/></audio></div>';
+            '<div data-name="bar"><audio><source data-src="some.mp3"/><source data-src="some.mp3"/></audio></div>';
 
-        $actual = $cookiePunch->addContextualConsent("myservice", $markup);
+        $actual = $cookiePunch->addContextualConsent("bar", $markup);
         $actual = $cookiePunch->blockTags(["audio", "source"], $actual);
 
         self::assertEquals($expected, $actual);

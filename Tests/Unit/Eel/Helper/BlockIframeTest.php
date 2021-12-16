@@ -72,6 +72,17 @@ class BlockIframeTest extends UnitTestCase
     {
         $cookiePunch = new CookiePunch();
 
+        ObjectAccess::setProperty(
+            $cookiePunch,
+            "services",
+            [
+                "bar" => [
+                    "title" => "Bar"
+                ],
+            ],
+            true
+        );
+
         $markup = '<iframe src="https://www.w3schools.com"></iframe>';
         $expected =
             '<iframe data-src="https://www.w3schools.com" data-name="bar"></iframe>';

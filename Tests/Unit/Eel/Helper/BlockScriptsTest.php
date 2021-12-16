@@ -312,14 +312,24 @@ class BlockScriptsTest extends UnitTestCase
     public function tagsWillUseServiceNameFromEelHelperAndNotSettings()
     {
         $cookiePunch = new CookiePunch();
+        ObjectAccess::setProperty(
+            $cookiePunch,
+            "services",
+            [
+                "bar" => [
+                    "title" => "Bar"
+                ],
+            ],
+            true
+        );
 
         $markup = '<script src="myscripts.js"></script>';
         $expected =
-            '<script data-src="myscripts.js" data-type="text/javascript" type="text/plain" data-name="foo"></script>';
+            '<script data-src="myscripts.js" data-type="text/javascript" type="text/plain" data-name="bar"></script>';
         $actual = $cookiePunch->blockTags(["script"],
             $markup,
             true,
-            "foo"
+            "bar"
         );
         self::assertEquals($expected, $actual);
     }

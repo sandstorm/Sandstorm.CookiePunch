@@ -4,7 +4,6 @@ namespace Sandstorm\CookiePunch\Eel\Helper;
 
 use Neos\Eel\ProtectedContextAwareInterface;
 use Neos\Flow\Annotations as Flow;
-use phpDocumentor\Reflection\Types\Boolean;
 use Sandstorm\CookiePunch\TagHelper;
 
 class CookiePunch implements ProtectedContextAwareInterface {
