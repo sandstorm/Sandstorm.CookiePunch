@@ -294,7 +294,7 @@ class CookiePunch implements ProtectedContextAwareInterface {
     }
 
     private function validateTagNames(array $tagNames) {
-        $allowedTagNames = ["audio","embed","iframe","img","input","script","source","track","video"];
+        $allowedTagNames = ["audio", "embed", "iframe", "img", "input", "script", "source", "track", "video"];
         $diff = array_diff($tagNames, $allowedTagNames);
 
         if(sizeof($diff) > 0) {
