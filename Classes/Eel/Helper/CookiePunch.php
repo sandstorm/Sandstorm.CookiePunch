@@ -2,14 +2,12 @@
 
 namespace Sandstorm\CookiePunch\Eel\Helper;
 
-use Neos\Flow\Annotations as Flow;
 use Neos\Eel\ProtectedContextAwareInterface;
-use Neos\Media\Domain\Model\Tag;
+use Neos\Flow\Annotations as Flow;
 use phpDocumentor\Reflection\Types\Boolean;
 use Sandstorm\CookiePunch\TagHelper;
 
-class CookiePunch implements ProtectedContextAwareInterface
-{
+class CookiePunch implements ProtectedContextAwareInterface {
     /**
      * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="services")
      */
@@ -20,26 +18,7 @@ class CookiePunch implements ProtectedContextAwareInterface
      */
     protected $tagPatterns;
 
-    public function neverBlockIframes(string $markup): string
-    {
-        return $this->replaceTags("iframe", $markup, function ($tag) {
-            // IMPORTANT: keep the order here or update all tests!
-            $tag = $this->addNeverBlockAttribute($tag);
-            return $tag;
-        });
-    }
-
-    public function neverBlockScripts(string $markup): string
-    {
-        return $this->replaceTags("script", $markup, function ($tag) {
-            // IMPORTANT: keep the order here or update all tests!
-            $tag = $this->addNeverBlockAttribute($tag);
-            return $tag;
-        });
-    }
-
-    public function neverBlockTag(string $tagName, string $markup): string
-    {
+    public function neverBlockTag(string $tagName, string $markup): string {
         return $this->replaceTags($tagName, $markup, function ($tag) {
             $tag = $this->addNeverBlockAttribute($tag);
             return $tag;
@@ -56,7 +35,7 @@ class CookiePunch implements ProtectedContextAwareInterface
             $serviceName
         ) use ($serviceNameOverride, $tagName) {
 
-            if(TagHelper::tagHasAttribute($tagMarkup, TagHelper::SRC)) {
+            if (TagHelper::tagHasAttribute($tagMarkup, TagHelper::SRC)) {
                 $tagMarkup = TagHelper::tagRenameAttribute(
                     $tagMarkup,
                     TagHelper::SRC,
@@ -64,8 +43,14 @@ class CookiePunch implements ProtectedContextAwareInterface
                 );
             }
 
-            if($tagName === "script") {
-                if(!TagHelper::tagHasAttribute($tagMarkup,TagHelper::TYPE)) {
+            switch ($tagName) {
+                case "script": {
+
+                }
+            }
+
+            if ($tagName === "script") {
+                if (!TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE)) {
                     // IMPORTANT: we need to add data-type="text/javascript" here to prevent Klaro from
                     // not correctly recovering the correct value.
                     // we add type="text/javascript" which later will be turned into an data attribute
@@ -87,9 +72,9 @@ class CookiePunch implements ProtectedContextAwareInterface
                     TagHelper::TYPE,
                     TagHelper::TYPE_TEXT_PLAIN
                 );
-            // ALL OTHER TAGS
+                // ALL OTHER TAGS
             } else {
-                if(TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE)) {
+                if (TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE)) {
                     $tagMarkup = TagHelper::tagAddAttribute(
                         $tagMarkup,
                         TagHelper::DATA_TYPE,
@@ -97,8 +82,7 @@ class CookiePunch implements ProtectedContextAwareInterface
                     );
                 }
             }
-
-            if(
+            if (
                 TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_SRC) ||
                 TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_TYPE)
             ) {
@@ -114,191 +98,6 @@ class CookiePunch implements ProtectedContextAwareInterface
                     );
                 }
             }
-
-            return $tagMarkup;
-        });
-    }
-
-    /**
-     * @param string $markup
-     * @return string
-     */
-    public function blockIframes(
-        string $markup,
-        bool $enabled = true,
-        string $serviceNameOverride = null
-    ): string {
-        if (!$enabled) {
-            return $markup;
-        }
-
-        return $this->blockTag("iframe", $markup, $enabled, $serviceNameOverride);
-
-        return $this->replaceTags("iframe", $markup, function (
-            $tagMarkup,
-            $serviceName
-        ) use ($serviceNameOverride) {
-            // IMPORTANT: keep the order here or update all tests!
-            $tagMarkup = TagHelper::tagRenameAttribute(
-                $tagMarkup,
-                TagHelper::SRC,
-                TagHelper::DATA_SRC
-            );
-
-            $dataNameAttribute = $serviceNameOverride
-                ? $serviceNameOverride
-                : $serviceName;
-
-            if (
-                !TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_NAME) &&
-                $dataNameAttribute
-            ) {
-                $tagMarkup = TagHelper::tagAddAttribute(
-                    $tagMarkup,
-                    TagHelper::DATA_NAME,
-                    $dataNameAttribute
-                );
-            }
-
-            return $tagMarkup;
-        });
-    }
-
-    private function processScriptTag($tagMarkup): string {
-        if (!TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE)) {
-            // IMPORTANT: we need to add data-type="text/javascript" here to prevent Klaro from
-            // not correctly recovering the correct value.
-            // we add type="text/javascript" which later will be turned into an data attribute
-            $tagMarkup = TagHelper::tagAddAttribute(
-                $tagMarkup,
-                TagHelper::DATA_TYPE,
-                TagHelper::TYPE_JAVASCRIPT
-            );
-        }
-
-        $tagMarkup = TagHelper::tagRenameAttribute(
-            $tagMarkup,
-            TagHelper::TYPE,
-            TagHelper::DATA_TYPE
-        );
-
-        $tagMarkup = TagHelper::tagAddAttribute(
-            $tagMarkup,
-            TagHelper::TYPE,
-            TagHelper::TYPE_TEXT_PLAIN
-        );
-
-        return $tagMarkup;
-    }
-
-    /**
-     * @param string $contentMarkup
-     * @return string
-     */
-    public function blockScripts(
-        string $contentMarkup,
-        bool $enabled = true,
-        string $serviceNameOverride = null
-    ): string {
-
-        return $this->blockTag("script", $contentMarkup, $enabled, $serviceNameOverride);
-
-        #######
-        if (!$enabled) {
-            return $contentMarkup;
-        }
-
-        return $this->replaceTags("script", $contentMarkup, function (
-            $tagMarkup,
-            $serviceName
-        ) use ($serviceNameOverride) {
-            // #########################################################################
-            // IMPORTANT: keep the order in the following section or update all tests!
-            // #########################################################################
-
-            $tagMarkup = TagHelper::tagRenameAttribute(
-                $tagMarkup,
-                TagHelper::SRC,
-                TagHelper::DATA_SRC
-            );
-
-            $hasType = TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE);
-
-            $typeAttributeValue = TagHelper::tagGetAttributeValue(
-                $tagMarkup,
-                "type"
-            );
-
-            if (!$typeAttributeValue) {
-                // We want to be least invasive and try to reuse the type attribute value
-                // if none is present we use fallback.
-                $typeAttributeValue = TagHelper::TYPE_JAVASCRIPT;
-            }
-
-            if (TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_SRC)) {
-                if ($hasType) {
-                    $tagMarkup = TagHelper::tagRenameAttribute(
-                        $tagMarkup,
-                        TagHelper::TYPE,
-                        TagHelper::DATA_TYPE
-                    );
-                    $tagMarkup = TagHelper::tagAddAttribute(
-                        $tagMarkup,
-                        TagHelper::TYPE,
-                        TagHelper::TYPE_TEXT_PLAIN
-                    );
-                } else {
-                    // IMPORTANT: we need to add data-type="text/javascript" here to prevent Klaro from
-                    // not correctly recovering the correct value.
-                    // we add type="text/javascript" which later will be turned into an data attribute
-                    $tagMarkup = TagHelper::tagAddAttribute(
-                        $tagMarkup,
-                        TagHelper::DATA_TYPE,
-                        $typeAttributeValue
-                    );
-                }
-            } else {
-                // nor src so we have to "break" the tag by setting the type
-                if ($hasType) {
-                    $tagMarkup = TagHelper::tagRenameAttribute(
-                        $tagMarkup,
-                        TagHelper::TYPE,
-                        TagHelper::DATA_TYPE
-                    );
-                    $tagMarkup = TagHelper::tagAddAttribute(
-                        $tagMarkup,
-                        TagHelper::TYPE,
-                        TagHelper::TYPE_TEXT_PLAIN
-                    );
-                } else {
-                    $tagMarkup = TagHelper::tagAddAttribute(
-                        $tagMarkup,
-                        TagHelper::TYPE,
-                        TagHelper::TYPE_TEXT_PLAIN
-                    );
-                    $tagMarkup = TagHelper::tagAddAttribute(
-                        $tagMarkup,
-                        TagHelper::DATA_TYPE,
-                        $typeAttributeValue
-                    );
-                }
-            }
-
-            $dataNameAttribute = $serviceNameOverride
-                ? $serviceNameOverride
-                : $serviceName;
-
-            if (
-                !TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_NAME) &&
-                $dataNameAttribute
-            ) {
-                $tagMarkup = TagHelper::tagAddAttribute(
-                    $tagMarkup,
-                    TagHelper::DATA_NAME,
-                    $dataNameAttribute
-                );
-            }
-
             return $tagMarkup;
         });
     }
@@ -309,9 +108,9 @@ class CookiePunch implements ProtectedContextAwareInterface
      * @return string
      */
     public function addContextualConsent(
-        string $service,
+        string  $service,
         ?string $markup,
-        ?bool $isEnabled
+        ?bool   $isEnabled
     ) {
         if ($isEnabled) {
             return "<div data-name='" . $service . "'>" . $markup . "</div>";
@@ -320,8 +119,7 @@ class CookiePunch implements ProtectedContextAwareInterface
         }
     }
 
-    private function addNeverBlockAttribute(string $tag): string
-    {
+    private function addNeverBlockAttribute(string $tag): string {
         if (!TagHelper::tagHasAttribute($tag, TagHelper::DATA_NEVER_BLOCK)) {
             return TagHelper::tagAddAttribute(
                 $tag,
@@ -336,8 +134,7 @@ class CookiePunch implements ProtectedContextAwareInterface
      * @param string $needle
      * @return bool
      */
-    private function tagContains(string $haystack, string $needle): bool
-    {
+    private function tagContains(string $haystack, string $needle): bool {
         return !!strpos($haystack, $needle) !== false;
     }
 
@@ -348,8 +145,8 @@ class CookiePunch implements ProtectedContextAwareInterface
      * @return string
      */
     private function replaceTags(
-        string $tagName,
-        string $contentMarkup,
+        string   $tagName,
+        string   $contentMarkup,
         callable $hitCallback
     ): string {
         $regex = '/<' . $tagName . '.*?>/';
@@ -419,9 +216,7 @@ class CookiePunch implements ProtectedContextAwareInterface
                 $block = true;
                 $serviceName = null;
 
-                $tagPatterns = isset($this->tagPatterns[$tagName])
-                    ? $this->tagPatterns[$tagName]
-                    : [];
+                $tagPatterns = $this->tagPatterns[$tagName] ?? [];
 
                 if (isset($tagPatterns["*"])) {
                     $patternConfig = $tagPatterns["*"];
@@ -469,15 +264,14 @@ class CookiePunch implements ProtectedContextAwareInterface
         );
     }
 
-    private function validateService(string $name = null)
-    {
+    private function validateService(string $name = null) {
         if ($name && !isset($this->services[$name])) {
             throw new \InvalidArgumentException(
                 'The service "' .
-                    $name .
-                    '" could not be found in your config. Expected config for "Sandstorm.CookiePunch.services.' .
-                    $name .
-                    '"',
+                $name .
+                '" could not be found in your config. Expected config for "Sandstorm.CookiePunch.services.' .
+                $name .
+                '"',
                 1596469884
             );
         }
@@ -489,8 +283,7 @@ class CookiePunch implements ProtectedContextAwareInterface
      * @param string $methodName
      * @return boolean
      */
-    public function allowsCallOfMethod($methodName)
-    {
+    public function allowsCallOfMethod($methodName) {
         return true;
     }
 }
