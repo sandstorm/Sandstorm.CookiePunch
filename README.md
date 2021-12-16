@@ -535,3 +535,11 @@ For more consent options of a service see the docs for advanced configuration.
 If you have custom styling it will most likely break depending on what was changed in klaro.js bundled
 with this package. This package does not provide a SCSS file anymore. Check the section on styling for
 more information.
+
+## Contributing
+
+### Running Tests
+
+You need a running Neos distribution.
+
+run `./bin/phpunit -c Build/BuildEssentials/PhpUnit/UnitTests.xml DistributionPackages/Sandstorm.CookiePunch/Tests/Unit/`

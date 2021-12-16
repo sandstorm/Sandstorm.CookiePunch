@@ -8,7 +8,7 @@ use Sandstorm\CookiePunch\Eel\Helper\CookiePunch;
 /**
  * Testcase
  */
-class CookiePunchTest extends UnitTestCase
+class BlockScriptsTest extends UnitTestCase
 {
     public function scriptTagsWillBeBlockedWithoutConfig()
     {
@@ -20,7 +20,7 @@ class CookiePunchTest extends UnitTestCase
         $expected =
             '<script type="text/plain" data-type="text/javascript">var foo="bar";</script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
-        self::assertEquals($expected, $actual);
+        self::assertEquals(true, false);
 
         // selfclosing
         $markup = '<script/>';
@@ -115,7 +115,7 @@ class CookiePunchTest extends UnitTestCase
 
         $markup = '<script>var foo="bar";</script>';
         $expected =
-            '<script type="text/plain" data-type="text/javascript" data-name="default">var foo="bar";</script>';
+            '<script data-type="text/javascript" type="text/plain" data-name="default">var foo="bar";</script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
     }
@@ -143,7 +143,7 @@ class CookiePunchTest extends UnitTestCase
 
         $markup = '<script>var foo="bar";</script>';
         $expected =
-            '<script type="text/plain" data-type="text/javascript" data-name="default">var foo="bar";</script>';
+            '<script data-type="text/javascript" type="text/plain" data-name="default">var foo="bar";</script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
     }
@@ -173,54 +173,6 @@ class CookiePunchTest extends UnitTestCase
         self::assertEquals($markup, $actual);
     }
 
-    /**
-     * @test
-     */
-    public function tagsWithDataNameWillBeBlocked()
-    {
-        $blockExternalContentHelper = new CookiePunch();
-
-        $markup = '<script src="myscripts.js" data-name="default"></script>';
-        $expected =
-            '<script data-src="myscripts.js" data-name="default" data-type="text/javascript"></script>';
-        $actual = $blockExternalContentHelper->blockScripts($markup);
-        self::assertEquals($expected, $actual);
-
-        $markup =
-            '<iframe src="https://www.w3schools.com" data-name="default"></iframe>';
-        $expected =
-            '<iframe data-src="https://www.w3schools.com" data-name="default"></iframe>';
-        $actual = $blockExternalContentHelper->blockIframes($markup);
-        self::assertEquals($expected, $actual);
-    }
-
-    /**
-     * @test
-     */
-    public function tagsWillUseServiceNameFromEelHelperAndNotSettings()
-    {
-        $blockExternalContentHelper = new CookiePunch();
-
-        $markup = '<script src="myscripts.js"></script>';
-        $expected =
-            '<script data-src="myscripts.js" data-type="text/javascript" data-name="foo"></script>';
-        $actual = $blockExternalContentHelper->blockScripts(
-            $markup,
-            true,
-            "foo"
-        );
-        self::assertEquals($expected, $actual);
-
-        $markup = '<iframe src="https://www.w3schools.com"></iframe>';
-        $expected =
-            '<iframe data-src="https://www.w3schools.com" data-name="bar"></iframe>';
-        $actual = $blockExternalContentHelper->blockIframes(
-            $markup,
-            true,
-            "bar"
-        );
-        self::assertEquals($expected, $actual);
-    }
 
     /**
      * @test
@@ -258,39 +210,6 @@ class CookiePunchTest extends UnitTestCase
             '<script type="text/plain" data-type="text/javascript" data-name="default">var foo="bar";</script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($markup, $actual);
-    }
-
-    /**
-     * @test
-     */
-    public function markedTagsWillNeverBeBlocked()
-    {
-        $blockExternalContentHelper = new CookiePunch();
-
-        $markup = '<script src="myscripts.js"></script>';
-        $actualWithDataAttribute = $blockExternalContentHelper->neverBlockScripts(
-            $markup
-        );
-        $actualNotBlocked = $blockExternalContentHelper->neverBlockScripts(
-            $actualWithDataAttribute
-        );
-
-        $expected = '<script src="myscripts.js" data-never-block></script>';
-
-        self::assertEquals($expected, $actualWithDataAttribute);
-        self::assertEquals($expected, $actualNotBlocked);
-
-        $markup = '<iframe src="https://www.w3schools.com">';
-        $actualWithDataAttribute = $blockExternalContentHelper->neverBlockIframes(
-            $markup
-        );
-        $actualNotBlocked = $blockExternalContentHelper->neverBlockIframes(
-            $actualWithDataAttribute
-        );
-        $expected = '<iframe src="https://www.w3schools.com" data-never-block>';
-
-        self::assertEquals($expected, $actualWithDataAttribute);
-        self::assertEquals($expected, $actualNotBlocked);
     }
 
     /**
@@ -368,7 +287,7 @@ class CookiePunchTest extends UnitTestCase
 
         // pattern matched -> not blocked
         $markup =
-            '<script src="Packages/Vendor.Example/myscripts.js" type="text/javascript"/>';
+            '<script src="Packages/Vendor.Example/myscripts.js" type="text/javascript" />';
         $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($markup, $actual);
     }
@@ -376,40 +295,65 @@ class CookiePunchTest extends UnitTestCase
     /**
      * @test
      */
-    public function iframesWillBeBlocked()
+    public function markedTagsWillNeverBeBlocked()
     {
         $blockExternalContentHelper = new CookiePunch();
 
-        ObjectAccess::setProperty(
-            $blockExternalContentHelper,
-            "tagPatterns",
-            [
-                "iframe" => [
-                    "*" => [
-                        "service" => "foo",
-                    ],
-                    "with-style" => [
-                        "block" => true,
-                    ],
-                ],
-            ],
-            true
+        $markup = '<script src="myscripts.js"></script>';
+        $actualWithDataAttribute = $blockExternalContentHelper->neverBlockScripts(
+            $markup
+        );
+        $actualNotBlocked = $blockExternalContentHelper->neverBlockScripts(
+            $actualWithDataAttribute
         );
 
-        // ### <iframe> with src ###
+        $expected = '<script src="myscripts.js" data-never-block></script>';
 
-        $markup = '<iframe src="https://www.w3schools.com"></iframe>';
+        self::assertEquals($expected, $actualWithDataAttribute);
+        self::assertEquals($expected, $actualNotBlocked);
+
+        $markup = '<iframe src="https://www.w3schools.com">';
+        $actualWithDataAttribute = $blockExternalContentHelper->neverBlockIframes(
+            $markup
+        );
+        $actualNotBlocked = $blockExternalContentHelper->neverBlockIframes(
+            $actualWithDataAttribute
+        );
+        $expected = '<iframe src="https://www.w3schools.com" data-never-block>';
+
+        self::assertEquals($expected, $actualWithDataAttribute);
+        self::assertEquals($expected, $actualNotBlocked);
+    }
+
+    /**
+     * @test
+     */
+    public function tagsWithDataNameWillBeBlocked()
+    {
+        $blockExternalContentHelper = new CookiePunch();
+
+        $markup = '<script src="myscripts.js" data-name="default"></script>';
         $expected =
-            '<iframe data-src="https://www.w3schools.com" data-name="foo"></iframe>';
-        $actual = $blockExternalContentHelper->blockIframes($markup);
-
+            '<script data-src="myscripts.js" data-name="default" data-type="text/javascript" type="text/plain"></script>';
+        $actual = $blockExternalContentHelper->blockScripts($markup);
         self::assertEquals($expected, $actual);
+    }
 
-        $markup = '<iframe src="with-style"/>';
+    /**
+     * @test
+     */
+    public function tagsWillUseServiceNameFromEelHelperAndNotSettings()
+    {
+        $blockExternalContentHelper = new CookiePunch();
+
+        $markup = '<script src="myscripts.js"></script>';
         $expected =
-            '<iframe data-src="with-style" data-name="foo"/>';
-        $actual = $blockExternalContentHelper->blockIframes($markup);
-
+            '<script data-src="myscripts.js" data-type="text/javascript" type="text/plain" data-name="foo"></script>';
+        $actual = $blockExternalContentHelper->blockScripts(
+            $markup,
+            true,
+            "foo"
+        );
         self::assertEquals($expected, $actual);
     }
 }
