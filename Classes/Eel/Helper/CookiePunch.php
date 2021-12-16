@@ -9,7 +9,7 @@ use Sandstorm\CookiePunch\TagHelper;
 
 class CookiePunch implements ProtectedContextAwareInterface {
     /**
-     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="services")
+     * @Flow\InjectConfiguration(package="Sandstorm.CookiePunch", path="consent.services")
      */
     protected $services;
 
@@ -19,6 +19,7 @@ class CookiePunch implements ProtectedContextAwareInterface {
     protected $tagPatterns;
 
     public function neverBlockTags(array $tagNames, string $markup): string {
+        $this->validateTagNames($tagNames);
         return $this->checkTagAndReplaceUsingACallback($tagNames, $markup, function ($tag) {
             $tag = $this->addNeverBlockAttribute($tag);
             return $tag;
@@ -26,6 +27,9 @@ class CookiePunch implements ProtectedContextAwareInterface {
     }
 
     public function blockTags(array $tagNames, string $markup, bool $enabled = true, string $serviceNameOverride = null) {
+        $this->validateTagNames($tagNames);
+        $this->validateService($serviceNameOverride);
+
         if (!$enabled) {
             return $markup;
         }
@@ -118,6 +122,7 @@ class CookiePunch implements ProtectedContextAwareInterface {
         string $markup,
         bool   $isEnabled = true
     ) {
+        $this->validateService($service);
         if ($isEnabled) {
             return '<div data-name="' . $service . '">' . $markup . "</div>";
         } else {
@@ -280,12 +285,25 @@ class CookiePunch implements ProtectedContextAwareInterface {
     private function validateService(string $name = null) {
         if ($name && !isset($this->services[$name])) {
             throw new \InvalidArgumentException(
-                'The service "' .
+                'Sandstorm.CookiePunch: The service "' .
                 $name .
-                '" could not be found in your config. Expected config for "Sandstorm.CookiePunch.services.' .
-                $name .
-                '"',
+                '" could not be found in your "Sandstorm.CookiePunch.services" config.',
                 1596469884
+            );
+        }
+    }
+
+    private function validateTagNames(array $tagNames) {
+        $allowedTagNames = ["audio","embed","iframe","img","input","script","source","track","video"];
+        $diff = array_diff($tagNames, $allowedTagNames);
+
+        if(sizeof($diff) > 0) {
+            throw new \InvalidArgumentException(
+                'Sandstorm.CookiePunch: The following tags are not supported for blocking: ' . implode(", ",$diff) .
+                ". Supported tags are: " . implode(", ", $allowedTagNames) .
+                ". Please check your Fusion code."
+                ,
+                1596469854
             );
         }
     }
