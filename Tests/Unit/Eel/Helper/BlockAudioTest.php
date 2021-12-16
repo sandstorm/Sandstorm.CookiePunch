@@ -57,8 +57,7 @@ class BlockAudioTest extends UnitTestCase
         $markup = '<audio><source src="some.mp3"/><source src="some.mp3"/></audio>';
         $expected =
             '<audio><source data-src="some.mp3"/><source data-src="some.mp3"/></audio>';
-        $actual = $cookiePunch->blockTags(["audio"], $markup);
-        $actual = $cookiePunch->blockTags(["source"], $actual);
+        $actual = $cookiePunch->blockTags(["audio", "source"], $markup);
         self::assertEquals($expected, $actual);
     }
 
@@ -71,8 +70,7 @@ class BlockAudioTest extends UnitTestCase
         $markup = '<audio><source src="some.mp3" type="audio/mpeg"/><source src="some.mp3" type="audio/mpeg"/></audio>';
         $expected =
             '<audio><source data-src="some.mp3" type="audio/mpeg" data-type="audio/mpeg"/><source data-src="some.mp3" type="audio/mpeg" data-type="audio/mpeg"/></audio>';
-        $actual = $cookiePunch->blockTags(["audio"], $markup);
-        $actual = $cookiePunch->blockTags(["source"], $actual);
+        $actual = $cookiePunch->blockTags(["audio", "source"], $markup);
         self::assertEquals($expected, $actual);
     }
 }

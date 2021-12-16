@@ -19,7 +19,7 @@ class CookiePunch implements ProtectedContextAwareInterface {
     protected $tagPatterns;
 
     public function neverBlockTags(array $tagNames, string $markup): string {
-        return $this->replaceTags($tagNames, $markup, function ($tag) {
+        return $this->checkTagAndReplaceUsingACallback($tagNames, $markup, function ($tag) {
             $tag = $this->addNeverBlockAttribute($tag);
             return $tag;
         });
@@ -30,12 +30,12 @@ class CookiePunch implements ProtectedContextAwareInterface {
             return $markup;
         }
 
-        return $this->replaceTags($tagNames, $markup, function (
+        return $this->checkTagAndReplaceUsingACallback($tagNames, $markup, function (
             $tagMarkup,
             $serviceName,
             $tagName
         ) use ($serviceNameOverride) {
-
+            // 1. RENAME `src` to `data-src` for all tags with this attribute
             if (TagHelper::tagHasAttribute($tagMarkup, TagHelper::SRC)) {
                 $tagMarkup = TagHelper::tagRenameAttribute(
                     $tagMarkup,
@@ -45,44 +45,49 @@ class CookiePunch implements ProtectedContextAwareInterface {
             }
 
             switch ($tagName) {
+                // 2. SPECIAL TREATMENT
                 case "script": {
+                    // FIXING MISSING TYPE ATTRIBUTE
+                    if (!TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE)) {
+                        // IMPORTANT: we need to add data-type="text/javascript" here to prevent Klaro from
+                        // not correctly recovering the correct value.
+                        // we add type="text/javascript" which later will be turned into an data attribute
+                        $tagMarkup = TagHelper::tagAddAttribute(
+                            $tagMarkup,
+                            TagHelper::TYPE,
+                            TagHelper::TYPE_JAVASCRIPT
+                        );
+                    }
+                    // RENAMING `type` to `data-type`
+                    $tagMarkup = TagHelper::tagRenameAttribute(
+                        $tagMarkup,
+                        TagHelper::TYPE,
+                        TagHelper::DATA_TYPE
+                    );
 
-                }
-            }
-
-            if ($tagName === "script") {
-                if (!TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE)) {
-                    // IMPORTANT: we need to add data-type="text/javascript" here to prevent Klaro from
-                    // not correctly recovering the correct value.
-                    // we add type="text/javascript" which later will be turned into an data attribute
+                    // ADDING `type="text/plain"`
                     $tagMarkup = TagHelper::tagAddAttribute(
                         $tagMarkup,
                         TagHelper::TYPE,
-                        TagHelper::TYPE_JAVASCRIPT
+                        TagHelper::TYPE_TEXT_PLAIN
                     );
+                    break;
                 }
-
-                $tagMarkup = TagHelper::tagRenameAttribute(
-                    $tagMarkup,
-                    TagHelper::TYPE,
-                    TagHelper::DATA_TYPE
-                );
-
-                $tagMarkup = TagHelper::tagAddAttribute(
-                    $tagMarkup,
-                    TagHelper::TYPE,
-                    TagHelper::TYPE_TEXT_PLAIN
-                );
-                // ALL OTHER TAGS
-            } else {
-                if (TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE)) {
-                    $tagMarkup = TagHelper::tagAddAttribute(
-                        $tagMarkup,
-                        TagHelper::DATA_TYPE,
-                        TagHelper::tagGetAttributeValue($tagMarkup, TagHelper::TYPE)
-                    );
+                default: {
+                    // 3. ALL OTHER TAGS
+                    if (TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE)) {
+                        $tagMarkup = TagHelper::tagAddAttribute(
+                            $tagMarkup,
+                            TagHelper::DATA_TYPE,
+                            TagHelper::tagGetAttributeValue($tagMarkup, TagHelper::TYPE)
+                        );
+                    }
                 }
             }
+
+            // 4. FINAL STEPS FOR ALL TAGS - Only if they were processed before
+            // otherwise we end up with tags not having a `src` but a `data-name` attribute
+            // e.g. `<audio data-name="myservice"/>`
             if (
                 TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_SRC) ||
                 TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_TYPE)
@@ -110,11 +115,11 @@ class CookiePunch implements ProtectedContextAwareInterface {
      */
     public function addContextualConsent(
         string  $service,
-        ?string $markup,
-        ?bool   $isEnabled
+        string $markup,
+        bool   $isEnabled = true
     ) {
         if ($isEnabled) {
-            return "<div data-name='" . $service . "'>" . $markup . "</div>";
+            return '<div data-name="' . $service . '">' . $markup . "</div>";
         } else {
             return $markup;
         }
@@ -145,7 +150,7 @@ class CookiePunch implements ProtectedContextAwareInterface {
      * @param callable $hitCallback
      * @return string
      */
-    private function replaceTags(
+    private function checkTagAndReplaceUsingACallback(
         array    $tagNames,
         string   $contentMarkup,
         callable $hitCallback
@@ -212,10 +217,15 @@ class CookiePunch implements ProtectedContextAwareInterface {
                 }
 
                 // Blocking based on patterns from the config
-                // tagName can be iframe or script
 
-                // default is always true but can change depending on the next stage
+                // IMPORTANT: we will always block tags on default when using the Eel-Helper
+                // `CookiePunch.blockTags(["iframe","script", "img"]`
+                // We do not differentiate between different tags as this makes it easier for
+                // the integrator to know what is going on. The default blocking behaviour
+                // can be changed in the configuration. This way deviation from the default
+                // is documented in the configuration of the project to show the intend.
                 $block = true;
+
                 $serviceName = null;
 
                 $tagPatterns = $this->tagPatterns[$tagName] ?? [];

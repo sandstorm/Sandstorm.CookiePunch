@@ -38,5 +38,5 @@ prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
     }
 
     // We should never block the consent ;)
-    @process.neverBlockScripts = ${CookiePunch.neverBlockTag("script", value)}
+    @process.neverBlockScripts = ${CookiePunch.neverBlockTags(["script"], value)}
 }
