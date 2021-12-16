@@ -575,8 +575,23 @@ more information.
 
 ## Contributing
 
-### Running Tests
+You need a running Neos distribution and install this package.
 
-You need a running Neos distribution.
+### PHP Code -> Blocking
+
+You can run test when making changes to the processing of the markup. 
 
 run `./bin/phpunit -c Build/BuildEssentials/PhpUnit/UnitTests.xml DistributionPackages/Sandstorm.CookiePunch/Tests/Unit/`
+
+### Fusion, XLF and Typescript
+
+run `nvm use && yarn` to install all dependencies
+run `yarn run watch` to start developing Typescript.
+
+We use NodeJs to automatically generate XLS and Fusion files based on the original Klaro translations.
+You can recompile these files by running `build:translations`.
+
+Remember to run `yarn run build` when you are finished.
+
+Check out the `package.json` for more useful scripts.
+
