@@ -20,7 +20,7 @@ class BlockScriptsTest extends UnitTestCase
         $expected =
             '<script type="text/plain" data-type="text/javascript">var foo="bar";</script>';
         $actual = $blockExternalContentHelper->blockScripts($markup);
-        self::assertEquals(true, false);
+        self::assertEquals($expected, $actual);
 
         // selfclosing
         $markup = '<script/>';
