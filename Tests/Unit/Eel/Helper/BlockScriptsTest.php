@@ -19,13 +19,13 @@ class BlockScriptsTest extends UnitTestCase
         $markup = '<script>var foo="bar";</script>';
         $expected =
             '<script type="text/plain" data-type="text/javascript">var foo="bar";</script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
 
         // selfclosing
         $markup = '<script/>';
         $expected = '<script type="text/plain" data-type="text/javascript"/>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
 
         // ### <script> with type attribute ###
@@ -33,7 +33,7 @@ class BlockScriptsTest extends UnitTestCase
         $markup = '<script type="text/javascript"></script>';
         $expected =
             '<script data-type="text/javascript" type="text/plain"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
 
         // ### <script> with src attribute ###
@@ -42,7 +42,7 @@ class BlockScriptsTest extends UnitTestCase
         $markup = '<script src="myscripts.js"></script>';
         $expected =
             '<script data-src="myscripts.js" data-type="text/javascript"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
 
         // ### <script> with src and type attribute ###
@@ -50,14 +50,14 @@ class BlockScriptsTest extends UnitTestCase
             '<script src="myscripts.js" defer type="text/javascript"></script>';
         $expected =
             '<script data-src="myscripts.js" defer data-type="text/javascript" type="text/plain"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
 
         // selfclosing
         $markup = '<script src="myscripts.js" type="text/javascript"/>';
         $expected =
             '<script data-src="myscripts.js" data-type="text/javascript" type="text/plain"/>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
 
         // ### <script> with "application/javascript" or other types will be blocked ###
@@ -65,7 +65,7 @@ class BlockScriptsTest extends UnitTestCase
             '<script src="myscripts.js" defer type="application/javascript"></script>';
         $expected =
             '<script data-src="myscripts.js" defer data-type="application/javascript" type="text/plain"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
     }
 
@@ -89,7 +89,7 @@ class BlockScriptsTest extends UnitTestCase
         $markup = '<script>var foo="bar";</script>';
         $expected =
             '<script type="text/plain" data-type="text/javascript">var foo="bar";</script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
     }
 
@@ -116,7 +116,7 @@ class BlockScriptsTest extends UnitTestCase
         $markup = '<script>var foo="bar";</script>';
         $expected =
             '<script data-type="text/javascript" type="text/plain" data-name="default">var foo="bar";</script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
     }
 
@@ -144,7 +144,7 @@ class BlockScriptsTest extends UnitTestCase
         $markup = '<script>var foo="bar";</script>';
         $expected =
             '<script data-type="text/javascript" type="text/plain" data-name="default">var foo="bar";</script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
     }
 
@@ -169,7 +169,7 @@ class BlockScriptsTest extends UnitTestCase
         );
 
         $markup = '<script>var foo="bar";</script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($markup, $actual);
     }
 
@@ -185,12 +185,12 @@ class BlockScriptsTest extends UnitTestCase
 
         $markup = '<script type="text/plain"></script>';
         $expected = '<script type="text/plain"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
 
         $markup = '<script type="application/ld+json"></script>';
         $expected = '<script type="application/ld+json"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
     }
 
@@ -203,12 +203,12 @@ class BlockScriptsTest extends UnitTestCase
 
         $markup =
             '<script data-src="myscripts.js" data-name="default"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($markup, $actual);
 
         $markup =
             '<script type="text/plain" data-type="text/javascript" data-name="default">var foo="bar";</script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($markup, $actual);
     }
 
@@ -237,13 +237,13 @@ class BlockScriptsTest extends UnitTestCase
 
         // no pattern matched -> not blocked
         $markup = '<script src="myscripts.js" type="text/javascript"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($markup, $actual);
 
         // no pattern matched -> not blocked
         $markup =
             '<script src="https://example.com/foobar.js" type="text/javascript"></script><script src="https://example.com/bazbar.js" type="text/javascript"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($markup, $actual);
 
         // pattern matched -> blocked
@@ -251,7 +251,7 @@ class BlockScriptsTest extends UnitTestCase
             '<script src="Packages/Vendor.Example/myscripts.js" type="text/javascript"/>';
         $expected =
             '<script data-src="Packages/Vendor.Example/myscripts.js" data-type="text/javascript" type="text/plain" data-name="foo"/>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
     }
 
@@ -282,13 +282,13 @@ class BlockScriptsTest extends UnitTestCase
         $markup = '<script type="text/javascript"></script>';
         $expected =
             '<script data-type="text/javascript" type="text/plain" data-name="foo"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
 
         // pattern matched -> not blocked
         $markup =
             '<script src="Packages/Vendor.Example/myscripts.js" type="text/javascript" />';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($markup, $actual);
     }
 
@@ -302,7 +302,7 @@ class BlockScriptsTest extends UnitTestCase
         $markup = '<script src="myscripts.js" data-name="default"></script>';
         $expected =
             '<script data-src="myscripts.js" data-name="default" data-type="text/javascript" type="text/plain"></script>';
-        $actual = $cookiePunch->blockTag("script", $markup);
+        $actual = $cookiePunch->blockTags(["script"], $markup);
         self::assertEquals($expected, $actual);
     }
 
@@ -316,7 +316,7 @@ class BlockScriptsTest extends UnitTestCase
         $markup = '<script src="myscripts.js"></script>';
         $expected =
             '<script data-src="myscripts.js" data-type="text/javascript" type="text/plain" data-name="foo"></script>';
-        $actual = $cookiePunch->blockTag("script", 
+        $actual = $cookiePunch->blockTags(["script"],
             $markup,
             true,
             "foo"

@@ -38,14 +38,14 @@ class BlockIframeTest extends UnitTestCase
         $markup = '<iframe src="https://www.w3schools.com"></iframe>';
         $expected =
             '<iframe data-src="https://www.w3schools.com" data-name="foo"></iframe>';
-        $actual = $cookiePunch->blockTag("iframe", $markup);
+        $actual = $cookiePunch->blockTags(["iframe"], $markup);
 
         self::assertEquals($expected, $actual);
 
         $markup = '<iframe src="with-style"/>';
         $expected =
             '<iframe data-src="with-style" data-name="foo"/>';
-        $actual = $cookiePunch->blockTag("iframe", $markup);
+        $actual = $cookiePunch->blockTags(["iframe"], $markup);
 
         self::assertEquals($expected, $actual);
     }
@@ -61,7 +61,7 @@ class BlockIframeTest extends UnitTestCase
             '<iframe src="https://www.w3schools.com" data-name="default"></iframe>';
         $expected =
             '<iframe data-src="https://www.w3schools.com" data-name="default"></iframe>';
-        $actual = $cookiePunch->blockTag("iframe", $markup);
+        $actual = $cookiePunch->blockTags(["iframe"], $markup);
         self::assertEquals($expected, $actual);
     }
 
@@ -75,7 +75,7 @@ class BlockIframeTest extends UnitTestCase
         $markup = '<iframe src="https://www.w3schools.com"></iframe>';
         $expected =
             '<iframe data-src="https://www.w3schools.com" data-name="bar"></iframe>';
-        $actual = $cookiePunch->blockTag("iframe", 
+        $actual = $cookiePunch->blockTags(["iframe"],
             $markup,
             true,
             "bar"

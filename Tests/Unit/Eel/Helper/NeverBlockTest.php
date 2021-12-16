@@ -18,16 +18,16 @@ class NeverBlockTest extends UnitTestCase
         $cookiePunch = new CookiePunch();
 
         $markup = '<script src="myscripts.js"></script>';
-        $actualFlagged = $cookiePunch->neverBlockTag("script", $markup);
-        $actualNotBlocked = $cookiePunch->blockTag("script", $actualFlagged);
+        $actualFlagged = $cookiePunch->neverBlockTags(["script"], $markup);
+        $actualNotBlocked = $cookiePunch->blockTags(["script"], $actualFlagged);
         $expected = '<script src="myscripts.js" data-never-block></script>';
 
         self::assertEquals($expected, $actualFlagged);
         self::assertEquals($expected, $actualNotBlocked);
 
         $markup = '<iframe src="https://www.w3schools.com">';
-        $actualFlagged = $cookiePunch->neverBlockTag("iframe", $markup);
-        $actualNotBlocked = $cookiePunch->blockTag("iframe", $actualFlagged);
+        $actualFlagged = $cookiePunch->neverBlockTags(["iframe"], $markup);
+        $actualNotBlocked = $cookiePunch->blockTags(["iframe"], $actualFlagged);
         $expected = '<iframe src="https://www.w3schools.com" data-never-block>';
 
         self::assertEquals($expected, $actualFlagged);
@@ -42,19 +42,19 @@ class NeverBlockTest extends UnitTestCase
         $cookiePunch = new CookiePunch();
 
         $markup = '<script src="myscripts.js"></script>';
-        $actualFlagged = $cookiePunch->neverBlockTag("script", $markup);
-        $actualFlagged = $cookiePunch->neverBlockTag("script", $actualFlagged);
-        $actualFlagged = $cookiePunch->neverBlockTag("script", $actualFlagged);
-        $actualFlagged = $cookiePunch->neverBlockTag("script", $actualFlagged);
+        $actualFlagged = $cookiePunch->neverBlockTags(["script"], $markup);
+        $actualFlagged = $cookiePunch->neverBlockTags(["script"], $actualFlagged);
+        $actualFlagged = $cookiePunch->neverBlockTags(["script"], $actualFlagged);
+        $actualFlagged = $cookiePunch->neverBlockTags(["script"], $actualFlagged);
         $expected = '<script src="myscripts.js" data-never-block></script>';
 
         self::assertEquals($expected, $actualFlagged);
 
         $markup = '<iframe src="https://www.w3schools.com">';
-        $actualFlagged = $cookiePunch->neverBlockTag("iframe", $markup);
-        $actualFlagged = $cookiePunch->neverBlockTag("iframe", $actualFlagged);
-        $actualFlagged = $cookiePunch->neverBlockTag("iframe", $actualFlagged);
-        $actualFlagged = $cookiePunch->neverBlockTag("iframe", $actualFlagged);
+        $actualFlagged = $cookiePunch->neverBlockTags(["iframe"], $markup);
+        $actualFlagged = $cookiePunch->neverBlockTags(["iframe"], $actualFlagged);
+        $actualFlagged = $cookiePunch->neverBlockTags(["iframe"], $actualFlagged);
+        $actualFlagged = $cookiePunch->neverBlockTags(["iframe"], $actualFlagged);
         $expected = '<iframe src="https://www.w3schools.com" data-never-block>';
 
         self::assertEquals($expected, $actualFlagged);

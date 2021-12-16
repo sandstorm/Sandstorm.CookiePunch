@@ -18,22 +18,23 @@ class CookiePunch implements ProtectedContextAwareInterface {
      */
     protected $tagPatterns;
 
-    public function neverBlockTag(string $tagName, string $markup): string {
-        return $this->replaceTags($tagName, $markup, function ($tag) {
+    public function neverBlockTags(array $tagNames, string $markup): string {
+        return $this->replaceTags($tagNames, $markup, function ($tag) {
             $tag = $this->addNeverBlockAttribute($tag);
             return $tag;
         });
     }
 
-    public function blockTag(string $tagName, string $markup, bool $enabled = true, string $serviceNameOverride = null) {
+    public function blockTags(array $tagNames, string $markup, bool $enabled = true, string $serviceNameOverride = null) {
         if (!$enabled) {
             return $markup;
         }
 
-        return $this->replaceTags($tagName, $markup, function (
+        return $this->replaceTags($tagNames, $markup, function (
             $tagMarkup,
-            $serviceName
-        ) use ($serviceNameOverride, $tagName) {
+            $serviceName,
+            $tagName
+        ) use ($serviceNameOverride) {
 
             if (TagHelper::tagHasAttribute($tagMarkup, TagHelper::SRC)) {
                 $tagMarkup = TagHelper::tagRenameAttribute(
@@ -139,17 +140,17 @@ class CookiePunch implements ProtectedContextAwareInterface {
     }
 
     /**
-     * @param string $tagName
+     * @param string $tagNames
      * @param string $contentMarkup
      * @param callable $hitCallback
      * @return string
      */
     private function replaceTags(
-        string   $tagName,
+        array    $tagNames,
         string   $contentMarkup,
         callable $hitCallback
     ): string {
-        $regex = '/<' . $tagName . '.*?>/';
+        $regex = '/<(' . implode("|", $tagNames) . ').*?>/';
 
         // STAGE 1:
         //
@@ -161,8 +162,9 @@ class CookiePunch implements ProtectedContextAwareInterface {
         // IMPORTANT: here we do not change a tag. We only check if we need to proceed
         return preg_replace_callback(
             $regex,
-            function ($hits) use ($hitCallback, $tagName) {
+            function ($hits) use ($hitCallback, $tagNames) {
                 $tagMarkup = $hits[0];
+                $tagName = $hits[1];
 
                 // EARLY RETURN - NO CALLBACK
                 if (!$hitCallback) {
@@ -254,7 +256,8 @@ class CookiePunch implements ProtectedContextAwareInterface {
                     return call_user_func(
                         $hitCallback,
                         $tagMarkup,
-                        $serviceName
+                        $serviceName,
+                        $tagName
                     );
                 } else {
                     return $tagMarkup;

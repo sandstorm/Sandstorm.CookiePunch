@@ -19,7 +19,7 @@ class BlockImgTest extends UnitTestCase
         $markup = '<img src="someimage.png"/>';
         $expected =
             '<img data-src="someimage.png"/>';
-        $actual = $cookiePunch->blockTag("img", $markup);
+        $actual = $cookiePunch->blockTags(["img"], $markup);
         self::assertEquals($expected, $actual);
     }
 }
