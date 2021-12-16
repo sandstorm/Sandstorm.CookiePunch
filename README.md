@@ -30,13 +30,14 @@ Create a new fusion file `CookiePunch.fusion` in `.../Resources/Private/Fusion` 
 prototype(Neos.Neos:Page) {
     head.javascripts.cookiepunchConsent = Sandstorm.CookiePunch:Consent
     # Block Global
-    @process.blockIframes = ${CookiePunch.blockIframes(value, !node.context.inBackend)}
-    @process.blockScripts = ${CookiePunch.blockScripts(value, !node.context.inBackend)}
+    @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend)}
 }
 ```
 
 This will add the needed js and css to your page. If you reload the page you should see the consent-modal. Now all `<iframe>` and `<script>` tags will be
-blocked. `!node.context.inBackend` disables blocking in the Neos backend.
+blocked. Supported tags are `["iframe", "script", "audio", "video", "source", "track", "img", "embed", "input"]`
+
+`!node.context.inBackend` disables blocking in the Neos backend.
 
 Open or reload your page. If blocking works your page should look broken, sorry for that ;)
 
@@ -53,13 +54,13 @@ You might have some scripts that you never want to be blocked because your page 
 renderer = Neos.Fusion:Tag {
     tagName = "script"
     attrbutes.src = "resource://Vendor.Example/Public/JavaScript/index.js"
-    @process.neverBlock = ${CookiePunch.neverBlockScripts(value)}
+    @process.neverBlockTags = ${CookiePunch.neverBlockTags(["script"],value)}
 }
 ```
 
 ```neosfusion
 renderer = afx`
-    <script src={props.src} type="application/javascript" @process.neverBlock={CookiePunch.neverBlockScripts(value)}></script>
+    <script src={props.src} type="application/javascript" @process.neverBlockTags={CookiePunch.neverBlockTags(["script"], value)}></script>
 `
 ```
 
@@ -216,8 +217,7 @@ prototype(Neos.Neos:Page) {
         noCSS = true
     }
     # Block Global
-    @process.blockIframes = ${CookiePunch.blockIframes(value, !node.context.inBackend)}
-    @process.blockScripts = ${CookiePunch.blockScripts(value, !node.context.inBackend)}
+    @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend)}
 }
 ```
 
@@ -255,7 +255,6 @@ This technique especially comes in handy for blocking inline `<script>...</scrip
 
 ```neosfusion
 // Plugin Implementation Example
-
 prototype(Vendor.Plugin.FooTube:Embed) < prototype(Neos.Fusion:Component) {
     renderer = afx`
       <div>
@@ -268,17 +267,16 @@ prototype(Vendor.Plugin.FooTube:Embed) < prototype(Neos.Fusion:Component) {
 
 ```neosfusion
 // CookiePunch.fusion
-
 prototype(Vendor.Plugin.FooTube:Embed) {
   // tags in this part of the tree will be blocked first
-  @process.blockIframes = ${CookiePunch.blockIframes(value, !node.context.inBackend, "footube")}
-  @process.blockScripts = ${CookiePunch.blockScripts(value, !node.context.inBackend, "footube")}
+  @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend, "footube")}
 }
+
 prototype(Neos.Neos:Page) {
   head.javascripts.cookiepunchConsent = Sandstorm.CookiePunch:Consent
   // at last all remaining tags will be blocked according to the config
-  @process.blockIframes = ${CookiePunch.blockIframes(value, !node.context.inBackend)}
-  @process.blockScripts = ${CookiePunch.blockScripts(value, !node.context.inBackend)}
+  // already blocked tags will be ignored
+  @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend)}
 }
 ```
 
@@ -294,6 +292,25 @@ prototype(Vendor.Plugin.FooTube:Embed) {
   @process.addContextualConsent = ${CookiePunch.addContextualConsent("footube", value, !node.context.inBackend)}
 }
 ```
+
+Another use case are `<audio>` or `<video>` tags with or without nested `<source>` tags.
+You might want to block them so that a visitors IP address is not send to a third party server without a consent.
+
+```neosfusion
+prototype(Vendor:Component.ThirdpartyAudio) < prototype(Neos.Fusion:Component) {
+  thirdpartySrc = ''
+  
+  renderer = afx`
+    <audio>
+      <source src={props.thirdpartySrc}/>
+    </audio>
+  `
+  @process.blockTags = ${CookiePunch.blockTags(["source"], value, !node.context.inBackend, "thirdpartymedia")}
+  @process.addContextualConsent = ${CookiePunch.addContextualConsent("thirdpartymedia", value, !node.context.inBackend)}
+}
+
+```
+
 
 ### Let the editor choose a service from the inspector
 
@@ -313,8 +330,10 @@ You also need to add this for the actual blocking.
 
 ```neosfusion
 prototype(Neos.NodeTypes.Html:Html) {
-    @process.blockIframes = ${CookiePunch.blockIframes(value, !node.context.inBackend, q(node).property("consentServices"))}
-    @process.blockScripts = ${CookiePunch.blockScripts(value, !node.context.inBackend, q(node).property("consentServices"))}
+  @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend, q(node).property("consentServices"))}
+  // you can wrap the html element with a `<div data-name="myservice">...</div>` to make sure 
+  // the contextual consent is displayed correctly 
+  @process.contextualConsent = ${CookiePunch.addContextualConsent(q(node).property("consentServices"))}
 }
 ```
 
@@ -364,6 +383,24 @@ You can override translations
 - Also block the Js, although it does not add any cookies.
 - Attach it to the same service as the iframe.
 - This way the Js will run after the iframe was unblocked.
+
+## Migrating from version 3 to 4
+
+You can now block more tags. This is why we generalized the Eel helpers.
+
+**Old**
+```neosfusion
+    @process.blockIframes = ${CookiePunch.blockIframes(value, !node.context.inBackend)}
+    @process.blockScripts = ${CookiePunch.blockScripts(value, !node.context.inBackend)}
+    @process.neverBlockScripts = ${CookiePunch.neverBlockScripts(value)}
+    @process.neverBlockIframes = ${CookiePunch.neverBlockIframes(value)}
+```
+
+**New**
+```neosfusion
+    @process.blockTags = ${CookiePunch.blockTags(["iframe", "script"],value, !node.context.inBackend)}
+    @process.neverBlockTags = ${CookiePunch.neverBlockTags(["iframe", "script"],value, !node.context.inBackend)}
+```
 
 ## Migrating from version 2 to 3
 
@@ -535,3 +572,26 @@ For more consent options of a service see the docs for advanced configuration.
 If you have custom styling it will most likely break depending on what was changed in klaro.js bundled
 with this package. This package does not provide a SCSS file anymore. Check the section on styling for
 more information.
+
+## Contributing
+
+You need a running Neos distribution and install this package.
+
+### PHP Code -> Blocking
+
+You can run test when making changes to the processing of the markup. 
+
+run `./bin/phpunit -c Build/BuildEssentials/PhpUnit/UnitTests.xml DistributionPackages/Sandstorm.CookiePunch/Tests/Unit/`
+
+### Fusion, XLF and Typescript
+
+run `nvm use && yarn` to install all dependencies
+run `yarn run watch` to start developing Typescript.
+
+We use NodeJs to automatically generate XLS and Fusion files based on the original Klaro translations.
+You can recompile these files by running `build:translations`.
+
+Remember to run `yarn run build` when you are finished.
+
+Check out the `package.json` for more useful scripts.
+

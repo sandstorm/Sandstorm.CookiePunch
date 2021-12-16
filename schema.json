@@ -272,13 +272,8 @@
                 "tagPatterns": {
                   "type": "object",
                   "additionalProperties": false,
-                  "properties": {
-                    "script": {
-                      "$ref": "#/definitions/blockPattern"
-                    },
-                    "iframe": {
-                      "$ref": "#/definitions/blockPattern"
-                    }
+                  "patternProperties": {
+                    "audio|embed|iframe|img|input|script|source|track|video": { "$ref": "#/definitions/blockPattern" },
                   }
                 }
               }
