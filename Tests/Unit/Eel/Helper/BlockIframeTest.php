@@ -15,10 +15,10 @@ class BlockIframeTest extends UnitTestCase
      */
     public function iframesWillBeBlocked()
     {
-        $blockExternalContentHelper = new CookiePunch();
+        $cookiePunch = new CookiePunch();
 
         ObjectAccess::setProperty(
-            $blockExternalContentHelper,
+            $cookiePunch,
             "tagPatterns",
             [
                 "iframe" => [
@@ -38,14 +38,14 @@ class BlockIframeTest extends UnitTestCase
         $markup = '<iframe src="https://www.w3schools.com"></iframe>';
         $expected =
             '<iframe data-src="https://www.w3schools.com" data-name="foo"></iframe>';
-        $actual = $blockExternalContentHelper->blockIframes($markup);
+        $actual = $cookiePunch->blockIframes($markup);
 
         self::assertEquals($expected, $actual);
 
         $markup = '<iframe src="with-style"/>';
         $expected =
             '<iframe data-src="with-style" data-name="foo"/>';
-        $actual = $blockExternalContentHelper->blockIframes($markup);
+        $actual = $cookiePunch->blockIframes($markup);
 
         self::assertEquals($expected, $actual);
     }
@@ -55,13 +55,13 @@ class BlockIframeTest extends UnitTestCase
      */
     public function tagsWithDataNameWillBeBlocked()
     {
-        $blockExternalContentHelper = new CookiePunch();
+        $cookiePunch = new CookiePunch();
 
         $markup =
             '<iframe src="https://www.w3schools.com" data-name="default"></iframe>';
         $expected =
             '<iframe data-src="https://www.w3schools.com" data-name="default"></iframe>';
-        $actual = $blockExternalContentHelper->blockIframes($markup);
+        $actual = $cookiePunch->blockIframes($markup);
         self::assertEquals($expected, $actual);
     }
 
@@ -70,12 +70,12 @@ class BlockIframeTest extends UnitTestCase
      */
     public function tagsWillUseServiceNameFromEelHelperAndNotSettings()
     {
-        $blockExternalContentHelper = new CookiePunch();
+        $cookiePunch = new CookiePunch();
 
         $markup = '<iframe src="https://www.w3schools.com"></iframe>';
         $expected =
             '<iframe data-src="https://www.w3schools.com" data-name="bar"></iframe>';
-        $actual = $blockExternalContentHelper->blockIframes(
+        $actual = $cookiePunch->blockIframes(
             $markup,
             true,
             "bar"

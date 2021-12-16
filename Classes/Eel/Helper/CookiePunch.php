@@ -38,6 +38,14 @@ class CookiePunch implements ProtectedContextAwareInterface
         });
     }
 
+    public function neverBlockTag(string $tagName, string $markup): string
+    {
+        return $this->replaceTags($tagName, $markup, function ($tag) {
+            $tag = $this->addNeverBlockAttribute($tag);
+            return $tag;
+        });
+    }
+
     public function blockTag(string $tagName, string $markup, bool $enabled = true, string $serviceNameOverride = null) {
         if (!$enabled) {
             return $markup;
@@ -56,9 +64,7 @@ class CookiePunch implements ProtectedContextAwareInterface
                 );
             }
 
-            if(
-                $tagName === "script"
-            ) {
+            if($tagName === "script") {
                 if(!TagHelper::tagHasAttribute($tagMarkup,TagHelper::TYPE)) {
                     // IMPORTANT: we need to add data-type="text/javascript" here to prevent Klaro from
                     // not correctly recovering the correct value.
@@ -81,7 +87,7 @@ class CookiePunch implements ProtectedContextAwareInterface
                     TagHelper::TYPE,
                     TagHelper::TYPE_TEXT_PLAIN
                 );
-
+            // ALL OTHER TAGS
             } else {
                 if(TagHelper::tagHasAttribute($tagMarkup, TagHelper::TYPE)) {
                     $tagMarkup = TagHelper::tagAddAttribute(
@@ -96,9 +102,7 @@ class CookiePunch implements ProtectedContextAwareInterface
                 TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_SRC) ||
                 TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_TYPE)
             ) {
-                $dataNameAttribute = $serviceNameOverride
-                    ? $serviceNameOverride
-                    : $serviceName;
+                $dataNameAttribute = $serviceNameOverride ?: $serviceName;
                 if (
                     !TagHelper::tagHasAttribute($tagMarkup, TagHelper::DATA_NAME) &&
                     $dataNameAttribute

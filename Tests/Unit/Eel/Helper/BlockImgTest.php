@@ -14,12 +14,12 @@ class BlockImgTest extends UnitTestCase
      * @test
      */
     public function singleAudioTag() {
-        $blockExternalContentHelper = new CookiePunch();
+        $cookiePunch = new CookiePunch();
 
         $markup = '<img src="someimage.png"/>';
         $expected =
             '<img data-src="someimage.png"/>';
-        $actual = $blockExternalContentHelper->blockTag("img", $markup);
+        $actual = $cookiePunch->blockTag("img", $markup);
         self::assertEquals($expected, $actual);
     }
 }
