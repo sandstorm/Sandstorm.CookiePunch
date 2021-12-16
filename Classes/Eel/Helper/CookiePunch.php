@@ -116,17 +116,18 @@ class CookiePunch implements ProtectedContextAwareInterface {
      * @param string $service
      * @return string
      */
-    public function addContextualConsent(
-        string  $service,
-        string $markup,
-        bool   $isEnabled = true
-    ) {
-        $this->validateService($service);
-        if ($isEnabled) {
-            return '<div data-name="' . $service . '">' . $markup . "</div>";
-        } else {
-            return $markup;
+    public function addContextualConsent(?string  $service, string $markup, bool  $isEnabled = true) {
+        // service can be null e.g. if nothing is selected for `Sandstorm.CookiePunch:Mixin.ConsentServices`
+        // in the inspector
+        if($service) {
+            $this->validateService($service);
+            if ($isEnabled) {
+                return '<div data-name="' . $service . '">' . $markup . "</div>";
+            } else {
+                return $markup;
+            }
         }
+        return $markup;
     }
 
     private function addNeverBlockAttribute(string $tag): string {
