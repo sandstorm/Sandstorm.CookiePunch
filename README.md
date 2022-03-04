@@ -53,7 +53,7 @@ You might have some scripts that you never want to be blocked because your page 
 ```neosfusion
 renderer = Neos.Fusion:Tag {
     tagName = "script"
-    attrbutes.src = "resource://Vendor.Example/Public/JavaScript/index.js"
+    attributes.src = "resource://Vendor.Example/Public/JavaScript/index.js"
     @process.neverBlockTags = ${CookiePunch.neverBlockTags(["script"],value)}
 }
 ```
