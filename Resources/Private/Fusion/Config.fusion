@@ -34,19 +34,23 @@ prototype(Sandstorm.CookiePunch:Config) < prototype(Neos.Fusion:DataStructure) {
             }
         }
 
-        services = Neos.Fusion:Map {
-            items = ${Configuration.setting("Sandstorm.CookiePunch.consent.services")}
-            itemRenderer = Neos.Fusion:DataStructure {
-                name = ${itemKey}
-                title = ${CookiePunchConfig.translate(item.title)}
-                description = ${CookiePunchConfig.translate(item.description)}
-                purposes = ${item.purposes}
-                contextualConsentOnly = ${item.contextualConsentOnly}
-                default = ${item.default}
-                cookies = ${item.cookies}
-                required = ${item.required}
-                optOut = ${item.optOut}
-                onlyOnce = ${item.onlyOnce}
+        services = Neos.Fusion:Component {
+            services = ${Array.filter(Configuration.setting("Sandstorm.CookiePunch.consent.services"), service => service.when == null || ConditionalRendering.checkCondition(service.when, site))}
+
+            renderer = Neos.Fusion:Map {
+                items = ${props.services}
+                itemRenderer = Neos.Fusion:DataStructure {
+                    name = ${itemKey}
+                    title = ${CookiePunchConfig.translate(item.title)}
+                    description = ${CookiePunchConfig.translate(item.description)}
+                    purposes = ${item.purposes}
+                    contextualConsentOnly = ${item.contextualConsentOnly}
+                    default = ${item.default}
+                    cookies = ${item.cookies}
+                    required = ${item.required}
+                    optOut = ${item.optOut}
+                    onlyOnce = ${item.onlyOnce}
+                }
             }
         }
 
