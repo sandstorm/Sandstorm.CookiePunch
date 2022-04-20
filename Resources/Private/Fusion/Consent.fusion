@@ -2,8 +2,15 @@
 prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
     noCSS = false
 
+    activeServices = ${Array.filter(Configuration.setting("Sandstorm.CookiePunch.consent.services"), service => service.when == null || ConditionalRendering.checkCondition(service.when, site))}
+
+    // only render if there is at least one service that has not been filtered out by its 'when' config key
+    @if.hasActiveServices = ${Array.length(this.activeServices) > 0}
+
     renderer = Neos.Fusion:Value {
-        @context.cookiePunchConfig = Sandstorm.CookiePunch:Config
+        @context.cookiePunchConfig = Sandstorm.CookiePunch:Config {
+            services = ${props.activeServices}
+        }
         @context.cookiePunchConfig.@process.toJson = ${Json.stringify(value)}
         @context.cookiePunch = Neos.Fusion:Case {
             noCSS {
