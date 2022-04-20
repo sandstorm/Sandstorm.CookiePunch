@@ -112,14 +112,15 @@ class CookiePunch implements ProtectedContextAwareInterface {
     }
 
     /**
-     * @param string | null $markup
-     * @param string $service
+     * @param ?string $markup
+     * @param ?string $service
      * @return string
      */
-    public function addContextualConsent(?string  $service, string $markup, bool  $isEnabled = true) {
+    public function addContextualConsent(?string  $service, ?string $markup, bool  $isEnabled = true) {
         // service can be null e.g. if nothing is selected for `Sandstorm.CookiePunch:Mixin.ConsentServices`
-        // in the inspector
-        if($service) {
+        // in the inspector. Markup can be null if there is no active service, because all have been filtered out
+        // by "when" config keys in Sandstorm.CookiePunch:Config
+        if($service && $markup) {
             $this->validateService($service);
             if ($isEnabled) {
                 return '<div data-name="' . $service . '">' . $markup . "</div>";
