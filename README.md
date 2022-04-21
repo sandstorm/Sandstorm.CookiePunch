@@ -361,6 +361,59 @@ You can override translations
 - in the yaml config by providing/overriding a translation key instead of the actual text ( e.g. for the title of service )
 - by overriding the corresponding path in the fusion prototypes `Sandstorm.CookiePunch:Config.Translations` or `Sandstorm.CookiePunch:Config`
 
+### Conditional Rendering
+
+You can evaluate if a switch in the cookie modal should be rendered at runtime like this (only works for services):
+
+```
+Sandstorm:
+  CookiePunch:
+    consent:
+      services:
+        youtube:
+          title: Youtube
+          description: ...
+          purposes:
+            - mediaembeds
+          when: "${q(site).find('[instanceof Vendor.Site:YouTube]').count() > 0}"
+        googleAnalytics:
+          title: Google Analytics
+          description: ...
+          purposes:
+            - analytics
+          when: "${q(site).property('googleAnalyticsAccountKey')}"
+```
+
+This is useful for multi-site setups and to prevent unnecessary consent switches from being rendered if e.g. no youtube video has ever been added to the content.
+
+**Note:** 
+
+1. You need to use an eel expression that evaluates to boolean.
+2. When querying the content repository with `q(...)`, only `site` is allowed (`documentNode` and `node` are not available)
+3. If all of your when-keys of all your services evaluate to false, the cookie consent is not rendered at all
+4. Klaro saves in a cookie, if a consent was given by the user in the past, so when e.g. removing and readding a youtube video, users are not asked again for cookie approval
+
+**Important:**
+
+You will need to adapt you cache configuration for `Sandstorm.CookiePunch:Consent` like this (uses the config example from above, adapt to your usecase):
+
+```
+prototype(Sandstorm.CookiePunch:Consent) {
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+            // RootPage being the nodetype of the site node (used as `q(site)` in the `when` settings key example above)
+            2 = ${Neos.Caching.nodeTypeTag('Vendor.Site:RootPage')}  // flush when the googleAnalyticsAccountKey changes
+            3 = ${Neos.Caching.nodeTypeTag('Vendor.Site:YouTube')} // flush when a youtube video is added or removed
+        }
+    }
+}
+```
+
 ## Troubleshooting
 
 ### iframes work after unblocking but are the wrong size or in the wrong place
