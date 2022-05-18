@@ -41,10 +41,10 @@ class CookiePunchConfigTest extends FunctionalTestCase
      */
     public function validEelExpressionIsEvaluatedCorrectly()
     {
-        $conditionalServiceRendering = new CookiePunchConfig();
+        $cookiePunchConfig = new CookiePunchConfig();
 
         $eelExpression = '${1 + 1 == 2}';
-        $actual = $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
+        $actual = $cookiePunchConfig->evaluateEelExpression($eelExpression, $this->dummySiteNode);
 
         self::assertTrue($actual, "Not a valid eel expression: " . $eelExpression);
     }
@@ -56,23 +56,10 @@ class CookiePunchConfigTest extends FunctionalTestCase
     {
         self::expectExceptionMessage('Invalid eel expression in CookiePunch config service block. Given: ${1 + 1 == 2');
 
-        $conditionalServiceRendering = new CookiePunchConfig();
+        $cookiePunchConfig = new CookiePunchConfig();
 
         $eelExpression = '${1 + 1 == 2';
-        $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
-    }
-
-    /**
-     * @test
-     */
-    public function eelExpressionThatDoesNotResolveToBoolThrowsException()
-    {
-        self::expectExceptionMessage('An eel expression was used in CookiePunch config service block that does not resolve to boolean. Given: ${"hello"}');
-
-        $conditionalServiceRendering = new CookiePunchConfig();
-
-        $eelExpression = '${"hello"}';
-        $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
+        $cookiePunchConfig->evaluateEelExpression($eelExpression, $this->dummySiteNode);
     }
 
     /**
@@ -82,11 +69,11 @@ class CookiePunchConfigTest extends FunctionalTestCase
      */
     public function testIfSitenodeIsPutCorrectlyIntoContext()
     {
-        $conditionalServiceRendering = new CookiePunchConfig();
+        $cookiePunchConfig = new CookiePunchConfig();
 
         $eelExpression = '${site != null}';
 
-        $actual = $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
+        $actual = $cookiePunchConfig->evaluateEelExpression($eelExpression, $this->dummySiteNode);
 
         self::assertTrue($actual, "Sitenode not found in context");
     }
