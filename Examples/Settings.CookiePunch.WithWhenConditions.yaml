@@ -1,0 +1,36 @@
+Sandstorm:
+  CookiePunch:
+    consent:
+      purposes:
+        mediaembeds:
+          title: Videos
+          description: Some description
+        analytics:
+          title: Analytics
+          description: Some description
+      services:
+        youtube:
+          title: Youtube
+          description: Some description
+          purposes:
+            - mediaembeds
+          when: "${q(site).find('[instanceof Vendor.Site:YouTube]').count() > 0}"
+        vimeo:
+          title: Vimeo
+          description: Some description
+          purposes:
+            - mediaembeds
+          when: "${q(site).find('[instanceof Vendor.Site:Vimeo]').count() > 0}"
+        googleAnalytics:
+          title: Google Analytics
+          description: Some description
+          purposes:
+            - analytics
+          when: "${q(site).property('googleAnalyticsAccountKey')}"
+    blocking:
+      tagPatterns:
+        script:
+          "Packages/Neos.Neos":
+            block: false
+          "GoogleAnalytics.js":
+            service: googleAnalytics
