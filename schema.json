@@ -86,13 +86,22 @@
                   "type": "boolean"
                 },
                 "cookiePath": {
-                  "type": ["string", "null"]
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 "cookieDomain": {
-                  "type": ["string", "null"]
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 "additionalClass": {
-                  "type": ["string", "null"]
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 "styling": {
                   "type": "object",
@@ -273,7 +282,9 @@
                   "type": "object",
                   "additionalProperties": false,
                   "patternProperties": {
-                    "audio|embed|iframe|img|input|script|source|track|video": { "$ref": "#/definitions/blockPattern" },
+                    "audio|embed|iframe|img|input|script|source|track|video": {
+                      "$ref": "#/definitions/blockPattern"
+                    }
                   }
                 }
               }
@@ -285,10 +296,14 @@
           "additionalProperties": false
         }
       },
-      "required": ["CookiePunch"],
+      "required": [
+        "CookiePunch"
+      ],
       "additionalProperties": false
     }
   },
-  "required": ["Sandstorm"],
+  "required": [
+    "Sandstorm"
+  ],
   "additionalProperties": true
 }
