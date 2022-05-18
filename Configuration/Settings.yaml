@@ -7,7 +7,6 @@ Neos:
     defaultContext:
       "CookiePunch": Sandstorm\CookiePunch\Eel\Helper\CookiePunch
       "CookiePunchConfig": Sandstorm\CookiePunch\Eel\Helper\CookiePunchConfig
-      "ConditionalRendering": Sandstorm\CookiePunch\Eel\Helper\ConditionalServiceRendering
 Sandstorm:
   CookiePunch:
     consent:
