@@ -389,9 +389,10 @@ This is useful for multi-site setups and to prevent unnecessary consent switches
 **Note:** 
 
 1. You need to use an eel expression that evaluates to boolean.
-2. When querying the content repository with `q(...)`, only `site` is allowed (`documentNode` and `node` are not available)
-3. If all of your when-keys of all your services evaluate to false, the cookie consent is not rendered at all
-4. Klaro saves in a cookie, if a consent was given by the user in the past, so when e.g. removing and readding a youtube video, users are not asked again for cookie approval
+2. If you do not add a when condition the default is `when: ${true}`, meaning there will always be a consent switch rendered for this service
+3. When querying the content repository with `q(...)`, only `site` is allowed (`documentNode` and `node` are not available)
+4. If all of your when-keys of all your services evaluate to false, the cookie consent is not rendered at all
+5. Klaro saves in a cookie, if a consent was given by the user in the past, so when e.g. removing and readding a youtube video, users are not asked again for cookie approval
 
 **Important:**
 
