@@ -361,9 +361,9 @@ You can override translations
 - in the yaml config by providing/overriding a translation key instead of the actual text ( e.g. for the title of service )
 - by overriding the corresponding path in the fusion prototypes `Sandstorm.CookiePunch:Config.Translations` or `Sandstorm.CookiePunch:Config`
 
-### Conditional Rendering
+### Conditional Rendering of Services in Consent Modal
 
-You can evaluate if a switch in the cookie modal should be rendered at runtime like this (only works for services):
+You can evaluate if a switch in the cookie modal should be rendered at runtime like this:
 
 ```yaml
 Sandstorm:
@@ -391,8 +391,7 @@ This is useful for multi-site setups and to prevent unnecessary consent switches
 1. You need to use an eel expression that evaluates to boolean.
 2. If you do not add a when condition the default is `when: ${true}`, meaning there will always be a consent switch rendered for this service
 3. When querying the content repository with `q(...)`, only `site` is allowed (`documentNode` and `node` are not available)
-4. If all of your when-keys of all your services evaluate to false, the cookie consent is not rendered at all
-5. Klaro saves in a cookie, if a consent was given by the user in the past, so when e.g. removing and readding a youtube video, users are not asked again for cookie approval
+4. Klaro saves in a cookie, if a consent was given by the user in the past, so when e.g. removing and readding a youtube video, users are not asked again for cookie approval
 
 **Important:**
 
@@ -422,8 +421,8 @@ override the prototype like this in your project:
 
 ```neosfusion
 prototype(Sandstorm.CookiePunch:Consent) {
-    only render if there is at least one service that has not been filtered out by its 'when' config key
-    @if.hasActiveServices = ${Array.length(this.activeServices) > 0}
+    // only render if there is at least one service that has not been filtered out by its 'when' config key
+    @if.hasServices = ${Array.length(this.servicesRemainingAfterWhenConditions) > 0}
 }
 ```
 

@@ -8,12 +8,12 @@ use Neos\ContentRepository\Domain\Model\NodeData;
 use Neos\ContentRepository\Domain\Model\Workspace;
 use Neos\ContentRepository\Domain\Service\Context;
 use Neos\Flow\Tests\FunctionalTestCase;
-use Sandstorm\CookiePunch\Eel\Helper\ConditionalServiceRendering;
+use Sandstorm\CookiePunch\Eel\Helper\CookiePunchConfig;
 
 /**
  * Testcase
  */
-class ConditionalServiceRenderingTest extends FunctionalTestCase
+class CookiePunchConfigTest extends FunctionalTestCase
 {
     private Node $dummySiteNode;
 
@@ -41,7 +41,7 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
      */
     public function validEelExpressionIsEvaluatedCorrectly()
     {
-        $conditionalServiceRendering = new ConditionalServiceRendering();
+        $conditionalServiceRendering = new CookiePunchConfig();
 
         $eelExpression = '${1 + 1 == 2}';
         $actual = $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
@@ -56,7 +56,7 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
     {
         self::expectExceptionMessage('Invalid eel expression in CookiePunch config service block. Given: ${1 + 1 == 2');
 
-        $conditionalServiceRendering = new ConditionalServiceRendering();
+        $conditionalServiceRendering = new CookiePunchConfig();
 
         $eelExpression = '${1 + 1 == 2';
         $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
@@ -69,7 +69,7 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
     {
         self::expectExceptionMessage('An eel expression was used in CookiePunch config service block that does not resolve to boolean. Given: ${"hello"}');
 
-        $conditionalServiceRendering = new ConditionalServiceRendering();
+        $conditionalServiceRendering = new CookiePunchConfig();
 
         $eelExpression = '${"hello"}';
         $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
@@ -82,7 +82,7 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
      */
     public function testIfSitenodeIsPutCorrectlyIntoContext()
     {
-        $conditionalServiceRendering = new ConditionalServiceRendering();
+        $conditionalServiceRendering = new CookiePunchConfig();
 
         $eelExpression = '${site != null}';
 
@@ -100,7 +100,7 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
 
         $expected = [];
 
-        $actual = (new ConditionalServiceRendering())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
+        $actual = (new CookiePunchConfig())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
 
         $this->assertArraysAreEqual($expected, $actual);
     }
@@ -122,7 +122,7 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
             ],
         ];
 
-        $actual = (new ConditionalServiceRendering())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
+        $actual = (new CookiePunchConfig())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
 
         $this->assertArraysAreEqual($expected, $actual);
     }
@@ -141,7 +141,7 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
         $expected = [
         ];
 
-        $actual = (new ConditionalServiceRendering())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
+        $actual = (new CookiePunchConfig())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
 
         $this->assertArraysAreEqual($expected, $actual);
     }
@@ -163,7 +163,7 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
             ],
         ];
 
-        $actual = (new ConditionalServiceRendering())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
+        $actual = (new CookiePunchConfig())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
 
         $this->assertArraysAreEqual($expected, $actual);
     }

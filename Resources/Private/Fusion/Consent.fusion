@@ -2,18 +2,19 @@
 prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
     noCSS = false
 
-    activeServices = ${ConditionalRendering.filterServicesArrayByWhenCondition(Configuration.setting("Sandstorm.CookiePunch.consent.services"), site)}
+    servicesRemainingAfterWhenConditions = ${CookiePunchConfig.filterServicesArrayByWhenCondition(Configuration.setting("Sandstorm.CookiePunch.consent.services"), site)}
 
     // If you want to prevent an empty CookieConsent modal for your users if all 'when' config keys evaluate to false,
     // override the prototype like this in your project:
-    //prototype(Sandstorm.CookiePunch:Consent) {
-    //     only render if there is at least one service that has not been filtered out by its 'when' config key
-    //     @if.hasActiveServices = ${Array.length(this.activeServices) > 0}
-    //}
+    //
+    // prototype(Sandstorm.CookiePunch:Consent) {
+    //      only render if there is at least one service that has not been filtered out by its 'when' config key
+    //      @if.hasServices = ${Array.length(this.servicesRemainingAfterWhenConditions) > 0}
+    // }
 
     renderer = Neos.Fusion:Value {
         @context.cookiePunchConfig = Sandstorm.CookiePunch:Config {
-            services = ${props.activeServices}
+            services = ${props.servicesRemainingAfterWhenConditions}
         }
         @context.cookiePunchConfig.@process.toJson = ${Json.stringify(value)}
         @context.cookiePunch = Neos.Fusion:Case {
