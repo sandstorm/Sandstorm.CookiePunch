@@ -25,11 +25,10 @@ class ConditionalServiceRendering implements ProtectedContextAwareInterface
     /**
      * @param string $eelExpression
      * @param NodeInterface $siteNode
-     * @param NodeInterface $documentNode
      * @return string
      * @throws \Exception for invalid eel expressions
      */
-    public function checkCondition($eelExpression, $siteNode)
+    public function evaluateEelExpression($eelExpression, $siteNode)
     {
         if (preg_match(\Neos\Eel\Package::EelExpressionRecognizer, $eelExpression)) {
             $defaultContextVariables = EelUtility::getDefaultContextVariables($this->defaultContext);
@@ -44,23 +43,6 @@ class ConditionalServiceRendering implements ProtectedContextAwareInterface
         } else {
             throw new \Exception("Invalid eel expression in CookiePunch config service block. Given: " . $eelExpression);
         }
-    }
-
-    /**
-     * Evaluate an Eel expression.
-     *
-     * @param string $expression The Eel expression to evaluate
-     * @param array $contextVariables
-     * @return mixed The result of the evaluated Eel expression
-     * @throws \Neos\Eel\Exception
-     */
-    private function evaluateEelExpression($expression, $contextVariables)
-    {
-        if ($this->defaultContextVariables === null) {
-            $this->defaultContextVariables = EelUtility::getDefaultContextVariables($this->defaultContext);
-        }
-        $contextVariables = array_merge($this->defaultContextVariables, $contextVariables);
-        return EelUtility::evaluateEelExpression($expression, $this->eelEvaluator, $contextVariables);
     }
 
     /**

@@ -2,7 +2,8 @@
 prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
     noCSS = false
 
-    activeServices = ${Array.filter(Configuration.setting("Sandstorm.CookiePunch.consent.services"), service => service.when == null || ConditionalRendering.checkCondition(service.when, site))}
+    // Filter configured services by their when-condition, if they have one
+    activeServices = ${Array.filter(Configuration.setting("Sandstorm.CookiePunch.consent.services"), service => service.when == null || ConditionalRendering.evaluateEelExpression(service.when, site))}
 
     // only render if there is at least one service that has not been filtered out by its 'when' config key
     @if.hasActiveServices = ${Array.length(this.activeServices) > 0}
