@@ -365,7 +365,7 @@ You can override translations
 
 You can evaluate if a switch in the cookie modal should be rendered at runtime like this (only works for services):
 
-```
+```yaml
 Sandstorm:
   CookiePunch:
     consent:
@@ -398,7 +398,7 @@ This is useful for multi-site setups and to prevent unnecessary consent switches
 
 You will need to adapt you cache configuration for `Sandstorm.CookiePunch:Consent` like this (uses the config example from above, adapt to your usecase):
 
-```
+```neosfusion
 prototype(Sandstorm.CookiePunch:Consent) {
     @cache {
         mode = 'cached'
@@ -412,6 +412,18 @@ prototype(Sandstorm.CookiePunch:Consent) {
             3 = ${Neos.Caching.nodeTypeTag('Vendor.Site:YouTube')} // flush when a youtube video is added or removed
         }
     }
+}
+```
+
+**Preventing an empty cookie modal**
+
+If you want to prevent an empty CookieConsent modal for your users if all 'when' config keys evaluate to false,
+override the prototype like this in your project:
+
+```neosfusion
+prototype(Sandstorm.CookiePunch:Consent) {
+    only render if there is at least one service that has not been filtered out by its 'when' config key
+    @if.hasActiveServices = ${Array.length(this.activeServices) > 0}
 }
 ```
 

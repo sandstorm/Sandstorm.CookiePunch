@@ -5,8 +5,12 @@ prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
     // Filter configured services by their when-condition, if they have one
     activeServices = ${Array.filter(Configuration.setting("Sandstorm.CookiePunch.consent.services"), service => service.when == null || ConditionalRendering.evaluateEelExpression(service.when, site))}
 
-    // only render if there is at least one service that has not been filtered out by its 'when' config key
-    @if.hasActiveServices = ${Array.length(this.activeServices) > 0}
+    // If you want to prevent an empty CookieConsent modal for your users if all 'when' config keys evaluate to false,
+    // override the prototype like this in your project:
+    //prototype(Sandstorm.CookiePunch:Consent) {
+    //     only render if there is at least one service that has not been filtered out by its 'when' config key
+    //     @if.hasActiveServices = ${Array.length(this.activeServices) > 0}
+    //}
 
     renderer = Neos.Fusion:Value {
         @context.cookiePunchConfig = Sandstorm.CookiePunch:Config {
