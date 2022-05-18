@@ -233,6 +233,9 @@
                           "type": "string"
                         }
                       },
+                      "when": {
+                        "type": "string"
+                      },
                       "contextualConsentOnly": {
                         "type": "boolean"
                       },
