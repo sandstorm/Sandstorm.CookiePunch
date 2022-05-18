@@ -15,6 +15,27 @@ use Sandstorm\CookiePunch\Eel\Helper\ConditionalServiceRendering;
  */
 class ConditionalServiceRenderingTest extends FunctionalTestCase
 {
+    private Node $dummySiteNode;
+
+    /**
+     * @before
+     */
+    public function initDummySiteNode() {
+        $this->dummySiteNode = new Node(
+            new NodeData(
+                "/sites/website",
+                new Workspace("")),
+            new Context("",
+                new DateTime(),
+                [],
+                [],
+                false,
+                false,
+                false
+            )
+        );
+    }
+
     /**
      * @test
      */
@@ -23,7 +44,7 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
         $conditionalServiceRendering = new ConditionalServiceRendering();
 
         $eelExpression = '${1 + 1 == 2}';
-        $actual = $conditionalServiceRendering->evaluateEelExpression($eelExpression, null);
+        $actual = $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
 
         self::assertTrue($actual, "Not a valid eel expression: " . $eelExpression);
     }
@@ -38,7 +59,20 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
         $conditionalServiceRendering = new ConditionalServiceRendering();
 
         $eelExpression = '${1 + 1 == 2';
-        $conditionalServiceRendering->evaluateEelExpression($eelExpression, null);
+        $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
+    }
+
+    /**
+     * @test
+     */
+    public function eelExpressionThatDoesNotResolveToBoolThrowsException()
+    {
+        self::expectExceptionMessage('An eel expression was used in CookiePunch config service block that does not resolve to boolean. Given: ${"hello"}');
+
+        $conditionalServiceRendering = new ConditionalServiceRendering();
+
+        $eelExpression = '${"hello"}';
+        $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
     }
 
     /**
@@ -50,23 +84,9 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
     {
         $conditionalServiceRendering = new ConditionalServiceRendering();
 
-        $siteNode = new Node(
-            new NodeData(
-                "/sites/website",
-                new Workspace("")),
-            new Context("",
-                new DateTime(),
-                [],
-                [],
-                false,
-                false,
-                false
-            )
-        );
-
         $eelExpression = '${site != null}';
 
-        $actual = $conditionalServiceRendering->evaluateEelExpression($eelExpression, $siteNode);
+        $actual = $conditionalServiceRendering->evaluateEelExpression($eelExpression, $this->dummySiteNode);
 
         self::assertTrue($actual, "Sitenode not found in context");
     }

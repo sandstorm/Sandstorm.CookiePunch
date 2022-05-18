@@ -2,6 +2,7 @@
 
 namespace Sandstorm\CookiePunch\Eel\Helper;
 
+use Exception;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Eel\ProtectedContextAwareInterface;
 use Neos\Flow\Annotations as Flow;
@@ -14,21 +15,21 @@ class ConditionalServiceRendering implements ProtectedContextAwareInterface
      * @Flow\Inject(lazy=false)
      * @var CompilingEvaluator
      */
-    protected $eelEvaluator;
+    protected CompilingEvaluator $eelEvaluator;
 
     /**
      * @Flow\InjectConfiguration(package="Neos.Fusion", path="defaultContext")
      * @var array
      */
-    protected $defaultContext;
+    protected array $defaultContext;
 
     /**
      * @param string $eelExpression
      * @param NodeInterface $siteNode
-     * @return string
-     * @throws \Exception for invalid eel expressions
+     * @return bool
+     * @throws Exception for invalid eel expressions
      */
-    public function evaluateEelExpression($eelExpression, $siteNode)
+    public function evaluateEelExpression(string $eelExpression, NodeInterface $siteNode): bool
     {
         if (preg_match(\Neos\Eel\Package::EelExpressionRecognizer, $eelExpression)) {
             $defaultContextVariables = EelUtility::getDefaultContextVariables($this->defaultContext);
@@ -39,9 +40,15 @@ class ConditionalServiceRendering implements ProtectedContextAwareInterface
 
             $contextVariables = array_merge($defaultContextVariables, $context);
 
-            return EelUtility::evaluateEelExpression($eelExpression, $this->eelEvaluator, $contextVariables);
+            $result = EelUtility::evaluateEelExpression($eelExpression, $this->eelEvaluator, $contextVariables);
+
+            // hard cast to boolean, only boolean expressions are supported. Other expression types are unsupported
+            // We do not throw an exception here after checking if (!is_bool($result)), because this would prevent
+            // often used eel expression shortcuts like ${q(site).property('googleAnalyticsAccountKey')} that are truthy
+            // or falsy but not strictly of type bool from being used
+            return (bool) $result;
         } else {
-            throw new \Exception("Invalid eel expression in CookiePunch config service block. Given: " . $eelExpression);
+            throw new Exception("Invalid eel expression in CookiePunch config service block. Given: " . $eelExpression);
         }
     }
 
@@ -51,7 +58,7 @@ class ConditionalServiceRendering implements ProtectedContextAwareInterface
      * @param string $methodName
      * @return boolean
      */
-    public function allowsCallOfMethod($methodName)
+    public function allowsCallOfMethod($methodName): bool
     {
         return true;
     }
