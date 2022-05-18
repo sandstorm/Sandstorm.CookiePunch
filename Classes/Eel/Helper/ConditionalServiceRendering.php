@@ -24,6 +24,19 @@ class ConditionalServiceRendering implements ProtectedContextAwareInterface
     protected array $defaultContext;
 
     /**
+     * @param array $services
+     * @param NodeInterface $siteNode
+     * @return array
+     * @throws Exception
+     */
+    public function filterServicesArrayByWhenCondition(array $services, NodeInterface $siteNode): array
+    {
+        return array_filter($services, function($service) use(&$siteNode) {
+            return !isset($service['when']) || $this->evaluateEelExpression($service['when'], $siteNode);
+        });
+    }
+
+    /**
      * @param string $eelExpression
      * @param NodeInterface $siteNode
      * @return bool

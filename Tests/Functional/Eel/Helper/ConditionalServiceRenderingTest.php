@@ -39,7 +39,7 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function validEelExpression()
+    public function validEelExpressionIsEvaluatedCorrectly()
     {
         $conditionalServiceRendering = new ConditionalServiceRendering();
 
@@ -91,4 +91,87 @@ class ConditionalServiceRenderingTest extends FunctionalTestCase
         self::assertTrue($actual, "Sitenode not found in context");
     }
 
+    /**
+     * @test
+     */
+    public function noServicePassedReturnsEmptyArray()
+    {
+        $services = [];
+
+        $expected = [];
+
+        $actual = (new ConditionalServiceRendering())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
+
+        $this->assertArraysAreEqual($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function aServiceWithWhenEvaluatingToTrueIsKept()
+    {
+        $services = [
+            'youtube' => [
+                'when' => '${true}'
+            ],
+        ];
+
+        $expected = [
+            'youtube' => [
+                'when' => '${true}'
+            ],
+        ];
+
+        $actual = (new ConditionalServiceRendering())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
+
+        $this->assertArraysAreEqual($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function aServiceWithWhenEvaluatingToFalseIsRemoved()
+    {
+        $services = [
+            'youtube' => [
+                'when' => '${false}'
+            ],
+        ];
+
+        $expected = [
+        ];
+
+        $actual = (new ConditionalServiceRendering())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
+
+        $this->assertArraysAreEqual($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function aServiceWithoutAWhenExpressionIsKept()
+    {
+        $services = [
+            'youtube' => [
+                'title' => 'youtube'
+            ],
+        ];
+
+        $expected = [
+            'youtube' => [
+                'title' => 'youtube'
+            ],
+        ];
+
+        $actual = (new ConditionalServiceRendering())->filterServicesArrayByWhenCondition($services, $this->dummySiteNode);
+
+        $this->assertArraysAreEqual($expected, $actual);
+    }
+
+    private function assertArraysAreEqual(array $array1, array $array2)
+    {
+        $arraysAreEqual = strcmp(json_encode($array1), json_encode($array2)) == 0;
+
+        self::assertTrue($arraysAreEqual, "The filtered services array does not contain the expected services");
+    }
 }
