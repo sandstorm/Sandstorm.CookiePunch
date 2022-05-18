@@ -632,9 +632,14 @@ You need a running Neos distribution and install this package.
 
 ### PHP Code -> Blocking
 
-You can run test when making changes to the processing of the markup. 
+You can run tests when making changes to the processing of the markup. 
 
 run `./bin/phpunit -c Build/BuildEssentials/PhpUnit/UnitTests.xml DistributionPackages/Sandstorm.CookiePunch/Tests/Unit/`
+
+Or functional tests, when changing the conditional consent rendering:
+
+run `./bin/phpunit -c Build/BuildEssentials/PhpUnit/FunctionalTests.xml DistributionPackages/Sandstorm.CookiePunch/Tests/Functional/`
+
 
 ### Fusion, XLF and Typescript
 
