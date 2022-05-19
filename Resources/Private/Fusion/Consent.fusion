@@ -14,7 +14,7 @@ prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
 
     renderer = Neos.Fusion:Value {
         @context.cookiePunchConfig = Sandstorm.CookiePunch:Config {
-            services = ${props.servicesRemainingAfterWhenConditions}
+            @context.servicesRemaining = ${props.servicesRemainingAfterWhenConditions}
         }
         @context.cookiePunchConfig.@process.toJson = ${Json.stringify(value)}
         @context.cookiePunch = Neos.Fusion:Case {
