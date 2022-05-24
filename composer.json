@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "require": {
-    "neos/neos": "^5.0 || ^7.0 || dev-master"
+    "neos/neos": "^5.0 || ^7.0 || ^8.0 || dev-master"
   },
   "authors": [
     {
