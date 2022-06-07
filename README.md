@@ -361,6 +361,31 @@ You can override translations
 - in the yaml config by providing/overriding a translation key instead of the actual text ( e.g. for the title of service )
 - by overriding the corresponding path in the fusion prototypes `Sandstorm.CookiePunch:Config.Translations` or `Sandstorm.CookiePunch:Config`
 
+**Example: Translating service labels**
+
+Labels of services in your Settings.CookiePunch.yml can be translated like this:
+
+```yaml
+services:
+  youtube:
+    title: Youtube
+    description: Vendor.Site:CookiePunch:services.youtube.description
+```
+
+Where 
+- `Vendor:Site` is your site package key
+- `CookiePunch` is the name of the xml file containing the translations (you can choose any name here, just needs to match the file name). See this:
+
+![Screenshot 2022-06-07 at 14 37 57](https://user-images.githubusercontent.com/9661367/172380821-9c374cb4-35ab-4892-afe3-f6cd09885981.png)
+
+- And inside the files you need to use the key following the colon `:` (here: `services.youtube.description`).
+
+```
+            <trans-unit id="services.youtube.description">
+                <source>Erlaubt die Einbindung von Youtube-Videos.</source>
+            </trans-unit>
+```
+
 ### Conditional Rendering of Services in Consent Modal
 
 You can evaluate if a switch in the cookie modal should be rendered at runtime like this:
