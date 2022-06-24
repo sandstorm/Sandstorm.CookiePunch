@@ -289,6 +289,7 @@ a contextual consent.
 ```neosfusion
 // CookiePunch.fusion
 prototype(Vendor.Plugin.FooTube:Embed) {
+  @process.blockTags = ${CookiePunch.blockTags(["script"], value, !node.context.inBackend, "footube")}
   @process.addContextualConsent = ${CookiePunch.addContextualConsent("footube", value, !node.context.inBackend)}
 }
 ```
