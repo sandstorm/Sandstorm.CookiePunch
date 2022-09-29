@@ -20,6 +20,26 @@ after the user consented.
 
 `composer require sandstorm/cookiepunch`
 
+This puts the dependency inside the outer composer.json/lock (usually in your repo root or `/app`).
+*Important:* In case, you want to declare CookiePunch settings *inside you Flow packages* you need to add the 
+composer dependency to your composer.json inside the package as well to ensure a correct flow package and 
+configuration loading order.
+
+DistributionPackages/Your.SitePackage/package.json
+```
+    ...
+    
+    "require": {
+        ...
+        
+        "sandstorm/cookiepunch": "*",
+        
+        ...
+    },
+    
+    ...
+```
+
 ## Basic Configuration and Usages
 
 ### Step 1: Adding the consent-modal
