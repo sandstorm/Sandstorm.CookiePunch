@@ -2,63 +2,88 @@ Sandstorm:
   CookiePunch:
     consent:
       privacyPolicyUrl: /privacy
+
       # You can customize the ID of the DIV element that Klaro will create
       # when starting up. If undefined, Klaro will use 'klaro'.
       elementID: "klaro"
+
       # Setting this to true will keep Klaro from automatically loading itself
       # when the page is being loaded.
       noAutoLoad: false
+
       # Setting this to true will render the descriptions of the consent
       # modal and consent notice are HTML. Use with care.
       htmlTexts: false
+
       # Setting 'embedded' to true will render the Klaro modal and notice without
       # the modal background, allowing you to e.g. embed them into a specific element
       # of your website, such as your privacy notice.
       embedded: false
+
       # You can group services by their purpose in the modal. This is advisable
       # if you have a large number of services. Users can then enable or disable
       # entire groups of services instead of having to enable or disable every service.
       groupByPurpose: true
+
       # How Klaro should store the user's preferences. It can be either 'cookie'
       # (the default) or 'localStorage'.
       storageMethod: cookie
+
       # You can customize the name of the cookie that Klaro uses for storing
       # user consent decisions. If undefined, Klaro will use 'klaro'.
       cookieName: cookie_punch
+
       # You can also set a custom expiration time for the Klaro cookie.
       # By default, it will expire after 120 days.
       cookieExpiresAfterDays: 120
+
       # You can change to cookie domain for the consent manager itself.
       # Use this if you want to get consent once for multiple matching domains.
       # If undefined, Klaro will use the current domain.
       cookieDomain: ~
+
       # You can change to cookie path for the consent manager itself.
       # Use this to restrict the cookie visibility to a specific path.
       # If undefined, Klaro will use '/' as cookie path.
       cookiePath: ~
+
       # Defines the default state for services
       default: false
+
       # If "mustConsent" is set to true, Klaro will directly display the consent
       # manager modal and not allow the user to close it before having actively
       # consented or declines the use of third-party services.
       mustConsent: true
+
       # Show "accept all" to accept all services instead of "ok" that only accepts
       # required and "default: true" services
       acceptAll: true
+
       # replace "decline" with cookie manager modal
       hideDeclineAll: false
+
       # hide "learnMore" link
       hideLearnMore: false
+
       # show cookie notice as modal (small bar, not visible if mustConsent=true)
       noticeAsModal: false
+
       # You can also remove the 'Realized with Klaro!' text in the consent modal.
       # Please don't do this! Klaro is a free open source tool.
       # Placing a link to our website helps klaro to spread the word about it,
       # which ultimately enables klaro to make their tool better for everyone.
       # So please be fair and keep the link enabled. Thanks :)
       disablePoweredBy: false
+
       # you can specify an additional class (or classes) that will be added to the Klaro `div`
       additionalClass: ~
+
+      # Only use contextual consent for all services.
+      # This prevents showing the modal or banner.
+      # This will set all consents to false on first visit.
+      # NOTICE: This is not Klaro API. We added this feature to CookiePunch only.
+      contextualConsentOnly: false
+
       # You can override CSS style variables here. We currently do not support
       # "theme" from the original klaro config.
       # styling -> see Settings.CookiePunch.Styling.yaml

@@ -22,6 +22,7 @@ prototype(Sandstorm.CookiePunch:Config) < prototype(Neos.Fusion:DataStructure) {
         additionalClass = ${Configuration.setting("Sandstorm.CookiePunch.consent.additionalClass")}
         cookiePath = ${Configuration.setting("Sandstorm.CookiePunch.consent.cookiePath")}
         cookieDomain = ${Configuration.setting("Sandstorm.CookiePunch.consent.cookieDomain")}
+        contextualConsentOnly = ${Configuration.setting("Sandstorm.CookiePunch.consent.contextualConsentOnly")}
 
         // With the current version of Klaro this is not working for the inline UI (e.g. if iframes are replaced)
             // Check out the workaround in `Consent.fusion`

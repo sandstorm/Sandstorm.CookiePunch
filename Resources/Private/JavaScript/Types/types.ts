@@ -44,7 +44,7 @@ export type CookiePunchConfig = {
     htmlTexts: boolean;
     embedded: false;
     groupByPurpose: boolean;
-    storageMethod: string;
+    storageMethod: 'cookie' | 'localStorage';
     cookieName: string;
     cookieExpiresAfterDays: number;
     default: boolean;
@@ -63,6 +63,8 @@ export type CookiePunchConfig = {
     translations: {
       [key: string]: any;
     };
+
+    contextualConsentOnly: boolean;
   };
 };
 
@@ -112,7 +114,7 @@ export type KlaroConfig = {
   htmlTexts: boolean;
   embedded: false;
   groupByPurpose: boolean;
-  storageMethod: string;
+  storageMethod: 'cookie' | 'localStorage';
   cookieName: string;
   cookieExpiresAfterDays: number;
   default: boolean;

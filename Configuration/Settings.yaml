@@ -27,6 +27,7 @@ Sandstorm:
       noticeAsModal: false
       disablePoweredBy: false
       additionalClass: ~
+      contextualConsentOnly: false
 ##########################################################
 # All tags specified like using the Eel Helper
 # e.g. `CookiePunch.blockTags(["iframe","script", "img"]`

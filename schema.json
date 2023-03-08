@@ -56,7 +56,11 @@
                   "type": "boolean"
                 },
                 "storageMethod": {
-                  "type": "string"
+                  "type": "string",
+                  "enum": [
+                    "cookie",
+                    "localStorage"
+                  ]
                 },
                 "cookieName": {
                   "type": "string"
@@ -102,6 +106,10 @@
                     "string",
                     "null"
                   ]
+                },
+                "contextualConsentOnly": {
+                  "type": "boolean",
+                  "default": "false"
                 },
                 "styling": {
                   "type": "object",
@@ -239,7 +247,6 @@
                       "contextualConsentOnly": {
                         "type": "boolean"
                       },
-                      "default": true,
                       "cookies": {
                         "type": "array",
                         "items": {

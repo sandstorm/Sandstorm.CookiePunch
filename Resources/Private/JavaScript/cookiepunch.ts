@@ -10,3 +10,10 @@ window.klaro = Klaro;
 window.klaroConfig = config;
 // we set up Klaro with the config
 Klaro.setup(config);
+
+// handle `cookiePunchConfig.consent.contextualConsentOnly` option
+if (cookiePunchConfig.consent.contextualConsentOnly && !Klaro.getManager().confirmed) {
+  // WHY: We emulate the "reject all" button of klaro.js here.
+  Klaro.getManager().changeAll(false)
+  Klaro.getManager().saveAndApplyConsents('decline')
+}
