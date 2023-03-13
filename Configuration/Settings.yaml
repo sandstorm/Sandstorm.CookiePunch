@@ -27,6 +27,9 @@ Sandstorm:
       noticeAsModal: false
       disablePoweredBy: false
       additionalClass: ~
+      # default `purposes` and `services`
+      purposes: []
+      services: []
       # NOTICE: This is not Klaro API. We added this feature to CookiePunch only.
       contextualConsentOnly: false
 ##########################################################
