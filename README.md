@@ -9,6 +9,7 @@ after the user consented.
 - eel helpers to block elements (scripts and iframes) before the markup is sent to the client
 - eel helper to place contextual consents for any part of the markup
 - a easy way to configure blocking via yaml config supporting patterns to target elements in markup
+- a contextual consent mode that does not show an initial banner/modal
 - localization support via Yaml and/or Fusion
 - data source providing all services e.g. as a dropdown in the inspector
 - **an awesome cookie-consent provided by [Klaro](https://heyklaro.com/docs/)** :heart: directly bundled with this package
@@ -470,6 +471,17 @@ prototype(Sandstorm.CookiePunch:Consent) {
     // only render if there is at least one service that has not been filtered out by its 'when' config key
     @if.hasServices = ${Array.length(this.servicesRemainingAfterWhenConditions) > 0}
 }
+```
+
+### Contextual Consent Only Mode
+If you don't want to initially show the cookie banner or modal you can use the global `contextualConsentOnly` mode introduced with [version 4.4.0](https://github.com/sandstorm/Sandstorm.CookiePunch/releases/tag/4.4.0).
+
+```yaml
+Sandstorm:
+  CookiePunch:
+    consent:
+      contextualConsentOnly: true
+      mustConsent: false
 ```
 
 ## Troubleshooting
