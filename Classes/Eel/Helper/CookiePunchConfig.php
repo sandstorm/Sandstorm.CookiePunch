@@ -17,7 +17,10 @@ class CookiePunchConfig implements ProtectedContextAwareInterface
     {
         if ($path) {
             $settingsValue = (new ConfigurationHelper())->setting($path);
-            if ($settingsValue) {
+            // we need to prevent an array to be passed to the TranslationHelper
+            // this can happen when we e.g. try to translate "Sandstorm", which will
+            // return the corresponding yaml config
+            if ($settingsValue && is_string($settingsValue)) {
                 return (new TranslationHelper())->translate($settingsValue);
             } else {
                 return (new TranslationHelper())->translate($path);
