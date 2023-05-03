@@ -32,11 +32,12 @@ Sandstorm:
       services: []
       # NOTICE: This is not Klaro API. We added this feature to CookiePunch only.
       contextualConsentOnly: false
+
 ##########################################################
-# All tags specified like using the Eel Helper
+# All tags specified using the Eel Helper
 # e.g. `CookiePunch.blockTags(["iframe","script", "img"]`
 # will be blocked on default. You can change the default blocking behaviour
-# with this configuration.
+# with the following configuration.
 #
 # Sandstorm:
 #   CookiePunch:

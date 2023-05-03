@@ -56,7 +56,7 @@ prototype(Neos.Neos:Page) {
 ```
 
 This will add the needed js and css to your page. If you reload the page you should see the consent-modal. Now all `<iframe>` and `<script>` tags will be
-blocked. Supported tags are `["iframe", "script", "audio", "video", "source", "track", "img", "embed", "input"]`
+blocked. Supported tags are `["iframe", "script", "audio", "video", "source", "track", "img", "embed", "input"]` 
 
 `!node.context.inBackend` disables blocking in the Neos backend.
 
@@ -266,6 +266,33 @@ Most of the inline comments are directly copied from the [annotated config.js](h
 **see [annotated yaml of service options](./Examples/Settings.CookiePunch.FullServiceConfig.yaml)**
 
 Most of the inline comments are directly copied from the [annotated config.js](https://github.com/kiprotect/klaro/blob/ec6e36934db10afdac0183721ddfbcb9c79e7dc3/dist/config.js) of klaro for your convenience ;)
+
+### Changing the default blocking behaviour
+
+```neosfusion
+prototype(Neos.Neos:Page) {
+    head.javascripts.cookiepunchConsent = Sandstorm.CookiePunch:Consent
+    # Block Global
+    @process.blockTags = ${CookiePunch.blockTags(["iframe","script", "img"], value, !node.context.inBackend)}
+}
+```
+
+`CookiePunch.blockTags(["iframe","script", "img"]` tells CookiePunch which tags to look for. 
+All `<iframe>`, `<script>` and `<img>` tags will be blocked on default. However for images you
+probably do not want to block all tags but decide which pattern to block. For this you can change
+the default blocking behaviour using `"*": false` pattern for the `img` tag.
+
+```
+Sandstorm:
+   CookiePunch:
+     blocking:
+       tagPatterns:
+         img:
+           "*":
+             block: false
+           "tracking-pixel-url":
+             service: myservice
+```
 
 ### Blocking a rendered fusion subtree
 
