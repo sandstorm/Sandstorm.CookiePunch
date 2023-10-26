@@ -1,8 +1,8 @@
 <?php
 namespace Sandstorm\CookiePunch\DataSource;
 
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Flow\Annotations as Flow;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Neos\Neos\Service\DataSource\AbstractDataSource;
 use Sandstorm\CookiePunch\Eel\Helper\CookiePunchConfig;
 
@@ -18,7 +18,7 @@ class GroupsDataSource extends AbstractDataSource
      */
     protected $services;
 
-    public function getData(NodeInterface $node = null, array $arguments = [])
+    public function getData(Node $node = null, array $arguments = [])
     {
         $CookiePunchConfig = new CookiePunchConfig();
         $options = [];

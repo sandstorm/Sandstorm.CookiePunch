@@ -9,7 +9,6 @@ use Neos\Eel\Helper\ConfigurationHelper;
 use Neos\Eel\ProtectedContextAwareInterface;
 use Neos\Eel\Utility as EelUtility;
 use Neos\Eel\CompilingEvaluator;
-use Neos\ContentRepository\Domain\Model\NodeInterface;
 
 class CookiePunchConfig implements ProtectedContextAwareInterface
 {
