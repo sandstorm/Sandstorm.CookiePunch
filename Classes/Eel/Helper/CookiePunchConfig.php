@@ -44,11 +44,11 @@ class CookiePunchConfig implements ProtectedContextAwareInterface
 
     /**
      * @param array $services
-     * @param NodeInterface $siteNode
+     * @param \Neos\ContentRepository\Core\Projection\ContentGraph\Node $siteNode
      * @return array
      * @throws Exception
      */
-    public function filterServicesArrayByWhenCondition(array $services, NodeInterface $siteNode): array
+    public function filterServicesArrayByWhenCondition(array $services, \Neos\ContentRepository\Core\Projection\ContentGraph\Node $siteNode): array
     {
         return array_filter($services, function($service) use(&$siteNode) {
             return !isset($service['when']) || $this->evaluateEelExpression($service['when'], $siteNode);
@@ -57,11 +57,11 @@ class CookiePunchConfig implements ProtectedContextAwareInterface
 
     /**
      * @param string $eelExpression
-     * @param NodeInterface $siteNode
+     * @param \Neos\ContentRepository\Core\Projection\ContentGraph\Node $siteNode
      * @return bool
      * @throws Exception for invalid eel expressions
      */
-    public function evaluateEelExpression(string $eelExpression, NodeInterface $siteNode): bool
+    public function evaluateEelExpression(string $eelExpression, \Neos\ContentRepository\Core\Projection\ContentGraph\Node $siteNode): bool
     {
         if (preg_match(\Neos\Eel\Package::EelExpressionRecognizer, $eelExpression)) {
             $defaultContextVariables = EelUtility::getDefaultContextVariables($this->defaultContext);

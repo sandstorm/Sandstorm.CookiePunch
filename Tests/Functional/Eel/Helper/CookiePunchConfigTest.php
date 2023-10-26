@@ -24,8 +24,8 @@ class CookiePunchConfigTest extends FunctionalTestCase
         $this->dummySiteNode = new Node(
             new NodeData(
                 "/sites/website",
-                new Workspace("")),
-            new Context("",
+                new \Neos\ContentRepository\Core\Projection\Workspace\Workspace("")),
+            new \Neos\Rector\ContentRepository90\Legacy\LegacyContextStub("",
                 new DateTime(),
                 [],
                 [],
