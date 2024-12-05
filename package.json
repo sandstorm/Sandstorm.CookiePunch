@@ -1,6 +1,6 @@
 {
   "name": "sandstorm-cookiepunch",
-  "version": "2.0.0",
+  "version": "4.5.0",
   "description": "Sandstorm CookiePunch",
   "author": "Sandstorm",
   "browserslist": "> 0.25%, not dead",
@@ -29,7 +29,7 @@
     "webpack-cli": "^4.7.0"
   },
   "dependencies": {
-    "klaro": "^0.7.18",
+    "klaro": "^0.7.21",
     "ts-loader": "^9.1.2"
   }
 }

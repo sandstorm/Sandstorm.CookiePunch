@@ -276,6 +276,15 @@
                       },
                       "onlyOnce": {
                         "type": "boolean"
+                      },
+                      "onInit": {
+                        "type": "string"
+                      },
+                      "onAccept": {
+                        "type": "string"
+                      },
+                      "onDecline": {
+                        "type": "string"
                       }
                     },
                     "additionalProperties": false

@@ -28,6 +28,10 @@
                 <source>Testing mode!</source>
                 <target>Testing mode!</target>
             </trans-unit>
+            <trans-unit id="consentNotice.title">
+                <source>Cookie Consent</source>
+                <target>Cookie Consent</target>
+            </trans-unit>
             <trans-unit id="consentNotice.changeDescription">
                 <source>There were changes since your last visit, please renew your consent.</source>
                 <target>There were changes since your last visit, please renew your consent.</target>
@@ -155,6 +159,14 @@
             <trans-unit id="contextualConsent.acceptAlways">
                 <source>Always</source>
                 <target>Always</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.descriptionEmptyStore">
+                <source>To agree to this service permanently, you must accept {title} in the {link}.</source>
+                <target>To agree to this service permanently, you must accept {title} in the {link}.</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.modalLinkText">
+                <source>Consent Manager</source>
+                <target>Consent Manager</target>
             </trans-unit>
         </body>
     </file>

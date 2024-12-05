@@ -131,6 +131,18 @@ function buildKlaroServicesConfig(
     if (typeof cookiePunchService.onlyOnce === "boolean")
       klaroService.onlyOnce = cookiePunchService.onlyOnce;
 
+    if (cookiePunchService.onInit) {
+      klaroService.onInit = eval("(function() { " + cookiePunchService.onInit + " })");
+    }
+
+    if (cookiePunchService.onAccept) {
+      klaroService.onAccept = eval("(function() { " + cookiePunchService.onAccept + " })");
+    }
+
+    if (cookiePunchService.onDecline) {
+      klaroService.onDecline = eval("(function() { " + cookiePunchService.onDecline + " })");
+    }
+
     result.push(klaroService);
   });
 
