@@ -10,12 +10,15 @@ prototype(Sandstorm.CookiePunch:Config.Translations) < prototype(Neos.Fusion:Dat
     consentModal.description = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.consentModal.description")}
     consentModal.title = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.consentModal.title")}
     consentNotice.changeDescription = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.consentNotice.changeDescription")}
+    consentNotice.title = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.consentNotice.title")}
     consentNotice.description = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.consentNotice.description")}
     consentNotice.learnMore = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.consentNotice.learnMore")}
     consentNotice.testing = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.consentNotice.testing")}
     contextualConsent.acceptAlways = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.contextualConsent.acceptAlways")}
     contextualConsent.acceptOnce = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.contextualConsent.acceptOnce")}
     contextualConsent.description = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.contextualConsent.description")}
+    contextualConsent.descriptionEmptyStore = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.contextualConsent.descriptionEmptyStore")}
+    contextualConsent.modalLinkText = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.contextualConsent.modalLinkText")}
     decline = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.decline")}
     ok = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.ok")}
     poweredBy = ${CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.poweredBy")}

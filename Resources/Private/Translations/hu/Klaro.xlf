@@ -10,6 +10,7 @@
         <body>
             <trans-unit id="acceptAll">
                 <source>Accept all</source>
+                <target>Mind elfogad</target>
             </trans-unit>
             <trans-unit id="acceptAll_en">
                 <source></source>
@@ -17,6 +18,7 @@
             </trans-unit>
             <trans-unit id="acceptSelected">
                 <source>Accept selected</source>
+                <target>Kiválasztottat elfogad</target>
             </trans-unit>
             <trans-unit id="acceptSelected_en">
                 <source></source>
@@ -24,7 +26,7 @@
             </trans-unit>
             <trans-unit id="service.disableAll.description">
                 <source>Use this switch to enable or disable all services.</source>
-                <target>Használd ezt a kapcsolót az összes alkalmazás engedélyezéséhez/letiltásához.</target>
+                <target>Használja ezt a kapcsolót az összes alkalmazás engedélyezéséhez/letiltásához.</target>
             </trans-unit>
             <trans-unit id="service.disableAll.title">
                 <source>Enable or disable all services</source>
@@ -48,11 +50,11 @@
             </trans-unit>
             <trans-unit id="service.required.description">
                 <source>This services is always required</source>
-                <target>Ez az alkalmazás mindig kötelező</target>
+                <target>Ez az alkalmazás mindig szükséges</target>
             </trans-unit>
             <trans-unit id="service.required.title">
                 <source>(always required)</source>
-                <target>(mindig kötelező)</target>
+                <target>(mindig szükséges)</target>
             </trans-unit>
             <trans-unit id="close">
                 <source>Close</source>
@@ -60,7 +62,7 @@
             </trans-unit>
             <trans-unit id="consentModal.description">
                 <source>Here you can assess and customize the services that we&#x27;d like to use on this website. You&#x27;re in charge! Enable or disable services as you see fit.</source>
-                <target>Itt láthatod és testreszabhatod az rólad gyűjtött információkat.</target>
+                <target>Itt láthatja és testreszabhatja az önről gyűjtött információkat.</target>
             </trans-unit>
             <trans-unit id="consentModal.privacyPolicy.name">
                 <source></source>
@@ -68,7 +70,7 @@
             </trans-unit>
             <trans-unit id="consentModal.privacyPolicy.text">
                 <source></source>
-                <target>További információért kérjük, olvassd el az {privacyPolicy}.</target>
+                <target>További információért kérjük, olvassa el az {privacyPolicy}.</target>
             </trans-unit>
             <trans-unit id="consentModal.title">
                 <source>Services we would like to use</source>
@@ -76,14 +78,15 @@
             </trans-unit>
             <trans-unit id="consentNotice.changeDescription">
                 <source>There were changes since your last visit, please renew your consent.</source>
-                <target>Az utolsó látogatás óta változások történtek, kérjük, frissítsd a hozzájárulásodat.</target>
+                <target>Az utolsó látogatás óta változások történtek, kérjük, frissítse a hozzájárulását.</target>
             </trans-unit>
             <trans-unit id="consentNotice.description">
                 <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
-                <target>Az személyes adataidat összegyűjtjük és feldolgozzuk az alábbi célokra: {purposes}.</target>
+                <target>Személyes adatait összegyűjtjük és feldolgozzuk az alábbi célokra: {purposes}.</target>
             </trans-unit>
             <trans-unit id="consentNotice.imprint.name">
                 <source></source>
+                <target>impresszum</target>
             </trans-unit>
             <trans-unit id="consentNotice.imprint.name_en">
                 <source></source>
@@ -91,15 +94,27 @@
             </trans-unit>
             <trans-unit id="consentNotice.learnMore">
                 <source>Let me choose</source>
-                <target>Tudj meg többet</target>
+                <target>Tudjon meg többet</target>
             </trans-unit>
             <trans-unit id="consentNotice.privacyPolicy.name">
                 <source></source>
                 <target>adatvédelmi irányelveinket</target>
             </trans-unit>
+            <trans-unit id="contextualConsent.acceptAlways">
+                <source>Always</source>
+                <target>Mindig</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.acceptOnce">
+                <source>Yes</source>
+                <target>Igen</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.description">
+                <source>Do you want to load external content supplied by {title}?</source>
+                <target>Be akarod tölteni a {title} által szolgáltatott külső tartalmakat?</target>
+            </trans-unit>
             <trans-unit id="decline">
                 <source>I decline</source>
-                <target>Mentés</target>
+                <target>Elutasít</target>
             </trans-unit>
             <trans-unit id="ok">
                 <source>That&#x27;s ok</source>
@@ -117,7 +132,7 @@
             </trans-unit>
             <trans-unit id="save">
                 <source>Save</source>
-                <target>Save</target>
+                <target>Mentés</target>
             </trans-unit>
         </body>
     </file>

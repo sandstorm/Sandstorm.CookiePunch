@@ -13,12 +13,15 @@ export type CookiePunchService = {
   optOut?: boolean;
   cookies?: CookiePunchServiceCookies;
   onlyOnce?: boolean;
+  onInit?: string;
+  onAccept?: string;
+  onDecline?: string;
 };
 
 export type CookiePunchPurpose = {
   title?: string;
   description?: string;
-}
+};
 
 export type CookiePunchServiceCookies = {
   pattern: string;
@@ -44,7 +47,7 @@ export type CookiePunchConfig = {
     htmlTexts: boolean;
     embedded: false;
     groupByPurpose: boolean;
-    storageMethod: 'cookie' | 'localStorage';
+    storageMethod: "cookie" | "localStorage";
     cookieName: string;
     cookieExpiresAfterDays: number;
     default: boolean;
@@ -58,7 +61,7 @@ export type CookiePunchConfig = {
     cookiePath?: string;
     cookieDomain?: string;
 
-    purposes: CookiePunchPurposes
+    purposes: CookiePunchPurposes;
     services: CookiePunchServices;
     translations: {
       [key: string]: any;
@@ -99,6 +102,9 @@ export type KlaroService = {
   required?: boolean;
   optOut?: boolean;
   onlyOnce?: boolean;
+  onInit?: () => void;
+  onAccept?: () => void;
+  onDecline?: () => void;
 };
 
 export type KlaroServiceCookies = ((RegExp | string)[] | string | RegExp)[];
@@ -114,7 +120,7 @@ export type KlaroConfig = {
   htmlTexts: boolean;
   embedded: false;
   groupByPurpose: boolean;
-  storageMethod: 'cookie' | 'localStorage';
+  storageMethod: "cookie" | "localStorage";
   cookieName: string;
   cookieExpiresAfterDays: number;
   default: boolean;

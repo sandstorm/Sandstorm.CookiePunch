@@ -40,6 +40,10 @@
                 <source>There were changes since your last visit, please renew your consent.</source>
                 <target>Seit Ihrem letzten Besuch gab es Änderungen, bitte erneuern Sie Ihre Zustimmung.</target>
             </trans-unit>
+            <trans-unit id="consentNotice.title">
+                <source>Cookie Consent</source>
+                <target>Cookie-Einstellungen</target>
+            </trans-unit>
             <trans-unit id="consentNotice.description">
                 <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
                 <target>Hallo! Könnten wir bitte einige zusätzliche Dienste für {purposes} aktivieren? Sie können Ihre Zustimmung später jederzeit ändern oder zurückziehen.</target>
@@ -71,6 +75,14 @@
             <trans-unit id="contextualConsent.description">
                 <source>Do you want to load external content supplied by {title}?</source>
                 <target>Möchten Sie von {title} bereitgestellte externe Inhalte laden?</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.descriptionEmptyStore">
+                <source>To agree to this service permanently, you must accept {title} in the {link}.</source>
+                <target>Um diesem Dienst dauerhaft zustimmen zu können, müssen Sie {title} in den {link} zustimmen.</target>
+            </trans-unit>
+            <trans-unit id="contextualConsent.modalLinkText">
+                <source>Consent Manager</source>
+                <target>Cookie-Einstellungen</target>
             </trans-unit>
             <trans-unit id="decline">
                 <source>I decline</source>
