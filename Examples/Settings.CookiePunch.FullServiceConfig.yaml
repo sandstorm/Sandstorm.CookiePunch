@@ -47,3 +47,9 @@ Sandstorm:
           # If "onlyOnce" is set to true, the service will only be executed
           # once regardless how often the user toggles it on and off.
           onlyOnce: true
+          # JavaScript code to execute when the service is initialized.
+          onInit: "console.log('init');"
+          # JavaScript code to execute when the user gives consent.
+          onAccept: "console.log('accept');"
+          # JavaScript code to execute when the user declines consent.
+          onDecline: "console.log('decline');"

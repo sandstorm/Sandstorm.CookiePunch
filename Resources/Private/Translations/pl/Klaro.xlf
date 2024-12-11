@@ -10,23 +10,23 @@
         <body>
             <trans-unit id="acceptAll">
                 <source>Accept all</source>
-                <target>Zaakceptować wszystkie</target>
+                <target>Zaakceptuj wszystkie</target>
             </trans-unit>
             <trans-unit id="acceptSelected">
                 <source>Accept selected</source>
-                <target>Zaakceptować wybrany</target>
+                <target>Zaakceptuj wybrane</target>
             </trans-unit>
             <trans-unit id="close">
                 <source>Close</source>
-                <target>Blisko</target>
+                <target>Zamknij</target>
             </trans-unit>
             <trans-unit id="consentModal.description">
                 <source>Here you can assess and customize the services that we&#x27;d like to use on this website. You&#x27;re in charge! Enable or disable services as you see fit.</source>
-                <target>Tutaj mogą Państwo ocenić i dostosować usługi, z których chcielibyśmy skorzystać na tej stronie. Jesteście Państwo odpowiedzialni! Mogą Państwo włączać lub wyłączać usługi według własnego uznania.</target>
+                <target>Tutaj mogą Państwo ocenić i dostosować usługi, które chcielibyśmy wykorzystać na tej stronie. Włączaj lub wyłączaj usługi według własnego uznania.</target>
             </trans-unit>
             <trans-unit id="consentModal.privacyPolicy.name">
                 <source></source>
-                <target>polityka prywatności</target>
+                <target>polityką prywatności</target>
             </trans-unit>
             <trans-unit id="consentModal.privacyPolicy.text">
                 <source></source>
@@ -38,15 +38,15 @@
             </trans-unit>
             <trans-unit id="consentNotice.changeDescription">
                 <source>There were changes since your last visit, please renew your consent.</source>
-                <target>Od czasu ostatniej wizyty nastąpiły zmiany, prosimy o odnowienie zgody.</target>
+                <target>Od Twojej ostatniej wizyty nastąpiły zmiany, prosimy o odnowienie zgody.</target>
             </trans-unit>
             <trans-unit id="consentNotice.description">
                 <source>Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.</source>
-                <target>Witam! Czy możemy włączyć dodatkowe usługi dla {purposes}? W każdej chwili mogą Państwo później zmienić lub wycofać swoją zgodę.</target>
+                <target>Czy możemy włączyć dodatkowe usługi dla {purposes}? W każdej chwili mogą Państwo później zmienić lub wycofać swoją zgodę.</target>
             </trans-unit>
             <trans-unit id="consentNotice.imprint.name">
                 <source></source>
-                <target>odcisk</target>
+                <target>Imprint</target>
             </trans-unit>
             <trans-unit id="consentNotice.learnMore">
                 <source>Let me choose</source>
@@ -78,11 +78,11 @@
             </trans-unit>
             <trans-unit id="ok">
                 <source>That&#x27;s ok</source>
-                <target>To jest ok.</target>
+                <target>Ok</target>
             </trans-unit>
             <trans-unit id="poweredBy">
                 <source>Realized with Klaro!</source>
-                <target>Zrealizowane z Klaro!</target>
+                <target>Technologia dostarczona przez Klaro</target>
             </trans-unit>
             <trans-unit id="privacyPolicy.name">
                 <source>privacy policy</source>
@@ -98,11 +98,11 @@
             </trans-unit>
             <trans-unit id="purposeItem.services">
                 <source>services</source>
-                <target>usług</target>
+                <target>usługi</target>
             </trans-unit>
             <trans-unit id="purposes.advertising.description">
                 <source>These services process personal information to show you personalized or interest-based advertisements.</source>
-                <target>Usługi te przetwarzają dane osobowe w celu pokazania Państwu spersonalizowanych lub opartych na zainteresowaniach ogłoszeń.</target>
+                <target>Usługi te przetwarzają dane osobowe w celu pokazania Państwu spersonalizowanych lub opartych na zainteresowaniach reklam.</target>
             </trans-unit>
             <trans-unit id="purposes.advertising.title">
                 <source>Advertising</source>
@@ -111,7 +111,7 @@
             <trans-unit id="purposes.functional.description">
                 <source>These services are essential for the correct functioning of this website. You cannot disable them here as the service would not work correctly otherwise.
 </source>
-                <target>Usługi te są niezbędne do prawidłowego funkcjonowania niniejszej strony internetowej. Nie mogą Państwo ich tutaj wyłączyć, ponieważ w przeciwnym razie usługa nie działałaby prawidłowo.
+                <target>Usługi te są niezbędne do prawidłowego funkcjonowania niniejszej strony internetowej. Nie mogą Państwo ich tutaj wyłączyć, ponieważ w przeciwnym razie strona nie działałaby prawidłowo.
 </target>
             </trans-unit>
             <trans-unit id="purposes.functional.title">
@@ -138,7 +138,7 @@
             </trans-unit>
             <trans-unit id="save">
                 <source>Save</source>
-                <target>Z wyjątkiem</target>
+                <target>Zapisz</target>
             </trans-unit>
             <trans-unit id="service.disableAll.description">
                 <source>Use this switch to enable or disable all services.</source>
@@ -146,7 +146,7 @@
             </trans-unit>
             <trans-unit id="service.disableAll.title">
                 <source>Enable or disable all services</source>
-                <target>Włączać lub wyłączać wszystkie usługi</target>
+                <target>Włącz lub wyłącz wszystkie usługi</target>
             </trans-unit>
             <trans-unit id="service.optOut.description">
                 <source>This services is loaded by default (but you can opt out)</source>

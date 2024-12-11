@@ -15,6 +15,7 @@ Sandstorm:
         title: Sandstorm.CookiePunch:Klaro:consentModal.title
       consentNotice:
         changeDescription: Sandstorm.CookiePunch:Klaro:consentNotice.changeDescription
+        title: Sandstorm.CookiePunch:Klaro:consentNotice.title
         description: Sandstorm.CookiePunch:Klaro:consentNotice.description
         learnMore: Sandstorm.CookiePunch:Klaro:consentNotice.learnMore
         testing: Sandstorm.CookiePunch:Klaro:consentNotice.testing
@@ -22,6 +23,8 @@ Sandstorm:
         acceptAlways: Sandstorm.CookiePunch:Klaro:contextualConsent.acceptAlways
         acceptOnce: Sandstorm.CookiePunch:Klaro:contextualConsent.acceptOnce
         description: Sandstorm.CookiePunch:Klaro:contextualConsent.description
+        descriptionEmptyStore: Sandstorm.CookiePunch:Klaro:contextualConsent.descriptionEmptyStore
+        modalLinkText: Sandstorm.CookiePunch:Klaro:contextualConsent.modalLinkText
       decline: Sandstorm.CookiePunch:Klaro:decline
       ok: Sandstorm.CookiePunch:Klaro:ok
       poweredBy: Sandstorm.CookiePunch:Klaro:poweredBy

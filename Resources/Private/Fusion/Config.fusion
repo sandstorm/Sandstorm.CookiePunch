@@ -50,6 +50,9 @@ prototype(Sandstorm.CookiePunch:Config) < prototype(Neos.Fusion:DataStructure) {
                 required = ${item.required}
                 optOut = ${item.optOut}
                 onlyOnce = ${item.onlyOnce}
+                onInit = ${item.onInit}
+                onAccept = ${item.onAccept}
+                onDecline = ${item.onDecline}
             }
         }
 
