@@ -2,7 +2,11 @@
 // We now register the callbacks using a script tag in a global variable before the main script is loaded.
 // See `buildKlaroConfig.ts` for more details on the JS implementation.
 prototype(Sandstorm.CookiePunch:Js.Callbacks) < prototype(Neos.Fusion:Component) {
-    cookiePunchConfig = ${{}}
+    cookiePunchConfig = null
+
+    @propTypes {
+        cookiePunchConfig = ${PropTypes.object().isRequired()}
+    }
 
     renderer = Neos.Fusion:Reduce {
         items = ${props.cookiePunchConfig.consent.services}
@@ -17,7 +21,11 @@ prototype(Sandstorm.CookiePunch:Js.Callbacks) < prototype(Neos.Fusion:Component)
 }
 
 prototype(Sandstorm.CookiePunch:Js.Callbacks.Item) < prototype(Neos.Fusion:Component) {
-    item = ${{}}
+    item = null
+
+    @propTypes {
+        item = ${PropTypes.object().isRequired()}
+    }
 
     renderer = Neos.Fusion:Join {
         onInit = ${'"' + item.name + '_onInit": () => {' + item.onInit + '},'}

@@ -1,8 +1,12 @@
 # Klaro cookie consent, see https://klaro.kiprotect.com/
 prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
     noCSS = false
-
     servicesRemainingAfterWhenConditions = ${CookiePunchConfig.filterServicesArrayByWhenCondition(Configuration.setting("Sandstorm.CookiePunch.consent.services"), site)}
+
+    @propTypes {
+        noCSS = ${PropTypes.boolean()}
+        servicesRemainingAfterWhenConditions = ${PropTypes.array()}
+    }
 
     // If you want to prevent an empty CookieConsent modal for your users if all 'when' config keys evaluate to false,
     // override the prototype like this in your project:
