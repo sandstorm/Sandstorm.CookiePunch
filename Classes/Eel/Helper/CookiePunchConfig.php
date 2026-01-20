@@ -3,6 +3,7 @@
 namespace Sandstorm\CookiePunch\Eel\Helper;
 
 use Exception;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\I18n\EelHelper\TranslationHelper;
 use Neos\Eel\Helper\ConfigurationHelper;
@@ -43,11 +44,11 @@ class CookiePunchConfig implements ProtectedContextAwareInterface
 
     /**
      * @param array $services
-     * @param \Neos\ContentRepository\Core\Projection\ContentGraph\Node $siteNode
+     * @param Node $siteNode
      * @return array
      * @throws Exception
      */
-    public function filterServicesArrayByWhenCondition(array $services, \Neos\ContentRepository\Core\Projection\ContentGraph\Node $siteNode): array
+    public function filterServicesArrayByWhenCondition(array $services, Node $siteNode): array
     {
         return array_filter($services, function($service) use(&$siteNode) {
             return !isset($service['when']) || $this->evaluateEelExpression($service['when'], $siteNode);
@@ -56,11 +57,11 @@ class CookiePunchConfig implements ProtectedContextAwareInterface
 
     /**
      * @param string $eelExpression
-     * @param \Neos\ContentRepository\Core\Projection\ContentGraph\Node $siteNode
+     * @param Node $siteNode
      * @return bool
      * @throws Exception for invalid eel expressions
      */
-    public function evaluateEelExpression(string $eelExpression, \Neos\ContentRepository\Core\Projection\ContentGraph\Node $siteNode): bool
+    public function evaluateEelExpression(string $eelExpression, Node $siteNode): bool
     {
         if (preg_match(\Neos\Eel\Package::EelExpressionRecognizer, $eelExpression)) {
             $defaultContextVariables = EelUtility::getDefaultContextVariables($this->defaultContext);
