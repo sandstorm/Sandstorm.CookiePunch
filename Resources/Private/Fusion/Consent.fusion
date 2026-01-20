@@ -16,7 +16,7 @@ prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
         @context.cookiePunchConfig = Sandstorm.CookiePunch:Config {
             @context.servicesRemaining = ${props.servicesRemainingAfterWhenConditions}
         }
-        @context.cookiePunchConfig.@process.toJson = ${Json.stringify(value)}
+
         @context.cookiePunch = Neos.Fusion:Case {
             noCSS {
                 condition = ${props.noCSS}
@@ -31,7 +31,6 @@ prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
                 }
             }
         }
-
         @context.klaroCssVars = Neos.Fusion:Join {
             1 = ".klaro {"
             2 = Neos.Fusion:Reduce {
@@ -43,7 +42,10 @@ prototype(Sandstorm.CookiePunch:Consent) < prototype(Neos.Fusion:Component) {
         @process.klaroCssVars = ${String.toString(value)}
 
         value = afx`
-            <script defer type="application/javascript">window.cookiePunchConfig={cookiePunchConfig};</script>
+            <script defer type="application/javascript">
+                <Sandstorm.CookiePunch:Js.Callbacks cookiePunchConfig={cookiePunchConfig}/>
+                <Sandstorm.CookiePunch:Js.Config cookiePunchConfig={cookiePunchConfig}/>
+            </script>
             <script defer type="application/javascript" src={cookiePunch}></script>
             <style @if.withCSS={!props.noCSS}>{klaroCssVars}</style>
         `

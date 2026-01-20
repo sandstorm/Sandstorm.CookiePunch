@@ -131,16 +131,30 @@ function buildKlaroServicesConfig(
     if (typeof cookiePunchService.onlyOnce === "boolean")
       klaroService.onlyOnce = cookiePunchService.onlyOnce;
 
+    // We refactored the old code because it used eval() which prevented us from using strict CSP policies.
+    // We now register the callbacks using a script tag rendered by fusion.
+    // See `Sandstorm.CookiePunch:Js.Callbacks` for more details on the fusion part.
+    const callbackMapping = window.cookiePunchCallbacks;
+
     if (cookiePunchService.onInit) {
-      klaroService.onInit = eval("(function() { " + cookiePunchService.onInit + " })");
+      const callbackName = `${name}_onInit`;
+      if (callbackName in callbackMapping) {
+        klaroService.onInit = callbackMapping[callbackName];
+      }
     }
 
     if (cookiePunchService.onAccept) {
-      klaroService.onAccept = eval("(function() { " + cookiePunchService.onAccept + " })");
+      const callbackName = `${name}_onAccept`;
+      if (callbackName in callbackMapping) {
+        klaroService.onAccept = callbackMapping[callbackName];
+      }
     }
 
     if (cookiePunchService.onDecline) {
-      klaroService.onDecline = eval("(function() { " + cookiePunchService.onDecline + " })");
+      const callbackName = `${name}_onDecline`;
+      if (callbackName in callbackMapping) {
+        klaroService.onDecline = callbackMapping[callbackName];
+      }
     }
 
     result.push(klaroService);

@@ -1,0 +1,8 @@
+prototype(Sandstorm.CookiePunch:Js.Config) < prototype(Neos.Fusion:Component) {
+    cookiePunchConfig = ${{}}
+
+    renderer = ${Json.stringify(props.cookiePunchConfig)}
+    renderer.@process.windowAssignment = afx`
+        window.cookiePunchConfig={value};
+    `
+}
