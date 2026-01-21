@@ -1,6 +1,6 @@
 {
   "name": "sandstorm-cookiepunch",
-  "version": "4.5.0",
+  "version": "5.1.0",
   "description": "Sandstorm CookiePunch",
   "author": "Sandstorm",
   "browserslist": "> 0.25%, not dead",

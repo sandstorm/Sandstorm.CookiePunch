@@ -1,0 +1,40 @@
+// We refactored the old code because it used eval() which prevented us from using strict CSP policies.
+// We now register the callbacks using a script tag in a global variable before the main script is loaded.
+// See `buildKlaroConfig.ts` for more details on the JS implementation.
+prototype(Sandstorm.CookiePunch:Js.Callbacks) < prototype(Neos.Fusion:Component) {
+    cookiePunchConfig = null
+
+    @propTypes {
+        cookiePunchConfig = ${PropTypes.object().isRequired()}
+    }
+
+    renderer = Neos.Fusion:Reduce {
+        items = ${props.cookiePunchConfig.consent.services}
+        itemReducer = afx`
+            {carry}
+            <Sandstorm.CookiePunch:Js.Callbacks.Item item={item}/>
+        `
+    }
+    renderer.@process.windowAssignment = afx`
+        window.cookiePunchCallbacks={'{' + value + '}'};
+    `
+}
+
+prototype(Sandstorm.CookiePunch:Js.Callbacks.Item) < prototype(Neos.Fusion:Component) {
+    item = null
+
+    @propTypes {
+        item = ${PropTypes.object().isRequired()}
+    }
+
+    renderer = Neos.Fusion:Join {
+        onInit = ${'"' + item.name + '_onInit": () => {' + item.onInit + '},'}
+        onInit.@if.hasOnInit = ${String.length(item.onInit || '') > 0}
+
+        onDecline = ${'"' + item.name + '_onDecline": () => {' + item.onDecline + '},'}
+        onDecline.@if.hasOnDecline = ${String.length(item.onDecline || '') > 0}
+
+        onAccept = ${'"' + item.name + '_onAccept": () => {' + item.onAccept + '},'}
+        onAccept.@if.hasOnAccept = ${String.length(item.onAccept || '') > 0}
+    }
+}
