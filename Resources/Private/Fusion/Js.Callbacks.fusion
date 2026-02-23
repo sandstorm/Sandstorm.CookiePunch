@@ -5,7 +5,7 @@ prototype(Sandstorm.CookiePunch:Js.Callbacks) < prototype(Neos.Fusion:Component)
     cookiePunchConfig = null
 
     @propTypes {
-        cookiePunchConfig = ${PropTypes.object().isRequired()}
+        cookiePunchConfig = ${PropTypes.object.isRequired()}
     }
 
     renderer = Neos.Fusion:Reduce {
@@ -24,7 +24,7 @@ prototype(Sandstorm.CookiePunch:Js.Callbacks.Item) < prototype(Neos.Fusion:Compo
     item = null
 
     @propTypes {
-        item = ${PropTypes.object().isRequired()}
+        item = ${PropTypes.object.isRequired()}
     }
 
     renderer = Neos.Fusion:Join {

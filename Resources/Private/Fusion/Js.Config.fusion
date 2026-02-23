@@ -2,7 +2,7 @@ prototype(Sandstorm.CookiePunch:Js.Config) < prototype(Neos.Fusion:Component) {
     cookiePunchConfig = null
 
     @propTypes {
-        cookiePunchConfig = ${PropTypes.object().isRequired()}
+        cookiePunchConfig = ${PropTypes.object.isRequired()}
     }
 
     renderer = ${Json.stringify(props.cookiePunchConfig)}
