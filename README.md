@@ -1,100 +1,121 @@
 # Sandstorm.CookiePunch
 
-This Neos package provides a general approach for blocking elements like script tags and iframes before the markup reaches the browser and therefore provides a general approach for
-blocking cookies or other concepts of tracking user behaviour. It integrates [Klaro](https://heyklaro.com/docs/) as UI for displaying a cookie-consent and unblocking groups of elements
-after the user consented.
+A Neos package that blocks elements like `<script>` and `<iframe>` server-side — *before* the markup reaches the browser — and ships [Klaro](https://heyklaro.com/docs/) as the consent UI to selectively unblock them once the user agrees.
+
+## Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Basic Configuration and Usages](#basic-configuration-and-usages)
+  - [Step 1: Adding the consent-modal](#step-1-adding-the-consent-modal)
+  - [Step 2: Always allow your own JavaScript](#step-2-always-allow-your-own-javascript)
+  - [Step 3: Blocking via YAML config](#step-3-blocking-via-yaml-config)
+  - [Step 4: Providing a link to your privacy statement](#step-4-providing-a-link-to-your-privacy-statement)
+  - [Step 5: Styling](#step-5-styling)
+  - [Step 6: Let the user reopen the consent modal later](#step-6-let-the-user-reopen-the-consent-modal-later)
+- [Advanced Usages](#advanced-usages)
+  - [Full list of consent / service options](#full-list-of-consent--service-options)
+  - [Supported tags](#supported-tags)
+  - [Pattern reference](#pattern-reference)
+  - [How blocking transforms markup](#how-blocking-transforms-markup)
+  - [Blocking a rendered Fusion subtree](#blocking-a-rendered-fusion-subtree)
+  - [Adding a contextual consent for non-iframe elements](#adding-a-contextual-consent-for-non-iframe-elements)
+  - [Let the editor choose a service from the inspector](#let-the-editor-choose-a-service-from-the-inspector)
+  - [Let the editor change the text of the consent](#let-the-editor-change-the-text-of-the-consent)
+  - [Privacy URL alternatives](#privacy-url-alternatives)
+  - [Manual styling](#manual-styling)
+  - [Translations](#translations)
+  - [Conditional Rendering of Services in the Consent Modal](#conditional-rendering-of-services-in-the-consent-modal)
+  - [Per-service lifecycle callbacks (`onInit` / `onAccept` / `onDecline`)](#per-service-lifecycle-callbacks-oninit--onaccept--ondecline)
+  - [Contextual Consent Only Mode](#contextual-consent-only-mode)
+- [Troubleshooting](#troubleshooting)
+- [Migration guide](./MIGRATIONS.md)
+- [Contributing](./CONTRIBUTING.md)
 
 ## Features
 
-- eel helpers to block elements (scripts and iframes) before the markup is sent to the client
-- eel helper to place contextual consents for any part of the markup
-- a easy way to configure blocking via yaml config supporting patterns to target elements in markup
-- a contextual consent mode that does not show an initial banner/modal
-- localization support via Yaml and/or Fusion
-- data source providing all services e.g. as a dropdown in the inspector
-- **an awesome cookie-consent provided by [Klaro](https://heyklaro.com/docs/)** :heart: directly bundled with this package
-  - supports unblocking of elements
-  - supports contextual consents to temporarily/permanently unblock content by consenting directly on the element without the need to open the consent modal
-  - You definitely need to check out their project on GitHub ;)
+- Eel helpers to block elements (scripts, iframes, and more) before the markup is sent to the client.
+- Eel helper to place contextual consents anywhere in the markup.
+- YAML configuration with patterns for targeting tags in the markup.
+- Contextual-consent-only mode — no initial banner / modal.
+- Localization via YAML and/or Fusion.
+- Data source providing all services as a dropdown in the inspector.
+- **A polished cookie-consent provided by [Klaro](https://heyklaro.com/docs/)**, bundled directly with this package:
+  - Unblocking of elements after consent.
+  - Contextual consents — temporarily or permanently unblock content from the element itself, without opening the modal.
 
 ## Installation
 
-`composer require sandstorm/cookiepunch`
-
-This puts the dependency inside the outer composer.json/lock (usually in your repo root or `/app`).
-*Important:* In case, you want to declare CookiePunch settings *inside your Flow packages* you need to add the 
-composer dependency to your composer.json inside the package as well to ensure a correct flow package and 
-configuration loading order.
-
-DistributionPackages/Your.SitePackage/package.json
+```bash
+# bash — from the application root
+composer require sandstorm/cookiepunch
 ```
-    ...
-    
+
+This puts the dependency in the outer `composer.json` / `composer.lock` (usually in your repo root or `/app`).
+
+> **Important:** If you want to declare CookiePunch settings *inside one of your Flow packages*, also add the composer dependency to that package's `composer.json` to ensure correct Flow package and configuration loading order.
+
+```jsonc
+// DistributionPackages/Your.SitePackage/composer.json
+{
     "require": {
-        ...
-        
-        "sandstorm/cookiepunch": "*",
-        
-        ...
-    },
-    
-    ...
+        "sandstorm/cookiepunch": "*"
+    }
+}
 ```
+
+For a minimal starting-point config, see [`Examples/Settings.CookiePunch.Basic.yaml`](./Examples/Settings.CookiePunch.Basic.yaml). For exhaustive references, see [`FullConsentConfig.yaml`](./Examples/Settings.CookiePunch.FullConsentConfig.yaml) and [`FullServiceConfig.yaml`](./Examples/Settings.CookiePunch.FullServiceConfig.yaml).
 
 ## Basic Configuration and Usages
 
 ### Step 1: Adding the consent-modal
 
-Create a new fusion file `CookiePunch.fusion` in `.../Resources/Private/Fusion` with the following content:
+Drop a `CookiePunch.fusion` file in your site package:
 
 ```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
 prototype(Neos.Neos:Page) {
     head.javascripts.cookiepunchConsent = Sandstorm.CookiePunch:Consent
-    # Block Global
     @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend)}
 }
 ```
 
-This will add the needed js and css to your page. If you reload the page you should see the consent-modal. Now all `<iframe>` and `<script>` tags will be
-blocked. Supported tags are `["iframe", "script", "audio", "video", "source", "track", "img", "embed", "input"]` 
+This adds the consent modal and starts blocking every `<iframe>` and `<script>`. The `!node.context.inBackend` flag keeps the Neos backend functional.
 
-`!node.context.inBackend` disables blocking in the Neos backend.
+Reload the page — it will likely look broken. Open the DevTools console and call `klaro.show()` to confirm Klaro is loaded; the next steps fix the breakage. For the full list of tag names you can pass to `blockTags`, see [Supported tags](#supported-tags).
 
-Open or reload your page. If blocking works your page should look broken, sorry for that ;)
+### Step 2: Always allow your own JavaScript
 
-You can open the console of your browser inspector and type `klaro.show()` to verify that klaro is working. In the next steps we will configure `purposes` and `services` that will
-show up in the consent modal.
-
-Let's start unbreaking your page;)
-
-### Step 2: Never block your own javascript
-
-You might have some scripts that you never want to be blocked because your page would not be usable at all. They are often called `main.js`, `app.js`, `index.js`, ...
+Some scripts (`main.js`, `app.js`, …) must always be allowed or your site won't work. You most likely have a Fusion prototype that bundles them — something like `Vendor.Site:HeaderAssets` — and that's the natural place to attach `neverBlockTags`:
 
 ```neosfusion
-renderer = Neos.Fusion:Tag {
-    tagName = "script"
-    attributes.src = "resource://Vendor.Example/Public/JavaScript/index.js"
-    @process.neverBlockTags = ${CookiePunch.neverBlockTags(["script"],value)}
+// Resources/Private/Fusion/Component/HeaderAssets.fusion
+prototype(Vendor.Site:HeaderAssets) < prototype(Neos.Fusion:Component) {
+    renderer = afx`
+        <script src={StaticResource.uri('Vendor.Site', 'JavaScript/main.js')}></script>
+        <script src={StaticResource.uri('Vendor.Site', 'JavaScript/menu.js')}></script>
+    `
+    @process.neverBlockTags = ${CookiePunch.neverBlockTags(["script"], value)}
 }
 ```
 
+For a one-off script tag, attach the helper directly:
+
 ```neosfusion
+// Resources/Private/Fusion/YourComponent.fusion
 renderer = afx`
     <script src={props.src} type="application/javascript" @process.neverBlockTags={CookiePunch.neverBlockTags(["script"], value)}></script>
 `
 ```
 
-You could also use the technique described in the next step to never block script however for scripts that are technically needed by the site the eel helper can be used in a more
-flexible way and adds more semantics to your code. "Hey, I checked this part of the code and it should not be blocked!".
+The same effect can be achieved via a YAML pattern (Step 3), but the helper makes the intent — *I checked, this script is required* — explicit at the call site.
 
-### Step 3: Blocking via yaml config
+### Step 3: Blocking via YAML config
 
-In `Configuration/` create a `Settings.CookiePunch.yaml`.
-
-**HINT:** Add the `schema.json` file from this package to your IDE and select it for `Settings.CookiePunch.yaml`. This will make it easier and give you auto-completion when configuring CookiePunch.
+Create `Configuration/Settings.CookiePunch.yaml`. Tip: register the package's `schema.json` in your IDE for auto-completion.
 
 ```yaml
+# Configuration/Settings.CookiePunch.yaml
 Sandstorm:
   CookiePunch:
     consent:
@@ -113,196 +134,187 @@ Sandstorm:
         script:
           "Packages/Neos.Neos":
             block: false
-          "Packages/Unikka.Slick":
+          "Packages/Vendor.ExampleLibrary":
             block: false
         iframe:
           "https://anchor.fm":
             service: anchor
 ```
 
-**This config is split in two parts.**
+The config has two parts: **`consent`** drives the Klaro UI (purposes group services), while **`blocking`** matches tags by substring pattern and either lets them through (`block: false`), blocks them permanently (`block: true`), or attaches them to a service so the user can allow them via consent (`service: anchor`).
 
-**`consent`** will directly be used to configure what is shown in the klaro consent. Klaro differentiates between `purposes` and `services`. A `purpose` is a group for
-multiple `services`. Check the consent to see how changes to the config are reflected in the browser.
+Given the config above, this **input markup**:
 
-**`blocking`** is used to find tags by a pattern, e.g. `"Packages/Unikka.Slick"` and then block them in the backend by "breaking" the tag. Instead of `block: ...` you can define a
-service `service: myservice`. This way klaro can unblock the content once the user gives his consent.
-
-#### Matching tags with patterns
-
-Blocking patterns are configured for a tag. We currently support bocking `<script>` and `<iframe>` tags.
-
-Let's look at the `Packages/Neos.Neos` pattern from the example above. This pattern will match all the following tags:
-
+```html
+<!-- Markup as rendered by Fusion before CookiePunch processes it -->
+<script src="/_Resources/Static/Packages/Neos.Neos/JavaScript/main.js"></script>
+<script src="/_Resources/Static/Packages/Vendor.ExampleLibrary/slider.js"></script>
+<iframe src="https://anchor.fm/embed/episodes/foo"></iframe>
+<script src="https://cdn.example.com/tracker.js"></script>
 ```
+
+…is transformed into this **output markup**:
+
+```html
+<!-- Markup after CookiePunch processing -->
+<script src="…/Packages/Neos.Neos/…/main.js"></script>                               <!-- untouched -->
+<script src="…/Packages/Vendor.ExampleLibrary/slider.js"></script>                   <!-- untouched -->
+<iframe data-src="https://anchor.fm/embed/episodes/foo" data-name="anchor"></iframe> <!-- broken; Klaro can restore via the "anchor" service -->
+<script type="text/plain" data-src="https://cdn.example.com/tracker.js" data-type="text/javascript"></script> <!-- broken; no service → permanently blocked -->
+```
+
+For substring-matching rules, the wildcard `*`, and the difference between `block: false` / `block: true` / `service: …`, see [Pattern reference](#pattern-reference). For the exact attribute rewrites done to a "broken" tag, see [How blocking transforms markup](#how-blocking-transforms-markup).
+
+### Step 4: Providing a link to your privacy statement
+
+The default URL is `/privacy`. Override it with a string for the simplest case:
+
+```yaml
+# Configuration/Settings.CookiePunch.yaml
+Sandstorm:
+  CookiePunch:
+    consent:
+      privacyPolicyUrl: /imprint/privacy
+```
+
+For most projects you'll want editors to pick the privacy page from the inspector. Add a reference property on your Homepage NodeType:
+
+```yaml
+# Configuration/NodeTypes.Homepage.yaml
+"Vendor.Site:Homepage":
+  properties:
+    privacyPolicyUrl:
+      type: reference
+      ui:
+        label: "Privacy page"
+        inspector:
+          group: "settings"
+          editorOptions:
+            nodeTypes: ["Neos.Neos:Document"]
+```
+
+…and point CookiePunch at it. `site` is already the Homepage, so no `q(site).find(...)` is needed:
+
+```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
+prototype(Sandstorm.CookiePunch:Config) {
+    consent.privacyPolicyUrl = ${q(site).property("privacyPolicyUrl")}
+    consent.privacyPolicyUrl.@process.convert = Neos.Neos:ConvertUris
+}
+```
+
+For other approaches (XLIFF translation key, dedicated PrivacyPage node type), see [Privacy URL alternatives](#privacy-url-alternatives).
+
+### Step 5: Styling
+
+Override the CSS variables Klaro exposes via YAML:
+
+```yaml
+# Configuration/Settings.CookiePunch.yaml
+Sandstorm:
+  CookiePunch:
+    consent:
+      styling:
+        font-family: "Work Sans, Helvetica Neue, Helvetica, Arial, sans-serif"
+        green1: "#00aa00"
+        border-radius: "0"
+```
+
+For the full variable list, see [`Examples/Settings.CookiePunch.Styling.yaml`](./Examples/Settings.CookiePunch.Styling.yaml). To replace Klaro's CSS entirely with your own, see [Manual styling](#manual-styling).
+
+### Step 6: Let the user reopen the consent modal later
+
+Place a link in Neos (e.g. in your privacy statement) with `href="#open_cookie_punch_modal"`. A click handler picks it up and opens the modal — the browser does not reload because `event.preventDefault()` is called internally.
+
+Alternatively call `klaro.show()` from your own JavaScript.
+
+## Advanced Usages
+
+### Full list of consent / service options
+
+- [annotated YAML of consent options](./Examples/Settings.CookiePunch.FullConsentConfig.yaml)
+- [annotated YAML of service options](./Examples/Settings.CookiePunch.FullServiceConfig.yaml)
+
+Most inline comments are copied directly from the [annotated `config.js`](https://github.com/kiprotect/klaro/blob/ec6e36934db10afdac0183721ddfbcb9c79e7dc3/dist/config.js) of Klaro for convenience.
+
+### Supported tags
+
+`CookiePunch.blockTags(...)` and `CookiePunch.neverBlockTags(...)` accept any of these tag names:
+
+`iframe`, `script`, `audio`, `video`, `source`, `track`, `img`, `embed`, `input`.
+
+The same set is allowed as keys under `Sandstorm.CookiePunch.blocking.tagPatterns` in YAML — see [`schema.json`](./schema.json).
+
+### Pattern reference
+
+Patterns under `tagPatterns.<tagName>` are matched against the raw rendered tag string with `strpos()` — i.e. it's a substring match. Anything in the tag (`src` URL, attribute name, attribute value, …) is fair game.
+
+The `Packages/Neos.Neos` pattern, for example, matches all of these:
+
+```html
+<!-- Example HTML matched by the "Packages/Neos.Neos" pattern -->
 <script src="/foo/bar/Packages/Neos.Neos/baz/index.js"/>
 <script data-foo="Neos.Neos"/>
 <script Neos.Neosisawesome src="/some/source/main.js"/>
 ```
 
-The tag is a string that matches if it contains the given pattern. You could also match for `foo` or anything else in this string. Internally `strpos()` is used.
-
-#### This pattern will never be blocked:
+Each pattern carries one of three actions:
 
 ```yaml
+# Configuration/Settings.CookiePunch.yaml
 "Packages/Neos.Neos":
-  block: false
-```
-
-#### This pattern will always be blocked and cannot be unblocked by the consent:
-
-Might be useful if the editor can place any html content and you want to always block certain tags.
-
-```yaml
+  block: false        # always allowed
 "https://really-stuff.bad":
-  block: true
-```
-
-#### This pattern will be blocked and can be unblocked by the user using the consent:
-
-```yaml
+  block: true         # always blocked, the consent cannot allow it
 "https://anchor.fm":
-  service: anchor
+  service: anchor     # blocked, but the user can allow via consent
 ```
 
-### Step 4: Providing a link to your privacy statement
+#### Wildcard (`"*"`)
 
-The default url is `/privacy`. This can be changed.
+The reserved key `"*"` flips the *default* for a tag name. Use sparingly — it defeats the purpose of documenting which services are in use.
 
-#### via the config as a string
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    consent:
-      privacyPolicyUrl: /different-privacy
-```
-
-#### Via the config using an XLF file
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    consent:
-      privacyPolicyUrl: Vendor.Site:Main:privacyPolicyUrl
-```
-
-#### Via fusion overriding the config prototype
+The most defensible case is `<img>`: by default you usually do not want every image blocked, only specific tracking pixels. Add `img` to the `blockTags` call so CookiePunch processes it, then flip the default:
 
 ```neosfusion
-prototype(Sandstorm.CookiePunch:Config) {
-    consent.privacyPolicyUrl = Neos.Neos:NodeUri {
-        node = ${q(site).find('[instanceof Vendor.Site:PrivacyPage]').get(0)}
-    }
-}
-```
-
-```neosfusion
-prototype(Sandstorm.CookiePunch:Config) {
-    consent.privacyPolicyUrl = ${q(site).find('[instanceof Vendor.Site:Homepage]').property("privacyPolicyUrl")}
-    consent.privacyPolicyUrl.@process.convert = Neos.Neos:ConvertUris
-}
-```
-
-Check the consent modal in the browser if the link is present!
-
-### Step 5: Styling
-
-#### Via yaml config (klaro css variables)
-
-see [supported Klaro css vars](./Examples/Settings.CookiePunch.Styling.yaml).
-
-A full yaml config can be found in `Examples/Settings.CookiePunch.Styling.yaml`
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    consent:
-      styling:
-        font-family: "Work Sans,Helvetica Neue,Helvetica,Arial,sans-serif"
-        green1: "red"
-        green2: "green"
-        green3: "blue"
-        border-radius: "0"
-```
-
-#### Manual styling
-
-Keep in mind that this might break when updating CookiePunch (which will also update klaro.js).
-
-First we have to disable css completely `noCSS = true`
-
-```neosfusion
-prototype(Neos.Neos:Page) {
-    head.javascripts.cookiepunchConsent = Sandstorm.CookiePunch:Consent {
-        noCSS = true
-    }
-    # Block Global
-    @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend)}
-}
-```
-
-Now no styling is applied to the consent UI. All styling has to be done by you. To make this easier you can find the original klaro styles
-here: `Resources/Private/KlaroCss/klaro.css`.
-
-### Step 6: Let the user open the consent modal later
-
-You can place a link in Neos, e.g. somewhere in your privacy statement with the `href` pointing to `#open_cookie_punch_modal`.
-This will be picked up by a click event listener and open the modal. The browser will not reload the page as we use `event.preventDefault()`
-internally.
-
-Alternatively you can call `klaro.show()` in your JavaScript.
-
-## Advanced Usages
-
-### Full list of consent options
-
-**see [annotated yaml of consent options](./Examples/Settings.CookiePunch.FullConsentConfig.yaml)**
-
-Most of the inline comments are directly copied from the [annotated config.js](https://github.com/kiprotect/klaro/blob/ec6e36934db10afdac0183721ddfbcb9c79e7dc3/dist/config.js) of klaro for your convenience ;)
-
-### Full list of service options
-
-**see [annotated yaml of service options](./Examples/Settings.CookiePunch.FullServiceConfig.yaml)**
-
-Most of the inline comments are directly copied from the [annotated config.js](https://github.com/kiprotect/klaro/blob/ec6e36934db10afdac0183721ddfbcb9c79e7dc3/dist/config.js) of klaro for your convenience ;)
-
-### Changing the default blocking behaviour
-
-```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
 prototype(Neos.Neos:Page) {
     head.javascripts.cookiepunchConsent = Sandstorm.CookiePunch:Consent
-    # Block Global
     @process.blockTags = ${CookiePunch.blockTags(["iframe","script", "img"], value, !node.context.inBackend)}
 }
 ```
 
-`CookiePunch.blockTags(["iframe","script", "img"]` tells CookiePunch which tags to look for. 
-All `<iframe>`, `<script>` and `<img>` tags will be blocked on default. However for images you
-probably do not want to block all tags but decide which pattern to block. For this you can change
-the default blocking behaviour using `"*": false` pattern for the `img` tag.
-
-```
+```yaml
+# Configuration/Settings.CookiePunch.yaml
 Sandstorm:
-   CookiePunch:
-     blocking:
-       tagPatterns:
-         img:
-           "*":
-             block: false
-           "tracking-pixel-url":
-             service: myservice
+  CookiePunch:
+    blocking:
+      tagPatterns:
+        img:
+          "*":
+            block: false
+          "tracking-pixel-url":
+            service: myservice
 ```
 
-### Blocking a rendered fusion subtree
+### How blocking transforms markup
 
-An already blocked markup will not be blocked again when running the eel-helpers for `Neos.Neos:Page`.
-This means we can hook into e.g. plugins to block them and attach them to a service in the consent modal.
+When CookiePunch breaks a tag, it does so by attribute rewriting — nothing is removed from the DOM:
 
-This technique especially comes in handy for blocking inline `<script>...</script>` tags that cannot be matched by a pattern.
+- `src` → `data-src`, so the browser doesn't fetch the resource.
+- For `<script>` tags only: the original `type` is moved to `data-type` and the live attribute is replaced with `type="text/plain"`, so the browser refuses to execute the script.
+- If the matching pattern points at a service, `data-name="<service>"` is added. Klaro reads this attribute, presents a contextual consent, and on accept swaps the `data-*` attributes back to their live counterparts.
+
+A tag with no `data-name` stays broken forever — there is no service to drive its restoration.
+
+### Blocking a rendered Fusion subtree
+
+An already-blocked piece of markup is *not* re-blocked when running the Eel helpers later on `Neos.Neos:Page`. This means we can hook into specific plugins to block them and attach them to a service.
+
+This is especially useful for inline `<script>...</script>` tags that cannot be matched by a URL pattern.
 
 ```neosfusion
-// Plugin Implementation Example
+// Resources/Private/Fusion/Plugin/FooTube.fusion — plugin implementation
 prototype(Vendor.Plugin.FooTube:Embed) < prototype(Neos.Fusion:Component) {
     renderer = afx`
       <div>
@@ -314,7 +326,7 @@ prototype(Vendor.Plugin.FooTube:Embed) < prototype(Neos.Fusion:Component) {
 ```
 
 ```neosfusion
-// CookiePunch.fusion
+// Resources/Private/Fusion/CookiePunch.fusion
 prototype(Vendor.Plugin.FooTube:Embed) {
   // tags in this part of the tree will be blocked first
   @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend, "footube")}
@@ -322,33 +334,31 @@ prototype(Vendor.Plugin.FooTube:Embed) {
 
 prototype(Neos.Neos:Page) {
   head.javascripts.cookiepunchConsent = Sandstorm.CookiePunch:Consent
-  // at last all remaining tags will be blocked according to the config
+  // at last, all remaining tags will be blocked according to the config
   // already blocked tags will be ignored
   @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend)}
 }
 ```
 
-### Adding a contextual consent for non-iframe element
+### Adding a contextual consent for non-iframe elements
 
-When blocking a `<script>` tag you might end up with a broken UI as some styles might not be applied and some markup might not be created.
-You can use the following eel-helper to wrap parts of the rendered fusion tree so klaro can "replace" the broken content and add
-a contextual consent.
+When blocking a `<script>` you may end up with a broken UI as some styles or markup never run. Use the helper below to wrap parts of the rendered Fusion tree so Klaro can swap the broken content for a contextual consent.
 
 ```neosfusion
-// CookiePunch.fusion
+// Resources/Private/Fusion/CookiePunch.fusion
 prototype(Vendor.Plugin.FooTube:Embed) {
   @process.blockTags = ${CookiePunch.blockTags(["script"], value, !node.context.inBackend, "footube")}
   @process.addContextualConsent = ${CookiePunch.addContextualConsent("footube", value, !node.context.inBackend)}
 }
 ```
 
-Another use case are `<audio>` or `<video>` tags with or without nested `<source>` tags.
-You might want to block them so that a visitors IP address is not send to a third party server without a consent.
+Another use case: `<audio>` or `<video>` tags (with or without nested `<source>` tags). You may want to block them so a visitor's IP address isn't sent to a third-party server before consent.
 
 ```neosfusion
+// Resources/Private/Fusion/Component/ThirdpartyAudio.fusion
 prototype(Vendor:Component.ThirdpartyAudio) < prototype(Neos.Fusion:Component) {
   thirdpartySrc = ''
-  
+
   renderer = afx`
     <audio>
       <source src={props.thirdpartySrc}/>
@@ -357,89 +367,131 @@ prototype(Vendor:Component.ThirdpartyAudio) < prototype(Neos.Fusion:Component) {
   @process.blockTags = ${CookiePunch.blockTags(["source"], value, !node.context.inBackend, "thirdpartymedia")}
   @process.addContextualConsent = ${CookiePunch.addContextualConsent("thirdpartymedia", value, !node.context.inBackend)}
 }
-
 ```
-
 
 ### Let the editor choose a service from the inspector
 
-If you allow your editors to place HTML (e.g. if you are using `Neos.NodeTypes.Html:Html` node type) the editor
-can place markup that potentially sets cookies. With the default configuration CookiePunch will block this content.
-This content cannot be unblocked if the markup is not matched by any pattern in the yaml config.
+If editors can place HTML (e.g. via the `Neos.NodeTypes.Html:Html` node type), they can introduce markup that sets cookies. With the default config, CookiePunch blocks this content — and if the markup matches no YAML pattern, it stays blocked permanently.
 
-You can add `Sandstorm.CookiePunch:Mixin.ConsentServices` to your NodeTypes.yaml to get a dropdown in the inspector.
+Add `Sandstorm.CookiePunch:Mixin.ConsentServices` to the affected node type to expose a service dropdown in the inspector:
 
 ```yaml
+# Configuration/NodeTypes.yaml
 "Neos.NodeTypes.Html:Html":
   superTypes:
     "Sandstorm.CookiePunch:Mixin.ConsentServices": true
 ```
 
-You also need to add this for the actual blocking.
+Then wire the chosen service into the actual blocking:
 
 ```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
 prototype(Neos.NodeTypes.Html:Html) {
   @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend, q(node).property("consentServices"))}
-  // you can wrap the html element with a `<div data-name="myservice">...</div>` to make sure 
-  // the contextual consent is displayed correctly 
-  @process.contextualConsent = ${CookiePunch.addContextualConsent(q(node).property("consentServices"))}
+  // Wrap the html element with `<div data-name="myservice">...</div>` to make sure
+  // the contextual consent is displayed correctly
+  @process.contextualConsent = ${CookiePunch.addContextualConsent(q(node).property("consentServices"), value, !node.context.inBackend)}
 }
 ```
 
 ### Let the editor change the text of the consent
 
-You can override the corresponding path in the fusion prototype `Sandstorm.CookiePunch:Config.Translations` with
-the text property of a content node. If the property contains markup you need to change the config of the consent.
+Override the corresponding path in the Fusion prototype `Sandstorm.CookiePunch:Config.Translations` with the text property of a content node. If the property contains markup, you also need to flip a config flag so descriptions are rendered as HTML:
 
 ```yaml
+# Configuration/Settings.CookiePunch.yaml
 Sandstorm:
   CookiePunch:
     consent:
-      # Setting this to true will render the descriptions of the consent
-      # modal and consent notice are HTML. Use with care.
+      # Renders descriptions in the consent modal/notice as HTML. Use with care.
       htmlTexts: true
 ```
 
-### Translations
+### Privacy URL alternatives
 
-Klaro already provides translations for many languages. These are made available as XLIFF files in `Resources/Private/Translations`.
+Beyond the simple-string and Homepage-property forms shown in [Step 4](#step-4-providing-a-link-to-your-privacy-statement), two other paths are available.
 
-You can override translations
-
-- by creating you own XLIFF files overriding the default ones
-- in the yaml config by providing/overriding a translation key instead of the actual text ( e.g. for the title of service )
-- by overriding the corresponding path in the fusion prototypes `Sandstorm.CookiePunch:Config.Translations` or `Sandstorm.CookiePunch:Config`
-
-**Example: Translating service labels**
-
-Labels of services in your Settings.CookiePunch.yml can be translated like this:
+#### XLIFF translation key
 
 ```yaml
+# Configuration/Settings.CookiePunch.yaml
+Sandstorm:
+  CookiePunch:
+    consent:
+      privacyPolicyUrl: Vendor.Site:Main:privacyPolicyUrl
+```
+
+#### Dedicated PrivacyPage node type
+
+```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
+prototype(Sandstorm.CookiePunch:Config) {
+    consent.privacyPolicyUrl = Neos.Neos:NodeUri {
+        node = ${q(site).find('[instanceof Vendor.Site:PrivacyPage]').get(0)}
+    }
+}
+```
+
+### Manual styling
+
+To take full control of the consent UI's CSS, disable the bundled stylesheet and provide your own. Note this couples your styling to Klaro's class names — it can break on package updates.
+
+```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
+prototype(Neos.Neos:Page) {
+    head.javascripts.cookiepunchConsent = Sandstorm.CookiePunch:Consent {
+        noCSS = true
+    }
+    @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend)}
+}
+```
+
+The original Klaro stylesheet ships at `Resources/Private/KlaroCss/klaro.css` if you want to fork from it.
+
+### Translations
+
+Klaro already provides translations for many languages. They are exposed as XLIFF files in `Resources/Private/Translations`.
+
+You can override translations by:
+
+- creating your own XLIFF files that override the defaults,
+- providing a translation key (e.g. `Vendor.Site:CookiePunch:services.youtube.description`) instead of literal text in the YAML config,
+- overriding the corresponding path in the Fusion prototypes `Sandstorm.CookiePunch:Config.Translations` or `Sandstorm.CookiePunch:Config`.
+
+**Example: translating service labels**
+
+Service labels in your `Settings.CookiePunch.yaml` can be translated like this:
+
+```yaml
+# Configuration/Settings.CookiePunch.yaml
 services:
   youtube:
     title: Youtube
     description: Vendor.Site:CookiePunch:services.youtube.description
 ```
 
-Where 
-- `Vendor:Site` is your site package key
-- `CookiePunch` is the name of the xml file containing the translations (you can choose any name here, just needs to match the file name). See this:
+Where:
+
+- `Vendor.Site` is your site package key,
+- `CookiePunch` is the name of the XLIFF file containing the translations (any name — must match the file name). See screenshot:
 
 ![Screenshot 2022-06-07 at 14 37 57](https://user-images.githubusercontent.com/9661367/172380821-9c374cb4-35ab-4892-afe3-f6cd09885981.png)
 
-- And inside the files you need to use the key following the colon `:` (here: `services.youtube.description`).
+- and inside the file you reference the key after the colon (here: `services.youtube.description`):
 
+```xml
+<!-- Resources/Private/Translations/de/CookiePunch.xlf -->
+<trans-unit id="services.youtube.description">
+    <source>Erlaubt die Einbindung von Youtube-Videos.</source>
+</trans-unit>
 ```
-            <trans-unit id="services.youtube.description">
-                <source>Erlaubt die Einbindung von Youtube-Videos.</source>
-            </trans-unit>
-```
 
-### Conditional Rendering of Services in Consent Modal
+### Conditional Rendering of Services in the Consent Modal
 
-You can evaluate if a switch in the cookie modal should be rendered at runtime like this:
+You can decide at runtime whether a switch should appear in the consent modal:
 
 ```yaml
+# Configuration/Settings.CookiePunch.yaml
 Sandstorm:
   CookiePunch:
     consent:
@@ -458,20 +510,21 @@ Sandstorm:
           when: "${q(site).property('googleAnalyticsAccountKey')}"
 ```
 
-This is useful for multi-site setups and to prevent unnecessary consent switches from being rendered if e.g. no youtube video has ever been added to the content.
+For a complete example see [`Examples/Settings.CookiePunch.WithWhenConditions.yaml`](./Examples/Settings.CookiePunch.WithWhenConditions.yaml).
 
-**Note:** 
+This is useful in multi-site setups, and to prevent unnecessary consent switches when e.g. no YouTube video has ever been added to the content.
 
-1. You need to use an eel expression that evaluates to boolean.
-2. If you do not add a when condition the default is `when: ${true}`, meaning there will always be a consent switch rendered for this service
-3. When querying the content repository with `q(...)`, only `site` is allowed (`documentNode` and `node` are not available)
-4. Klaro saves in a cookie, if a consent was given by the user in the past, so when e.g. removing and readding a youtube video, users are not asked again for cookie approval
+**Notes:**
 
-**Important:**
+1. The `when` value must be an Eel expression that evaluates to boolean.
+2. With no `when` condition, the default is `${true}` — the switch always renders for that service.
+3. When querying the content repository with `q(...)`, only `site` is available. `documentNode` and `node` are not.
+4. Klaro stores past consent decisions in a cookie, so removing and re-adding e.g. a YouTube video will not re-prompt users who already consented.
 
-You will need to adapt you cache configuration for `Sandstorm.CookiePunch:Consent` like this (uses the config example from above, adapt to your usecase):
+**Important:** adapt your cache config for `Sandstorm.CookiePunch:Consent`. Add tags for every node type referenced in your `when` expressions:
 
 ```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
 prototype(Sandstorm.CookiePunch:Consent) {
     @cache {
         mode = 'cached'
@@ -480,30 +533,57 @@ prototype(Sandstorm.CookiePunch:Consent) {
         }
         entryTags {
             1 = ${Neos.Caching.nodeTag(node)}
-            // RootPage being the nodetype of the site node (used as `q(site)` in the `when` settings key example above)
-            2 = ${Neos.Caching.nodeTypeTag('Vendor.Site:RootPage')}  // flush when the googleAnalyticsAccountKey changes
-            3 = ${Neos.Caching.nodeTypeTag('Vendor.Site:YouTube')} // flush when a youtube video is added or removed
+            // RootPage is the nodetype of the site node (used as `q(site)` in the `when` example above)
+            2 = ${Neos.Caching.nodeTypeTag('Vendor.Site:RootPage')}  // flush when googleAnalyticsAccountKey changes
+            3 = ${Neos.Caching.nodeTypeTag('Vendor.Site:YouTube')}    // flush when a YouTube video is added or removed
         }
     }
 }
 ```
 
-**Preventing an empty cookie modal**
+**Preventing an empty consent modal**
 
-If you want to prevent an empty CookieConsent modal for your users if all 'when' config keys evaluate to false,
-override the prototype like this in your project:
+If all `when` expressions evaluate to false you can hide the modal entirely:
 
 ```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
 prototype(Sandstorm.CookiePunch:Consent) {
     // only render if there is at least one service that has not been filtered out by its 'when' config key
     @if.hasServices = ${Array.length(this.servicesRemainingAfterWhenConditions) > 0}
 }
 ```
 
-### Contextual Consent Only Mode
-If you don't want to initially show the cookie banner or modal you can use the global `contextualConsentOnly` mode introduced with [version 4.4.0](https://github.com/sandstorm/Sandstorm.CookiePunch/releases/tag/4.4.0).
+### Per-service lifecycle callbacks (`onInit` / `onAccept` / `onDecline`)
+
+Each service can declare JavaScript snippets that run when Klaro initialises, when the user accepts, and when the user declines:
 
 ```yaml
+# Configuration/Settings.CookiePunch.yaml
+Sandstorm:
+  CookiePunch:
+    consent:
+      services:
+        googleAnalytics:
+          title: Google Analytics
+          purposes: [analytics]
+          # JS executed when Klaro initialises the service
+          onInit: "console.log('GA init');"
+          # JS executed when the user gives consent
+          onAccept: "window.dataLayer.push({'event': 'cookie_consent_ga'});"
+          # JS executed when the user withdraws consent
+          onDecline: "console.log('GA declined');"
+```
+
+Each value is the *body* of a JS function. The strings are exposed via `window.cookiePunchCallbacks` and registered with Klaro before the main bundle loads — so they work under strict CSP without `unsafe-eval`. (Prior to v5 these were registered via `eval()`. See [MIGRATIONS.md](./MIGRATIONS.md#migrating-from-version-4-to-5).)
+
+A complete service config showing every supported key — including these callbacks — is in [`Examples/Settings.CookiePunch.FullServiceConfig.yaml`](./Examples/Settings.CookiePunch.FullServiceConfig.yaml).
+
+### Contextual Consent Only Mode
+
+If you don't want to show the cookie banner or modal initially, use the global `contextualConsentOnly` mode introduced with [version 4.4.0](https://github.com/sandstorm/Sandstorm.CookiePunch/releases/tag/4.4.0).
+
+```yaml
+# Configuration/Settings.CookiePunch.yaml
 Sandstorm:
   CookiePunch:
     consent:
@@ -513,240 +593,29 @@ Sandstorm:
 
 ## Troubleshooting
 
-### iframes work after unblocking but are the wrong size or in the wrong place
+### Iframes work after unblocking but are the wrong size or in the wrong place
 
 **Please check**
 
-- Do you have an iframe that you blocked because it adds cookies?
-- Do you have a Js that manipulates this iframe?
-- Is this Js not blocked while the iframe is?
-- Does a reload of the page fix the problem after you consented?
+- Do you have an iframe that you blocked because it sets cookies?
+- Do you have JS that manipulates this iframe?
+- Is the JS *not* blocked while the iframe *is*?
+- Does a reload after consenting fix the problem?
 
 **This could be the problem**
 
-- The Js runs once when the page loads, but the iframe is still "broken" (maybe having the wrong size).
-- The Js does some styling magic to extend the iframe to the available width of the page.
-- The Js needs to run when the iframe is in an unblocked state otherwise the calculation fails.
+- The JS runs once on page load, but the iframe is still "broken" (e.g. has the wrong size).
+- The JS does some styling magic to extend the iframe to the available width.
+- The JS needs to run when the iframe is in an unblocked state — otherwise its size calculation fails.
 
 **How to fix**
 
-- Also block the Js, although it does not add any cookies.
-- Attach it to the same service as the iframe.
-- This way the Js will run after the iframe was unblocked.
+Block the JS too — even though it doesn't set any cookies — and attach it to the same service as the iframe. The JS will then run *after* the iframe is unblocked.
 
-## Migrating from version 3 to 4
+## Migration guide
 
-You can now block more tags. This is why we generalized the Eel helpers.
-
-**Old**
-```neosfusion
-    @process.blockIframes = ${CookiePunch.blockIframes(value, !node.context.inBackend)}
-    @process.blockScripts = ${CookiePunch.blockScripts(value, !node.context.inBackend)}
-    @process.neverBlockScripts = ${CookiePunch.neverBlockScripts(value)}
-    @process.neverBlockIframes = ${CookiePunch.neverBlockIframes(value)}
-```
-
-**New**
-```neosfusion
-    @process.blockTags = ${CookiePunch.blockTags(["iframe", "script"],value, !node.context.inBackend)}
-    @process.neverBlockTags = ${CookiePunch.neverBlockTags(["iframe", "script"],value, !node.context.inBackend)}
-```
-
-## Migrating from version 2 to 3
-
-We changed the format for configuring the purposes to provide more functionality provided by Klaro.js. We now support `title` and `description` for each purpose.
-
-**Old**
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    consent:
-      purposes:
-        mediaembeds: Media Embeds
-```
-
-**New**
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    consent:
-      purposes:
-        title: Media Embeds
-        description: Some Description
-```
-
-## Migrating from version 1 to 2
-
-**HINT:** Add the `schema.json` file from this package to your IDE and select it for your yaml files. This will make it easier and give you auto-completion and validation when migrating.
-
-Everything concerning the actual blocking of tags by changing the markup on the server
-is moved to `Sandstorm/CookiePunch/blocking/...` in the config
-
-Everything concerning the rendering of the consent and therefore the configuration of klaro
-is moved to `Sandstorm/CookiePunch/consent/...` in the config
-
-### Blocking Mode
-
-**Old**
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    mode:
-      blockAllScripts: true
-      blockAllIframes: true
-```
-
-**New**
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    blocking:
-      tagPatterns:
-        script:
-          "*":
-            block: true
-        iframe:
-          "*":
-            block: true
-```
-
-### Blocking Patterns
-
-**Old**
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    elements:
-      block: true # default blocking mode for all tags
-      group: default # default group for all blocked tags
-      patterns:
-        "Packages/Neos.Neos":
-          type: script
-          block: false
-        "https://anchor.fm":
-          type: iframe
-          block: true
-```
-
-**New**
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    blocking:
-      tagPatterns:
-        script:
-          # "*":
-          #   service: default -> see explanation
-          "Packages/Neos.Neos":
-            block: false
-        iframe:
-          # "*":
-          #   service: default -> see explanation
-          "https://anchor.fm":
-            service: mediaembeds
-```
-
-IMPORTANT: The wildcard pattern `*` should only be used in rare situations. Think about if you really need
-to change the default blocking behaviour and create a generic service `default` as this defies the whole purpose
-of documenting the services used for this page.
-
-A pattern schould eigther have `block: true|false` OR `service: "nameofservice"`
-
-### Groups -> Services
-
-We changed the naming to match the api of klaro. Everything concerning the consent can be configured here:
-
-`Sandstorm/CookiePunch/consent/...`
-
-**Old**
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    groups:
-      anchor:
-        title: Anchor FM
-        description: Podcast Player
-```
-
-**New**
-
-```yaml
-Sandstorm:
-  CookiePunch:
-    consent:
-      services:
-        anchor:
-          title: Anchor FM
-          description: Podcast Player
-```
-
-### Consent Options for each group -> service
-
-As we are already in `Sandstorm/CookiePunch/consent/...` we drop the additional
-`consent` nesting level. All options of a service concern the consent.
-
-**Old**
-
-```yaml
-anchor:
-  title: Anchor FM
-  description: Podcast Player
-  purposes:
-    - mediaembeds
-  consent:
-    required: true
-```
-
-**New**
-
-```yaml
-anchor:
-  title: Anchor FM
-  description: Podcast Player
-  purposes:
-    - mediaembeds
-  required: true
-```
-
-For more consent options of a service see the docs for advanced configuration.
-
-### Styling
-
-If you have custom styling it will most likely break depending on what was changed in klaro.js bundled
-with this package. This package does not provide a SCSS file anymore. Check the section on styling for
-more information.
+For upgrade notes between major versions, see [`MIGRATIONS.md`](./MIGRATIONS.md).
 
 ## Contributing
 
-You need a running Neos distribution and install this package.
-
-### PHP Code -> Blocking
-
-You can run tests when making changes to the processing of the markup. 
-
-run `./bin/phpunit -c Build/BuildEssentials/PhpUnit/UnitTests.xml DistributionPackages/Sandstorm.CookiePunch/Tests/Unit/`
-
-Or functional tests, when changing the conditional consent rendering:
-
-run `./bin/phpunit -c Build/BuildEssentials/PhpUnit/FunctionalTests.xml DistributionPackages/Sandstorm.CookiePunch/Tests/Functional/`
-
-
-### Fusion, XLF and Typescript
-
-run `nvm use && yarn` to install all dependencies
-run `yarn run watch` to start developing Typescript.
-
-We use NodeJs to automatically generate XLS and Fusion files based on the original Klaro translations.
-You can recompile these files by running `build:translations`.
-
-Remember to run `yarn run build` when you are finished.
-
-Check out the `package.json` for more useful scripts.
-
+For test, build, and translation workflows, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).

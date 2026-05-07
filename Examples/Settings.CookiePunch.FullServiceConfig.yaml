@@ -21,6 +21,12 @@ Sandstorm:
           # Do not forget to add translations for all purposes you list here.
           purposes:
             - mediaembeds
+          # Optional Eel expression evaluating to a boolean. If set and false,
+          # the service is omitted from the consent modal entirely. Useful in
+          # multi-site setups or to hide switches when the corresponding content
+          # is not present. Only `q(site)` is available — `node` / `documentNode`
+          # are not. Defaults to `${true}` when omitted.
+          when: "${q(site).find('[instanceof Vendor.Site:FooTube]').count() > 0}"
           # A list of regex expressions or strings giving the names of
           # cookies set by this service. If the user withdraws consent for a
           # given service, Klaro will then automatically delete all matching
