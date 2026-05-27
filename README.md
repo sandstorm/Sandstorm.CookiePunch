@@ -11,8 +11,8 @@ A Neos package that blocks elements like `<script>` and `<iframe>` server-side �
   - [Step 2: Always allow your own JavaScript](#step-2-always-allow-your-own-javascript)
   - [Step 3: Blocking via YAML config](#step-3-blocking-via-yaml-config)
   - [Step 4: Providing a link to your privacy statement](#step-4-providing-a-link-to-your-privacy-statement)
-  - [Step 5: Styling](#step-5-styling)
-  - [Step 6: Let the user reopen the consent modal later](#step-6-let-the-user-reopen-the-consent-modal-later)
+  - [Step 5: Let the user reopen the consent modal later](#step-5-let-the-user-reopen-the-consent-modal-later)
+  - [Step 6: Styling](#step-6-styling)
 - [Advanced Usages](#advanced-usages)
   - [Full list of consent / service options](#full-list-of-consent--service-options)
   - [Supported tags](#supported-tags)
@@ -26,6 +26,7 @@ A Neos package that blocks elements like `<script>` and `<iframe>` server-side �
   - [Manual styling](#manual-styling)
   - [Translations](#translations)
   - [Conditional Rendering of Services in the Consent Modal](#conditional-rendering-of-services-in-the-consent-modal)
+  - [Editor-defined dynamic services](#editor-defined-dynamic-services)
   - [Per-service lifecycle callbacks (`onInit` / `onAccept` / `onDecline`)](#per-service-lifecycle-callbacks-oninit--onaccept--ondecline)
   - [Contextual Consent Only Mode](#contextual-consent-only-mode)
 - [Troubleshooting](#troubleshooting)
@@ -205,7 +206,13 @@ prototype(Sandstorm.CookiePunch:Config) {
 
 For other approaches (XLIFF translation key, dedicated PrivacyPage node type), see [Privacy URL alternatives](#privacy-url-alternatives).
 
-### Step 5: Styling
+### Step 5: Let the user reopen the consent modal later
+
+Place a link in Neos (e.g. in your privacy statement) with `href="#open_cookie_punch_modal"`. A click handler picks it up and opens the modal — the browser does not reload because `event.preventDefault()` is called internally.
+
+Alternatively call `klaro.show()` from your own JavaScript.
+
+### Step 6: Styling
 
 Override the CSS variables Klaro exposes via YAML:
 
@@ -221,12 +228,6 @@ Sandstorm:
 ```
 
 For the full variable list, see [`Examples/Settings.CookiePunch.Styling.yaml`](./Examples/Settings.CookiePunch.Styling.yaml). To replace Klaro's CSS entirely with your own, see [Manual styling](#manual-styling).
-
-### Step 6: Let the user reopen the consent modal later
-
-Place a link in Neos (e.g. in your privacy statement) with `href="#open_cookie_punch_modal"`. A click handler picks it up and opens the modal — the browser does not reload because `event.preventDefault()` is called internally.
-
-Alternatively call `klaro.show()` from your own JavaScript.
 
 ## Advanced Usages
 
@@ -552,6 +553,136 @@ prototype(Sandstorm.CookiePunch:Consent) {
     @if.hasServices = ${Array.length(this.servicesRemainingAfterWhenConditions) > 0}
 }
 ```
+
+### Editor-defined dynamic services
+
+[Let the editor choose a service from the inspector](#let-the-editor-choose-a-service-from-the-inspector) lets editors pick from a **predefined** list of services. Sometimes you want them to **create a new service on the fly** — e.g. a content element where the editor pastes a third-party embed, names the service, and a matching switch appears in the consent automatically.
+
+The trick is to override `Sandstorm.CookiePunch:Consent` and append dynamically-built services to `servicesRemainingAfterWhenConditions` (the same property used in [Conditional Rendering](#conditional-rendering-of-services-in-the-consent-modal)). The service key is derived by hashing the editor's typed name, so the same value can be used on both the blocking side and the consent side.
+
+#### 1. A content element node type
+
+```yaml
+# Configuration/NodeTypes.CookieConsentEmbed.yaml
+"Vendor.Site:CookieConsentEmbed":
+  superTypes:
+    "Neos.Neos:Content": true
+  ui:
+    label: "Third-party embed (with consent)"
+    inspector:
+      groups:
+        consent:
+          label: "Cookie consent"
+  properties:
+    serviceName:
+      type: string
+      validation:
+        "Neos.Neos/Validation/NotEmptyValidator": []
+      ui:
+        label: "Service name (shown in the cookie consent)"
+        inspector:
+          group: consent
+    serviceDescription:
+      type: string
+      ui:
+        label: "Service description"
+        inspector:
+          group: consent
+    embedCode:
+      type: string
+      ui:
+        label: "Embed code (script / iframe)"
+        reloadIfChanged: true
+        inspector:
+          group: consent
+          editor: Neos.Neos/Inspector/Editors/CodeEditor
+```
+
+#### 2. Render and block the element's own markup
+
+The element renders the embed, then blocks it and attaches the contextual consent. The service key is the md5 of the editor's `serviceName`:
+
+```neosfusion
+// Resources/Private/Fusion/Content/CookieConsentEmbed.fusion
+prototype(Vendor.Site:CookieConsentEmbed) < prototype(Neos.Neos:ContentComponent) {
+    // derive the service key once; the consent override below MUST hash the same way
+    @context.serviceKey = ${String.md5(q(node).property('serviceName'))}
+
+    renderer = afx`
+        <div>{String.htmlSpecialCharsDecode(q(node).property('embedCode'))}</div>
+    `
+    @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend, serviceKey)}
+    @process.addContextualConsent = ${CookiePunch.addContextualConsent(serviceKey, value, !node.context.inBackend)}
+}
+```
+
+#### 3. Register a service for every embed
+
+Override the consent prototype to scan the site for these elements and append one service per distinct name:
+
+```neosfusion
+// Resources/Private/Fusion/Overrides/CookiePunch.fusion
+prototype(Sandstorm.CookiePunch:Consent) {
+    // recompute the statically-configured services (we cannot self-reference
+    // servicesRemainingAfterWhenConditions, so we rebuild it from the config)
+    @context.originalServices = ${CookiePunchConfig.filterServicesArrayByWhenCondition(Configuration.setting("Sandstorm.CookiePunch.consent.services"), site)}
+
+    @context.dynamicServices = Neos.Fusion:Map {
+        items = ${q(site).find('[instanceof Vendor.Site:CookieConsentEmbed][serviceName != ""]')}
+        itemRenderer = Neos.Fusion:DataStructure {
+            // NOTE: no `name` here — Config.fusion derives the Klaro service name
+            // from the map KEY (keyRenderer), not from a `name` field.
+            title = ${q(item).property('serviceName')}
+            description = ${q(item).property('serviceDescription')}
+            purposes = ${['externalContent']}
+        }
+        // The KEY becomes the Klaro service name. It MUST match the `data-name`
+        // produced by the element's blockTags/addContextualConsent above —
+        // i.e. hash `serviceName` exactly the same way. Using the hash as key
+        // also deduplicates: two embeds with the same name share one switch
+        // (the last one rendered wins for title/description).
+        keyRenderer = ${String.md5(q(item).property('serviceName'))}
+    }
+
+    servicesRemainingAfterWhenConditions = ${Array.concat(originalServices, dynamicServices)}
+
+    // REQUIRED: the consent is rendered inside the cached page, and its service
+    // list depends on q(site).find(...). Without these tags a newly published
+    // embed would not get a switch on already-cached pages.
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+            2 = ${Neos.Caching.nodeTypeTag('Vendor.Site:CookieConsentEmbed')}  // flush every page's consent when an embed changes
+        }
+    }
+}
+```
+
+#### 4. Declare the purpose
+
+Every purpose a service references must exist under `consent.purposes` (for its title/description and translations):
+
+```yaml
+# Configuration/Settings.CookiePunch.yaml
+Sandstorm:
+  CookiePunch:
+    consent:
+      purposes:
+        externalContent:
+          title: External content
+          description: Embedded third-party content that may set cookies.
+```
+
+#### Notes & caveats
+
+- **The two `String.md5(...)` expressions must stay byte-identical** (the element in step 2 and the consent override in step 3). If they ever drift, the markup is blocked but no service can unblock it — the content stays broken forever.
+- **Deduplication is by name.** Two embeds with the same `serviceName` produce one switch; the last-rendered node wins for `title`/`description`.
+- **Make `serviceName` required.** An empty name hashes to a constant (`md5('')`), collapsing unrelated embeds into one bogus service — hence the `NotEmptyValidator` and the `[serviceName != ""]` filter.
+- **The `@cache` block is not optional** — see the inline comment above.
 
 ### Per-service lifecycle callbacks (`onInit` / `onAccept` / `onDecline`)
 
