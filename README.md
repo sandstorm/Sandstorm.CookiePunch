@@ -5,7 +5,9 @@ A Neos package that blocks elements like `<script>` and `<iframe>` server-side �
 ## Contents
 
 - [Features](#features)
+- [How it works](#how-it-works)
 - [Installation](#installation)
+- [Minimal setup](#minimal-setup)
 - [Basic Configuration and Usages](#basic-configuration-and-usages)
   - [Step 1: Adding the consent-modal](#step-1-adding-the-consent-modal)
   - [Step 2: Always allow your own JavaScript](#step-2-always-allow-your-own-javascript)
@@ -22,6 +24,7 @@ A Neos package that blocks elements like `<script>` and `<iframe>` server-side �
   - [Adding a contextual consent for non-iframe elements](#adding-a-contextual-consent-for-non-iframe-elements)
   - [Let the editor choose a service from the inspector](#let-the-editor-choose-a-service-from-the-inspector)
   - [Let the editor change the text of the consent](#let-the-editor-change-the-text-of-the-consent)
+  - [Caching the consent](#caching-the-consent)
   - [Privacy URL alternatives](#privacy-url-alternatives)
   - [Manual styling](#manual-styling)
   - [Translations](#translations)
@@ -45,6 +48,26 @@ A Neos package that blocks elements like `<script>` and `<iframe>` server-side �
   - Unblocking of elements after consent.
   - Contextual consents — temporarily or permanently unblock content from the element itself, without opening the modal.
 
+## How it works
+
+CookiePunch combines **server-side markup rewriting** with the **client-side Klaro consent UI**. On every render, the `CookiePunch.blockTags(...)` Eel helper walks the markup and breaks the configured tags: `src` becomes `data-src`, `type` becomes `data-type`, `<script>` tags get `type="text/plain"`, and a `data-name="<service>"` attribute is added when a service is in play. The browser refuses to fetch or execute the broken tags. Klaro then reads `data-name`, shows a consent UI, and on accept swaps the attributes back so the browser fetches and runs the original content.
+
+The **service identifier** is the single string that ties (a) the YAML/inline blocking config, (b) the `data-name` in the rewritten markup, and (c) the switch in the Klaro modal together. Keep it consistent across all three and the rest follows.
+
+```
+# Data flow: server-side rewrite → browser → consent → restored markup
+Fusion render
+     │
+     ▼  CookiePunch.blockTags / @process.blockTags
+[rewritten markup]  <script type="text/plain" data-src="…" data-name="myservice">…</script>
+     │
+     ▼  shipped to browser
+[Klaro JS]  reads data-name → renders switch → user consents
+     │
+     ▼  Klaro restores attributes
+<script type="application/javascript" src="…">  ← browser fetches & runs
+```
+
 ## Installation
 
 ```bash
@@ -65,7 +88,39 @@ This puts the dependency in the outer `composer.json` / `composer.lock` (usually
 }
 ```
 
-For a minimal starting-point config, see [`Examples/Settings.CookiePunch.Basic.yaml`](./Examples/Settings.CookiePunch.Basic.yaml). For exhaustive references, see [`FullConsentConfig.yaml`](./Examples/Settings.CookiePunch.FullConsentConfig.yaml) and [`FullServiceConfig.yaml`](./Examples/Settings.CookiePunch.FullServiceConfig.yaml).
+For exhaustive references, see [`FullConsentConfig.yaml`](./Examples/Settings.CookiePunch.FullConsentConfig.yaml) and [`FullServiceConfig.yaml`](./Examples/Settings.CookiePunch.FullServiceConfig.yaml).
+
+## Minimal setup
+
+Two files get a working consent modal on every page. Drop them into your site package and reload:
+
+```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
+prototype(Neos.Neos:Page) {
+    head.javascripts.cookiepunchConsent = Sandstorm.CookiePunch:Consent
+    @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend)}
+}
+```
+
+```yaml
+# Configuration/Settings.CookiePunch.yaml
+Sandstorm:
+  CookiePunch:
+    consent:
+      purposes:
+        essential:
+          title: Essential
+          description: Required for basic functionality.
+      services: {}
+    blocking:
+      tagPatterns:
+        script:
+          # never block Neos' own scripts, or the backend breaks
+          "Packages/Neos.Neos":
+            block: false
+```
+
+This blocks every `<iframe>` and `<script>` (except Neos' own), shows the consent modal, and is enough to verify the install. The 6 Steps below layer in real services, pattern matching, and editor integrations. See also [`Examples/Settings.CookiePunch.Basic.yaml`](./Examples/Settings.CookiePunch.Basic.yaml).
 
 ## Basic Configuration and Usages
 
@@ -181,8 +236,8 @@ Sandstorm:
 For most projects you'll want editors to pick the privacy page from the inspector. Add a reference property on your Homepage NodeType:
 
 ```yaml
-# Configuration/NodeTypes.Homepage.yaml
-"Vendor.Site:Homepage":
+# NodeTypes/Document/Homepage/Document.Homepage.yaml
+"Vendor.Site:Document.Homepage":
   properties:
     privacyPolicyUrl:
       type: reference
@@ -372,13 +427,13 @@ prototype(Vendor:Component.ThirdpartyAudio) < prototype(Neos.Fusion:Component) {
 
 ### Let the editor choose a service from the inspector
 
-If editors can place HTML (e.g. via the `Neos.NodeTypes.Html:Html` node type), they can introduce markup that sets cookies. With the default config, CookiePunch blocks this content — and if the markup matches no YAML pattern, it stays blocked permanently.
+If editors can place HTML (e.g. via a `Vendor.Site:Content.Html` node type), they can introduce markup that sets cookies. With the default config, CookiePunch blocks this content — and if the markup matches no YAML pattern, it stays blocked permanently.
 
 Add `Sandstorm.CookiePunch:Mixin.ConsentServices` to the affected node type to expose a service dropdown in the inspector:
 
 ```yaml
-# Configuration/NodeTypes.yaml
-"Neos.NodeTypes.Html:Html":
+# NodeTypes/Content/Html/Content.Html.yaml
+"Vendor.Site:Content.Html":
   superTypes:
     "Sandstorm.CookiePunch:Mixin.ConsentServices": true
 ```
@@ -386,8 +441,8 @@ Add `Sandstorm.CookiePunch:Mixin.ConsentServices` to the affected node type to e
 Then wire the chosen service into the actual blocking:
 
 ```neosfusion
-// Resources/Private/Fusion/CookiePunch.fusion
-prototype(Neos.NodeTypes.Html:Html) {
+// NodeTypes/Content/Html/Content.Html.fusion
+prototype(Vendor.Site:Content.Html) {
   @process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend, q(node).property("consentServices"))}
   // Wrap the html element with `<div data-name="myservice">...</div>` to make sure
   // the contextual consent is displayed correctly
@@ -397,16 +452,160 @@ prototype(Neos.NodeTypes.Html:Html) {
 
 ### Let the editor change the text of the consent
 
-Override the corresponding path in the Fusion prototype `Sandstorm.CookiePunch:Config.Translations` with the text property of a content node. If the property contains markup, you also need to flip a config flag so descriptions are rendered as HTML:
+All texts of the consent notice and modal live in the Fusion prototype `Sandstorm.CookiePunch:Config.Translations`. Each key maps to a Klaro string — `ok`, `decline`, `consentNotice.description`, `consentNotice.learnMore`, `consentModal.title`, `consentModal.description`, `privacyPolicy.text`, `contextualConsent.*`, and more. The complete list is in [`Resources/Private/Fusion/Config.Translations.fusion`](./Resources/Private/Fusion/Config.Translations.fusion).
+
+You can override any of these from Fusion. To let editors maintain them, wire the paths to inspector properties on a dedicated node.
+
+#### 1. A node holding the editable texts
+
+```yaml
+# NodeTypes/Document/CookieConsentTexts/Document.CookieConsentTexts.yaml
+"Vendor.Site:Document.CookieConsentTexts":
+  superTypes:
+    "Neos.Neos:Document": true
+  ui:
+    label: "Cookie consent texts"
+    icon: icon-cookie
+    inspector:
+      groups:
+        consent:
+          label: "Cookie consent"
+  properties:
+    ok:
+      type: string
+      ui:
+        label: "Accept button"
+        inspector: { group: consent }
+    decline:
+      type: string
+      ui:
+        label: "Decline button"
+        inspector: { group: consent }
+    consentNoticeDescription:
+      type: string
+      ui:
+        label: "Notice text (use {imprint} for the imprint link)"
+        inspector:
+          group: consent
+          editor: Neos.Neos/Inspector/Editors/TextAreaEditor
+    consentNoticeLearnMore:
+      type: string
+      ui:
+        label: "Notice 'learn more' link"
+        inspector: { group: consent }
+    consentModalTitle:
+      type: string
+      ui:
+        label: "Modal title"
+        inspector: { group: consent }
+    consentModalDescription:
+      type: string
+      ui:
+        label: "Modal text"
+        inspector:
+          group: consent
+          editor: Neos.Neos/Inspector/Editors/TextAreaEditor
+    privacyPolicyText:
+      type: string
+      ui:
+        label: "Privacy-policy line (use {imprint} for the imprint link)"
+        inspector:
+          group: consent
+          editor: Neos.Neos/Inspector/Editors/TextAreaEditor
+    imprint:
+      type: reference
+      ui:
+        label: "Imprint page"
+        inspector:
+          group: consent
+          editorOptions:
+            nodeTypes: ["Neos.Neos:Document"]
+```
+
+#### 2. Wire the properties into `Config.Translations`
+
+Use `|| CookiePunchConfig.translate(...)` for keys where an empty inspector field should fall back to the bundled Klaro translation instead of blanking the string:
+
+```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
+prototype(Sandstorm.CookiePunch:Config.Translations) {
+    @context._texts = ${q(site).find('[instanceof Vendor.Site:Document.CookieConsentTexts]').get(0).properties}
+    // Resolve the referenced imprint node to an <a> tag we can splice into the text
+    @context._imprintLink = Neos.Neos:NodeLink {
+        node = ${_texts.imprint}
+    }
+
+    ok = ${_texts.ok || CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.ok")}
+    decline = ${_texts.decline || CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.decline")}
+
+    consentNotice {
+        description = ${String.replace(_texts.consentNoticeDescription, '{imprint}', _imprintLink)}
+        learnMore = ${_texts.consentNoticeLearnMore || CookiePunchConfig.translate("Sandstorm.CookiePunch.translations.consentNotice.learnMore")}
+    }
+    consentModal {
+        title = ${_texts.consentModalTitle}
+        description = ${_texts.consentModalDescription}
+    }
+    privacyPolicy {
+        text = ${String.replace(_texts.privacyPolicyText, '{imprint}', _imprintLink)}
+    }
+
+    // Keys you do not override fall back to the bundled Klaro translations automatically.
+}
+```
+
+#### 3. Enable HTML rendering for the descriptions
+
+`Neos.Neos:NodeLink` renders a full `<a href="…">…</a>` tag, so any text containing the `{imprint}` substitution now contains HTML. Allow Klaro to render it:
 
 ```yaml
 # Configuration/Settings.CookiePunch.yaml
 Sandstorm:
   CookiePunch:
     consent:
-      # Renders descriptions in the consent modal/notice as HTML. Use with care.
+      # Renders the descriptions of the consent modal/notice as HTML. Use with care.
       htmlTexts: true
 ```
+
+#### 4. Flush the cache when editors change the texts
+
+The override reads from `q(site).find(...)` and is rendered inside the cached `Neos.Neos:Page`. Add `Neos.Caching.nodeTypeTag('Vendor.Site:Document.CookieConsentTexts')` to the consent cache — see [Caching the consent](#caching-the-consent).
+
+#### Notes & caveats
+
+- The full set of overridable paths is in [`Config.Translations.fusion`](./Resources/Private/Fusion/Config.Translations.fusion).
+- An empty inspector property silently blanks the bundled default. Use the `|| CookiePunchConfig.translate(...)` fallback for any string where that would be a regression.
+- `Neos.Neos:NodeLink` renders an `<a>` tag — `htmlTexts: true` is mandatory wherever you substitute it in.
+- The `@cache` entry tag on the texts node type is not optional; without it, edits don't propagate. See [Caching the consent](#caching-the-consent).
+- For multi-language sites where the text varies by locale, XLIFF (see [Translations](#translations)) is the better tool. Inspector properties suit editor-owned wording, not translator-owned.
+
+### Caching the consent
+
+`Sandstorm.CookiePunch:Consent` ships **without** a `@cache` block. It is rendered inside the cached `Neos.Neos:Page`, so any dynamic read it makes — `q(site).find(...)` for conditional services, dynamic services, or editor-maintained texts — gets baked into each page's cache entry. Without explicit cache tags, editing the source nodes never reaches already-cached pages.
+
+Override the prototype once with the canonical block and merge **all** the entry tags the rest of your setup needs:
+
+```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
+prototype(Sandstorm.CookiePunch:Consent) {
+    @cache {
+        mode = 'cached'
+        entryIdentifier {
+            node = ${node}
+        }
+        entryTags {
+            1 = ${Neos.Caching.nodeTag(node)}
+            // Add one numeric key per nodeTypeTag your dynamic reads depend on:
+            // 2 = ${Neos.Caching.nodeTypeTag('Vendor.Site:Document.CookieConsentTexts')}      // editor-maintained consent texts
+            // 3 = ${Neos.Caching.nodeTypeTag('Vendor.Site:Content.CookieConsentEmbed')}      // editor-defined dynamic services
+            // 4 = ${Neos.Caching.nodeTypeTag('Vendor.Site:Document.RootPage')}                // when:-expressions reading site properties
+            // 5 = ${Neos.Caching.nodeTypeTag('Vendor.Site:Content.YouTube')}                  // when:-expressions counting content nodes
+        }
+    }
+}
+```
+
+**Why this lives in one place.** The `entryTags` keys must be unique within the block — if you copy the snippet from two Advanced sections that each define `entryTags { 1 = ...; 2 = ... }`, the later override silently wins and your first feature stops invalidating. Keep one `@cache` block in your project and add a new numbered tag for each Advanced feature you adopt.
 
 ### Privacy URL alternatives
 
@@ -428,7 +627,7 @@ Sandstorm:
 // Resources/Private/Fusion/CookiePunch.fusion
 prototype(Sandstorm.CookiePunch:Config) {
     consent.privacyPolicyUrl = Neos.Neos:NodeUri {
-        node = ${q(site).find('[instanceof Vendor.Site:PrivacyPage]').get(0)}
+        node = ${q(site).find('[instanceof Vendor.Site:Document.PrivacyPage]').get(0)}
     }
 }
 ```
@@ -502,7 +701,7 @@ Sandstorm:
           description: ...
           purposes:
             - mediaembeds
-          when: "${q(site).find('[instanceof Vendor.Site:YouTube]').count() > 0}"
+          when: "${q(site).find('[instanceof Vendor.Site:Content.YouTube]').count() > 0}"
         googleAnalytics:
           title: Google Analytics
           description: ...
@@ -513,7 +712,7 @@ Sandstorm:
 
 For a complete example see [`Examples/Settings.CookiePunch.WithWhenConditions.yaml`](./Examples/Settings.CookiePunch.WithWhenConditions.yaml).
 
-This is useful in multi-site setups, and to prevent unnecessary consent switches when e.g. no YouTube video has ever been added to the content.
+This is useful in multi-site setups, and to prevent unnecessary consent switches when e.g. no YouTube video has ever been added to the content (the `Vendor.Site:Content.YouTube` node type above stands in for whichever content type embeds a YouTube video in your site).
 
 **Notes:**
 
@@ -522,25 +721,7 @@ This is useful in multi-site setups, and to prevent unnecessary consent switches
 3. When querying the content repository with `q(...)`, only `site` is available. `documentNode` and `node` are not.
 4. Klaro stores past consent decisions in a cookie, so removing and re-adding e.g. a YouTube video will not re-prompt users who already consented.
 
-**Important:** adapt your cache config for `Sandstorm.CookiePunch:Consent`. Add tags for every node type referenced in your `when` expressions:
-
-```neosfusion
-// Resources/Private/Fusion/CookiePunch.fusion
-prototype(Sandstorm.CookiePunch:Consent) {
-    @cache {
-        mode = 'cached'
-        entryIdentifier {
-            node = ${node}
-        }
-        entryTags {
-            1 = ${Neos.Caching.nodeTag(node)}
-            // RootPage is the nodetype of the site node (used as `q(site)` in the `when` example above)
-            2 = ${Neos.Caching.nodeTypeTag('Vendor.Site:RootPage')}  // flush when googleAnalyticsAccountKey changes
-            3 = ${Neos.Caching.nodeTypeTag('Vendor.Site:YouTube')}    // flush when a YouTube video is added or removed
-        }
-    }
-}
-```
+**Important:** every node type referenced in your `when` expressions needs a matching `Neos.Caching.nodeTypeTag(...)` on the consent cache (e.g. `Vendor.Site:Document.RootPage` for `q(site).property(...)`, `Vendor.Site:Content.YouTube` for `q(site).find('[instanceof ...YouTube]').count()`). See [Caching the consent](#caching-the-consent) for the canonical block.
 
 **Preventing an empty consent modal**
 
@@ -563,8 +744,8 @@ The trick is to override `Sandstorm.CookiePunch:Consent` and append dynamically-
 #### 1. A content element node type
 
 ```yaml
-# Configuration/NodeTypes.CookieConsentEmbed.yaml
-"Vendor.Site:CookieConsentEmbed":
+# NodeTypes/Content/CookieConsentEmbed/Content.CookieConsentEmbed.yaml
+"Vendor.Site:Content.CookieConsentEmbed":
   superTypes:
     "Neos.Neos:Content": true
   ui:
@@ -603,8 +784,8 @@ The trick is to override `Sandstorm.CookiePunch:Consent` and append dynamically-
 The element renders the embed, then blocks it and attaches the contextual consent. The service key is the md5 of the editor's `serviceName`:
 
 ```neosfusion
-// Resources/Private/Fusion/Content/CookieConsentEmbed.fusion
-prototype(Vendor.Site:CookieConsentEmbed) < prototype(Neos.Neos:ContentComponent) {
+// NodeTypes/Content/CookieConsentEmbed/Content.CookieConsentEmbed.fusion
+prototype(Vendor.Site:Content.CookieConsentEmbed) < prototype(Neos.Neos:ContentComponent) {
     // derive the service key once; the consent override below MUST hash the same way
     @context.serviceKey = ${String.md5(q(node).property('serviceName'))}
 
@@ -628,7 +809,7 @@ prototype(Sandstorm.CookiePunch:Consent) {
     @context.originalServices = ${CookiePunchConfig.filterServicesArrayByWhenCondition(Configuration.setting("Sandstorm.CookiePunch.consent.services"), site)}
 
     @context.dynamicServices = Neos.Fusion:Map {
-        items = ${q(site).find('[instanceof Vendor.Site:CookieConsentEmbed][serviceName != ""]')}
+        items = ${q(site).find('[instanceof Vendor.Site:Content.CookieConsentEmbed][serviceName != ""]')}
         itemRenderer = Neos.Fusion:DataStructure {
             // NOTE: no `name` here — Config.fusion derives the Klaro service name
             // from the map KEY (keyRenderer), not from a `name` field.
@@ -643,24 +824,12 @@ prototype(Sandstorm.CookiePunch:Consent) {
         // (the last one rendered wins for title/description).
         keyRenderer = ${String.md5(q(item).property('serviceName'))}
     }
-
+    
     servicesRemainingAfterWhenConditions = ${Array.concat(originalServices, dynamicServices)}
-
-    // REQUIRED: the consent is rendered inside the cached page, and its service
-    // list depends on q(site).find(...). Without these tags a newly published
-    // embed would not get a switch on already-cached pages.
-    @cache {
-        mode = 'cached'
-        entryIdentifier {
-            node = ${node}
-        }
-        entryTags {
-            1 = ${Neos.Caching.nodeTag(node)}
-            2 = ${Neos.Caching.nodeTypeTag('Vendor.Site:CookieConsentEmbed')}  // flush every page's consent when an embed changes
-        }
-    }
 }
 ```
+
+Then add `Neos.Caching.nodeTypeTag('Vendor.Site:Content.CookieConsentEmbed')` to the consent cache so a newly published embed flushes every page's consent — see [Caching the consent](#caching-the-consent).
 
 #### 4. Declare the purpose
 
@@ -682,7 +851,7 @@ Sandstorm:
 - **The two `String.md5(...)` expressions must stay byte-identical** (the element in step 2 and the consent override in step 3). If they ever drift, the markup is blocked but no service can unblock it — the content stays broken forever.
 - **Deduplication is by name.** Two embeds with the same `serviceName` produce one switch; the last-rendered node wins for `title`/`description`.
 - **Make `serviceName` required.** An empty name hashes to a constant (`md5('')`), collapsing unrelated embeds into one bogus service — hence the `NotEmptyValidator` and the `[serviceName != ""]` filter.
-- **The `@cache` block is not optional** — see the inline comment above.
+- **The `@cache` entry tag is not optional** — without it, new embeds don't appear on already-cached pages. See [Caching the consent](#caching-the-consent).
 
 ### Per-service lifecycle callbacks (`onInit` / `onAccept` / `onDecline`)
 
@@ -723,6 +892,91 @@ Sandstorm:
 ```
 
 ## Troubleshooting
+
+### The consent modal doesn't appear
+
+**Please check**
+
+- Is `Sandstorm.CookiePunch:Consent` actually included in your `Neos.Neos:Page` (e.g. `head.javascripts.cookiepunchConsent = Sandstorm.CookiePunch:Consent`)?
+- Does `klaro.show()` work in the DevTools console?
+- Does the browser console show CSP errors about an inline `<script>`?
+
+**This could be the problem**
+
+- The Fusion include is missing or shadowed by another `head.javascripts.*` assignment.
+- A strict Content Security Policy without `unsafe-inline` (or a matching nonce/hash) is blocking the inline `<script>` produced by `Sandstorm.CookiePunch:Js.Config` and `Sandstorm.CookiePunch:Js.Callbacks`.
+
+**How to fix**
+
+Add the Fusion include from [Step 1](#step-1-adding-the-consent-modal). If CSP blocks the inline script, either allow `script-src 'unsafe-inline'` (not recommended) or attach a nonce/hash to the consent's script tag.
+
+### A service switch is missing from the modal
+
+**Please check**
+
+- Is the service declared under `Sandstorm.CookiePunch.consent.services` in your YAML?
+- Does its `when:` expression (if any) evaluate truthy for the current `site`?
+- For editor-defined dynamic services, is the page's `Sandstorm.CookiePunch:Consent` `@cache` tagged on the embed/text node type?
+
+**This could be the problem**
+
+- A YAML typo / mis-nesting under the wrong key (`Sandstorm:CookiePunch:` vs. `Sandstorm: { CookiePunch: { … } }`).
+- A `when:` Eel expression is silently false (`q(site).find(...).count() == 0`, missing property).
+- The page is showing a cached version that pre-dates the service's existence — see [Caching the consent](#caching-the-consent).
+
+**How to fix**
+
+Open the DevTools console and inspect `window.cookiePunchConfig` — every service the server emitted is listed there. If yours is missing, the issue is in the Fusion/YAML; if it's present but the switch isn't, see [Caching the consent](#caching-the-consent) and flush the page cache.
+
+### Content stays blocked even after the user accepts
+
+**Please check**
+
+- View the rendered HTML (not the live DOM). Does the broken tag have a `data-name="…"` attribute?
+- Does the value of that `data-name` match a service `name` from `window.cookiePunchConfig.services`?
+
+**This could be the problem**
+
+- The matching pattern attached `block: true` (no service) instead of `service: someService`, so Klaro cannot restore the markup.
+- For [Editor-defined dynamic services](#editor-defined-dynamic-services), the two `String.md5(...)` expressions (element side vs. consent side) have drifted — typically because the element-side `serviceName` was edited but the consent-side query didn't refresh.
+- A pattern matched the URL but the wildcard `"*": false` is also present and won by mistake — see [Pattern reference](#pattern-reference).
+
+**How to fix**
+
+Make `data-name` and the service `name` byte-identical. For dynamic services, ensure the consent's `@cache` is tagged on the embed node type so updates propagate.
+
+### The Neos backend looks broken
+
+**Please check**
+
+- Did you pass the `!node.context.inBackend` argument to `CookiePunch.blockTags(...)`?
+
+**This could be the problem**
+
+- `blockTags(["iframe","script"], value)` (only two arguments) blocks unconditionally — including in the Neos backend, which breaks the editor UI.
+
+**How to fix**
+
+Always pass `!node.context.inBackend` as the third argument:
+
+```neosfusion
+// Resources/Private/Fusion/CookiePunch.fusion
+@process.blockTags = ${CookiePunch.blockTags(["iframe","script"], value, !node.context.inBackend)}
+```
+
+### Edits to dynamic-source nodes don't show up on already-published pages
+
+**Please check**
+
+- Does your `Sandstorm.CookiePunch:Consent` override declare a `@cache` block with a `nodeTypeTag` for the source node type?
+
+**This could be the problem**
+
+- The consent is rendered inside `Neos.Neos:Page`. Without explicit cache tags, `q(site).find(...)` reads are frozen into each page's cache entry.
+
+**How to fix**
+
+Add the missing `Neos.Caching.nodeTypeTag('Vendor.Site:Document.X')` to the consent cache — see [Caching the consent](#caching-the-consent).
 
 ### Iframes work after unblocking but are the wrong size or in the wrong place
 
