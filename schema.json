@@ -241,6 +241,9 @@
                           "type": "string"
                         }
                       },
+                      "default": {
+                        "type": "boolean"
+                      },
                       "when": {
                         "type": "string"
                       },

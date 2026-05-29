@@ -16,7 +16,7 @@ Sandstorm:
         script:
           "Packages/Neos.Neos":
             block: false
-          "Packages/Unikka.Slick":
+          "Packages/Vendor.ExampleLibrary":
             block: false
         iframe:
           "https://anchor.fm":
