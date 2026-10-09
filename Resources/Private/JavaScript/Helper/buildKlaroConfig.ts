@@ -14,15 +14,17 @@ export default function buildKlaroConfig(
   cookiePunchConfig: CookiePunchConfig
 ): KlaroConfig {
   validateCookiePunchConfigOnWindow(cookiePunchConfig);
+  const lang = pageLanguage();
   return {
     version: 1,
 
     // IMPORTANT: we disable the language handling of klaro because
-    // we want to use translations provided the Neos-way
+    // we want to use translations provided the Neos-way (already in the language of the page)
     // however we cannot use the zz language as for some reasons default translations
-    // will be used when switching languages. This is why we pin the language here so
-    // klaro will use the translations provided by us.
-    lang: "en",
+    // will be used when switching languages. This is why we pin the language to the one of
+    // the page and store our translations under it: klaro uses them and renders `lang` with it,
+    // so screen readers pronounce the texts in the right language.
+    lang,
 
     elementID: cookiePunchConfig.consent.elementID,
     noAutoLoad: cookiePunchConfig.consent.noAutoLoad,
@@ -48,7 +50,7 @@ export default function buildKlaroConfig(
     services: buildKlaroServicesConfig(cookiePunchConfig.consent.services),
 
     translations: {
-      en: {
+      [lang]: {
         privacyPolicyUrl: cookiePunchConfig.consent.privacyPolicyUrl,
         ...cookiePunchConfig.consent.translations,
         ...buildKlaroServiceTranslations(cookiePunchConfig.consent.services),
@@ -58,6 +60,11 @@ export default function buildKlaroConfig(
       },
     },
   };
+}
+
+// the primary language subtag of <html lang>, e.g. "de" for "de-CH" - "en" if the page has none
+function pageLanguage(): string {
+  return document.documentElement.lang.split("-")[0].toLowerCase() || "en";
 }
 
 function validateCookiePunchConfigOnWindow(

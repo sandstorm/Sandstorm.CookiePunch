@@ -113,7 +113,7 @@ export type KlaroServices = KlaroService[];
 
 export type KlaroConfig = {
   version: 1;
-  lang: "en";
+  lang: string;
 
   elementID: string;
   noAutoLoad: boolean;
@@ -138,6 +138,6 @@ export type KlaroConfig = {
   services: KlaroServices;
 
   translations: {
-    en: KlaroTranslations | KlaroServiceTranslations;
+    [lang: string]: KlaroTranslations | KlaroServiceTranslations;
   };
 };
